@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.cordovaplugincamerapreview.sampleapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>barcode</name>
+    <description>read barcode.</description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">Sample App</author>
+    <content src="index.html" />
+    <access origin="*" />
+    <plugin name="cordova-plugin-camera-preview" spec="https://github.com/wildabeast/BarcodeScanner.git" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git" />
+</widget>

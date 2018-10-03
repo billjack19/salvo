@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <title>Entrega</title>
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css"> 
+    </head>
+ 
+    <body onload="submeterFormulario()">
+    	<div id="site">
+        	<!-- <h1>Entrega</h1> -->
+            <center>
+            <button class="btn btn-block btn-primary" onclick="imprimirTela()" id="btnImprimir">
+                <i class="fa fa-print"></i>&nbsp;&nbsp;&nbsp;Imprimir
+            </button>
+
+            <form method="post" action="index.html" style="display: none;">
+                <fieldset>
+                    <legend>Criar rotas</legend>
+                    
+                    <div>
+                        <label for="txtEnderecoPartida">Endereço de partida:</label>
+                        <input type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" value="-21.78593779334913,-46.56324505805969" />
+                    </div>
+                    
+                    <div>
+                        <label for="txtEnderecoChegada">Endereço de chegada:</label>
+                        <input type="text" id="txtEnderecoChegada" name="txtEnderecoChegada" value="-21.78593779334913,-46.56324505805969" />
+                        <!-- -21.801517634953733,-46.568141682073474 -->
+                        <!-- rua dovilio taconi 150 poços de caldas minas gerais -->
+                        <!-- pernabuco 649 poços de caldas minas gerais -->
+                    </div>
+                    
+                    <!-- <div>
+                        <label for="referencia">Ponto referencia:</label>
+                        <input type="text" id="referencia" name="referencia" value="rua assis figueiredo 45 poços de caldas minas gerais" />
+                    </div> -->
+                    
+                    <div>
+                        <input type="submit" id="btnEnviar" name="btnEnviar" value="Enviar" />
+                    </div>
+                </fieldset>
+            </form>
+            <div id="logoTipo" style="margin-top: -15px;display: none;">
+                <div class="text-left col-xs-6">
+                    <img src="img/LotoTipo.jpg" width="25%">
+                </div>
+                <div class="text-right col-xs-6">
+                    <img src="img/Logo.png" width="25%">
+                </div>
+            </div>
+            <div class="col-xs-12" id="mapa"></div>
+
+            <div id="trajeto-texto" style="display: none;"></div>
+            <!-- O símbolo <img src="img/imagemExplicativa polilinha A google maps.png">, se aparecer no mapa, diz que é o ponto inicial do percurso.&nbsp;
+            E o símbolo <img src="img/imagemExplicativa polilinha B google maps.png"> diz que é o ponto de chagada desse percurso <br> --><br>
+            <div id="trajeto_descritivo" class="col-xs-12"></div>
+            <!-- <div id="trajeto_descritivo2" class="col-xs-6"></div> -->
+            <!-- <div id="trajeto_descritivo3" class="col-xs-4"></div> -->
+            <br><br>
+            <div class="text-right" style="font-size: 10px">
+                Developer Jack Biller
+            </div>
+        
+        </div>
+        
+        <script src="js/jquery.min.js"></script>
+		
+        <!-- Maps API Javascript -->
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+ 
+        <!-- Arquivo de inicialização do mapa -->
+		<script src="js/mapa.js"></script>
+
+        <script type="text/javascript">
+            var render = 0;
+            function submeterFormulario(){
+                document.getElementById("btnEnviar").click();
+            }
+
+            function imprimirTela(){
+                document.getElementById("btnImprimir").style.display = "none";
+                document.getElementById("logoTipo").style.display = "block";
+                setarCaminhaoMapa = false;
+                for (var i = 0; i < caminhaos.length; i++) {
+                    caminhaos[i].caminhao.setMap(null);
+                }
+                window.print();
+                document.getElementById("btnImprimir").style.display = "block";
+                document.getElementById("logoTipo").style.display = "none";
+                setarCaminhaoMapa = true;
+            }
+        </script>
+    </body>
+</html>

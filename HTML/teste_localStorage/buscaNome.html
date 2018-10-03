@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<center>
+	<h1>Busca</h1>
+</center>
+<div id="result"></div>
+
+<script>
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+    // Store
+    if(!localStorage.lastname){
+    	localStorage.setItem("lastname", "Smith");
+    }
+    // Retrieve
+    document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+
+function trocar(){
+	if (typeof(Storage) !== "undefined") {
+		// Store
+		localStorage.setItem("lastname", document.getElementById("nome").value );
+		// Retrieve
+		document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+	} else {
+		document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+	}
+}
+</script>
+	<input type="text" id="nome">
+	<button onclick='trocar()'>Trocar</button>
+	<a href="index.html">Link</a>
+</body>
+</html>

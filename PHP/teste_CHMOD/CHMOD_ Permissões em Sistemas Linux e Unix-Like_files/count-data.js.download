@@ -1,0 +1,5 @@
+var DISQUSWIDGETS;
+
+if (typeof DISQUSWIDGETS != 'undefined') {
+    DISQUSWIDGETS.displayCount({"text":{"and":"e","comments":{"zero":"0 Coment\u00e1rios","multiple":"{num} Coment\u00e1rios","one":"1 Coment\u00e1rio"}},"counts":[{"id":"376 http:\/\/www.rberaldo.com.br\/blog\/?p=376","comments":0}]});
+}

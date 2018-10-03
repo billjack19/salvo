@@ -1,0 +1,38 @@
+Tela de Adicionar Produto:
+
+Será feita num modal;
+É disparado quando tenta ler um codigo de barra e não o produto registrado;
+Deve conter os seguinte campos:
+	- Descrição
+	- Marca
+		* contem a opção de adicionar nova marca já que precisa somente da descrição
+	- Tipo de venda
+		* separado em duas categoris:
+			- Qunatidade (em que é vendido)
+			- Unidade de Medidoa (tambem em que é vendido)
+
+
+
+
+
+Tela de adicionar produto;
+
+Será como a tela principal do aplicativo;
+Deve conter um pedido sempre aberto independente se tiver ou não
+	* caso seja a primeira vez ele irá criar um pedido instantaneamente
+Terá opção de selecionar produto com o codigo de barras ou pesquisando ele;
+Após campo de codigo de barras terá um campo descrição do produto
+	* será preenchido automaticamente se tiver codigo
+	* caso não tenha o usuario poderá entrar com uma descrição do produto de no minimo 15 caracteres
+
+Terá campo para informar quantidade
+Terá campo para informar valor unitario
+Colocat uma ( div / span ) para informar caso um outro supermercado esteja mais barato o mesmo produto
+
+
+Após isso terá dois botões:
+	+ lista  	/ 	* lista (atualizar)
+	+ compra	/ 	* compra (atualizar)
+
+poderá haver mais um botão caso o produto esteja na lista e na compra e estejão diferentes 
+	- terá opção de visulaizar na ( lista / compra )

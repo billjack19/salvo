@@ -1,0 +1,69 @@
+
+
+<h1>Adicionar: Orçamento Item</h1>
+
+<div class="text-right">
+	<a href="principal.php#!grade_orcamento_item-orcamento" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Supermercado &nbsp;&nbsp;<span style='color: red'>*</span>
+	<div id="supermercadoDiv"></div>
+</div>
+<div class="col-md-4">
+	<br>Item &nbsp;&nbsp;<span style='color: red'>*</span>
+	<div id="itemDiv"></div>
+</div>
+<div class="col-md-4">
+	<br>Marca &nbsp;&nbsp;
+	<div id="marcaDiv"></div>
+</div>
+<div class="col-md-4">
+	<br>Quantidade &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="number" class="form-control" id="quantidade_orcamento_item" onkeyup="limitarValorNum('quantidade_orcamento_item', );calculador(3, 'quantidade_orcamento_item+preco_orcamento_item+', 'campos_data_logica_negocio', 'total_orcamento_item', 'quantidade_orcamento_item', 'd'); "  >
+</div>
+<div class="col-md-4">
+	<br>Preço &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="number" class="form-control" id="preco_orcamento_item" onkeyup="limitarValorNum('preco_orcamento_item', );calculador(3, 'quantidade_orcamento_item+preco_orcamento_item+', 'campos_data_logica_negocio', 'total_orcamento_item', 'preco_orcamento_item', 'd'); "  >
+</div>
+<div class="col-md-4">
+	<br>Total &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="number" class="form-control" id="total_orcamento_item" onclick=""  disabled >
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_orcamento_item" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="orcamento_id">
+			<script>$("#orcamento_id").val(retornaValorIdTabelaPrimaria('orcamento', 'orcamento_item'))</script>
+			
+			<input type="hidden" id="data_atualizacao_orcamento_item">
+			<script>$("#data_atualizacao_orcamento_item").val("1")</script>
+			
+			<input type="hidden" id="usuario_id">
+			<script>$("#usuario_id").val($("#usuario").val())</script>
+			
+		<button class="btn btn-success" onclick='gravarRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('orcamento_item-orcamento');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_adicionar_orcamento_item.js"></script>
+
+<script type="text/javascript" src="app/js/combo/supermercadoCombo.js"></script>
+<script type="text/javascript" src="app/js/combo/itemCombo.js"></script>
+<script type="text/javascript" src="app/js/combo/marcaCombo.js"></script>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel='shortcut icon' href="img/icon.png" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+
+	<title>Compras</title>
+	<!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	<script type="text/javascript" src="js/jQuery.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+
+	<!-- Scrips padrão -->
+	<!-- <script type="text/javascript" src="js/bootbox.js"></script> -->
+	<!-- <script type="text/javascript" src="js/masked2.js"></script> -->
+	<!-- <script type="text/javascript" src="js/masked.js"></script> -->
+	<!-- <script type="text/javascript" src="js/toast.js"></script> -->
+	<!-- <script type="text/javascript" src="js/maskmoney.js"></script> -->
+	<script type="text/javascript" src="js/moment.js"></script>
+
+
+	<!-- <script src="js/jquery.maskMoney.min.js" type="text/javascript"></script> -->
+	<!-- <link rel="stylesheet" type="text/css" href="css/toast.css"> -->
+
+
+	<script type="text/javascript" src="js/scripts.js"></script>
+
+	<script type="text/javascript">
+		/* Maquina casa */
+		if(!localStorage.IP) localStorage.setItem("IP", "192.168.1.102");
+		var ip_Global = "http://" + localStorage.getItem("IP") + "/compras/comprasWeb/";
+		
+		/* Maquina serviço */
+		// if(!localStorage.IP) localStorage.setItem("IP", "192.168.100.15:8088");
+		// var ip_Global = "http://" + localStorage.getItem("IP") + "/Teste/Mini Project/compras/comprasWeb/";
+		
+		console.log(ip_Global);
+		if (localStorage.usuario_Global) var usuario_Global = JSON.parse(localStorage.getItem("usuario_Global"));
+		else { localStorage.removeItem("usuario_Global"); window.location.assign("index.html"); }
+
+
+		var id_pedido_Global = 0;
+		if (localStorage.id_pedido_Global) {
+			id_pedido_Global = localStorage.getItem("id_pedido_Global");
+		}
+	</script>
+</head>
+
+<body>
+
+<div class="app">
+	Olá <span id="nomeUsuario"></span>
+	<script type="text/javascript">
+		document.getElementById("nomeUsuario").innerHTML = usuario_Global.nome;
+	</script>
+	<h2>Gestão de Compras</h2>
+
+
+	<div id="comboSupermecado">
+		<h3>Carregando supermercados...</h3>
+	</div>
+	<br>
+
+
+
+
+	<!-- Menu Principal -->
+	<ul class="nav nav-tabs">
+		<li role="presentation" class="active" name='itemMenu' onclick="mudarPagina(this, 'divCompra')">
+			<a href="#">Compra</a>
+		</li>
+		<li role="presentation" name='itemMenu' onclick="buscaPendentes();mudarPagina(this, 'divHistorico')">
+			<a href="#">Histórico</a>
+		</li>
+		<li role="presentation" name='itemMenu' onclick="mudarPagina(this, 'divConsulta')">
+			<a href="#">Consulta</a>
+		</li>
+	</ul>
+
+
+
+
+
+
+
+
+	<!-- Div Menu compras -->
+	<div id="divCompra" name="itemMenuDiv">
+
+		<!-- Sub menu compraS -->
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active" name='menuProd' id='preHead' onclick="mudarPagina2(this, 'divAddProduto')">
+				<a href="#"><i class="fa fa-plus"></i> Produto</a>
+			</li>
+			<li role="presentation" name='menuProd' id='itemPreHead' onclick="buscaListaProdutos();mudarPagina2(this, 'divListaProd')">
+				<a href="#">Lista</a>
+			</li>
+			<li role="presentation" name='menuProd' id='itemPreHead' onclick="mudarPagina2(this, 'divProdutos')">
+				<a href="#">Produtos</a>
+			</li>
+		</ul>
+
+
+
+
+
+
+
+
+		<!-- Categoria de cadastro dos intens para pedido tanto lista de compras quanto compra -->
+		<div id="divAddProduto">
+			<br>
+			<div style="width: 100%" class="text-right">
+				<button class="btn btn-info" onclick="novoPedido()">
+					<i class="fa fa-file"></i> Novo
+				</button>
+			</div>
+
+			<!-- Menu de codigo de barras -->
+			<label>Produtos</label>
+			<div class="input-group">
+				<span class="input-group-addon" onclick="$('#modalCodFunc').modal('show')">
+					&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;
+				</span>
+				<input type="tel" id="cod_produto_pedido" class="form-control" onkeyup="buscarSetarProduto({cod: this.value})">
+				<span class="input-group-addon" id="scanProd">
+					&nbsp;&nbsp;&nbsp;<i class="fa fa-barcode"></i>&nbsp;&nbsp;&nbsp;
+				</span>
+				<span class="hidden input-group-addon" id="buttonAddProduto" onclick="modalAdicionarItem($('#cod_produto_pedido').val())"><!-- hidden -->
+					&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;
+				</span>
+				<span class="hidden input-group-addon" id="buttonEquivalenteProduto" onclick="modalRquivalenteItem($('#cod_produto_pedido').val())"><!-- hidden -->
+					&nbsp;&nbsp;&nbsp;<i class="fa fa-copy"></i>&nbsp;&nbsp;&nbsp;
+				</span>
+			</div>
+
+
+			<input type="hidden" id="id_produto">
+			<label>Descrição Produto</label>
+			<input type="text" id="descricao_produto" class="form-control" onkeyup="compararDescricaoProduto(this.value)">
+
+
+			<label>Quantidade</label>
+			<div class="input-group">
+				<span class="input-group-addon" onclick="calcCampo('-', 'qdtProdutoAdicionar')">
+					<i class="fa fa-minus"></i>
+				</span>
+				<input type="tel" class="form-control" id="qdtProdutoAdicionar" value='1' style="text-align: right;">
+				<span class="input-group-addon" onclick="calcCampo('+', 'qdtProdutoAdicionar')">
+					<i class="fa fa-plus"></i>
+				</span>
+			</div>
+
+
+			<label>Valor Unitário</label>
+			<div class="input-group">
+				<span class="input-group-addon">R$</span>
+				<input type="tel" class="form-control" id="vlrUnitariProduto" style="text-align: right;">
+				<span class="input-group-addon">,</span>
+				<input type="tel" class="form-control" id="vlrUnitariDecimalProduto" style="text-align: right;">
+			</div>
+
+
+			<table class="table">
+				<tr>
+					<td width="50%">
+						<button class="btn btn-block btn-primary" onclick="salvarProduto({lista: true})">
+							<!-- <i class="fa fa-floppy-o"></i>&nbsp;&nbsp;&nbsp;Lista -->
+							<i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Lista
+						</button>
+					</td>
+					<td width="50%">
+						<button class="btn btn-block btn-success" onclick="salvarProduto({compra: true})">
+							<!-- <i class="fa fa-floppy-o"></i>&nbsp;&nbsp;&nbsp; -->
+							<i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Compra
+						</button>
+					</td>
+				</tr>
+			</table>
+			<!-- <span id="especificacoes_produto"></span> -->
+		</div>
+
+
+
+		<div id="divListaProd"></div>
+
+
+
+
+		<div id="divProdutos"></div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Categoria de historicos de compras do usuario -->
+	<div id="divHistorico" class="hidden" name="itemMenuDiv"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Categoria de consulta de Preço -->
+	<div id="divConsulta" class="hidden" name="itemMenuDiv">
+		<div class="input-group">
+			<span class="input-group-addon">
+				Buscar
+			</span>
+			<input type="text" id="ds_folha_func" class="form-control" onkeyup="buscarProduto(this.value)">
+			<span class="input-group-addon" id="carregaBuscaConsulta">
+				&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;
+			</span>
+		</div>
+		<div id="resultadoConsulta"></div>
+	</div>
+</div>
+
+
+<!-- FIM DA VIEW -->
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+	app.initialize();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Procurar produto para adicionar ao produto -->
+<div class="modal fade" id="modalCodFunc" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Procurar Produto:</h4>
+			</div>
+			<div class="modal-body">
+				Buscar
+				<input type="text" id="procurarPrdutoCod" class="form-control" onkeyup="buscarProdutoPesquisa(this.value)">
+				<div id="resultadoPesquisaProdutoDiv"></div>
+			</div>
+			<div class="modal-footer" style="margin: 0;">
+				<!-- <button class="btn btn-primary" onclick="buscarSetarProduto({cod: $('#procurarPrdutoCod').val(), boolModal: true })"> -->
+					<!-- Buscar -->
+				<!-- </button> -->
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+	Produto em grade são os produtos equivalentes de caravteristicas diferentes 
+	codigos de barras diferentes porém com o mesmo preço 
+-->
+<div class="modal fade" id="modalEspecificacaoItem" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Produto em grade:</h4>
+			</div>
+			<div class="modal-body">
+				<span id="descricaoCompletaEspecificacaoModal"></span>
+				
+				Codigo
+				<div class="input-group">
+					<input type="tel" id="cod_produto_pedidoModal" class="form-control" onkeyup="buscarSetarProduto({
+							cod: this.value, 
+							modalEquivalente: true
+					})">
+					<span class="input-group-addon" id="scanProd">
+						&nbsp;&nbsp;&nbsp;<i class="fa fa-barcode"></i>&nbsp;&nbsp;&nbsp;
+					</span>
+				</div>
+
+			</div>
+			<div class="modal-footer" style="margin: 0;">
+				<!-- <button class="btn btn-primary" onclick="buscarSetarProduto({cod: $('#procurarPrdutoCod').val(), boolModal: true })"> -->
+					<!-- Buscar -->
+				<!-- </button> -->
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Cadastro de produtos -->
+<div class="modal fade" id="modalCadastroProduto" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Cadastrar Produto:</h4>
+			</div>
+			<div class="modal-body">
+				Código
+				<input type="text" class="form-control" id="codProdutoModla" disabled>
+				<br>
+				Marca
+				<div id="comboMaraDiv">
+					<input type="text" class="form-control" id="marcaProtudoModal">
+				</div>
+				<br>
+				<div id="produtodMarcaDiv" style="display: none;">
+					<div>
+						Produtos: 
+					</div>
+					<div style="margin-top: -20px;width: 100%" class="text-right">
+						<button class="fa fa-minus btn" onclick="minimizaTelaPrdutoMarca('-', this);">
+							
+						</button>
+						<script type="text/javascript">
+							function minimizaTelaPrdutoMarca(op, button){
+								if (op == "-") {
+									$("#tabelaProdutoMarcaDiv").hide(1500);
+									button.className = "fa fa-plus btn";
+									button.onclick = function(){ minimizaTelaPrdutoMarca("+", this); }
+								} else {
+									$("#tabelaProdutoMarcaDiv").show(1500);
+									button.className = "fa fa-minus btn";
+									button.onclick = function(){ minimizaTelaPrdutoMarca("-", this); }
+								}
+							}
+							
+						</script>
+					</div>
+					<div id="tabelaProdutoMarcaDiv" style="
+							border-style: solid;
+							border-color: gray;
+							border-radius: 10px;
+							margin-top: 5px;
+					"></div>
+				</div>
+				<br>
+				Descrição
+				<input type="text" class="form-control" id="descricaoProdutoModal">
+				<br>
+				Tipo Venda
+				<table class="table">
+					<tr>
+						<td width="50%">
+							<div class="input-group">
+								<span class="input-group-addon" onclick="calcCampo('-', 'qtdProtudoModal')">
+									<i class="fa fa-minus"></i>
+								</span>
+								<input type="tel" class="form-control" id="qtdProtudoModal" style="text-align: right;">
+								<span class="input-group-addon" onclick="calcCampo('+', 'qtdProtudoModal')">
+									<i class="fa fa-plus"></i>
+								</span>
+							</div>
+						</td>
+						<td width="50%">
+							<div id="selectUnidadeMedDiv">
+								<!-- <select class='form-control' id='unidadeProdutoMdal'>
+									<option value='1'>un - Unidade</option>
+									<option value='2'>kg - Kilograma</option>
+									<option value='3'>g - Grama</option>
+									<option value='4'>mg - Milígrama</option>
+									<option value='5'>l - Litro</option>
+									<option value='6'>ml - Mililitro</option>
+									<option value='7'>m - Metro</option>
+									<option value='8'>cm - Centímetro</option>
+									<option value='9'>mm - Milímetro</option>
+								</select> -->
+							</div>
+						</td>
+					</tr>
+				</table>
+				<!-- <br> -->
+				Especificação
+				<input type="text" id="especificacaoProdutoModal" class="form-control">
+			</div>
+			<div class="modal-footer" style="margin: 0;">
+				<button class="btn btn-success" onclick="adidcionarItem()">
+					Salvar
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script type="text/javascript" src="scriptCofing.js"></script>
+<script type="text/javascript" src="scriptConsulta.js"></script>
+<script type="text/javascript" src="scriptInserir.js"></script>
+<script type="text/javascript" src="scriptEditar.js"></script>
+<script type="text/javascript" src="scriptRemover.js"></script>
+
+<script type="text/javascript">
+	buscarSupermercado();
+	buscarUnidadeMedida();
+	buscaMarca();
+
+
+
+	// Modal Busca Produto por codigo
+	$("#modalCodFunc").on('shown.bs.modal', function() {
+		// Quando modal abrir
+		$("#procurarPrdutoCod").focus();
+	});
+	$('#modalCodFunc').on('hidden.bs.modal', function () {
+		// Qunado modal fechar
+		$("#procurarPrdutoCod").val("");
+		$("#resultadoPesquisaProdutoDiv").html("");
+	});
+
+
+
+
+	/* Modal de protudos equivalentes */
+	$("#modalEspecificacaoItem").on('shown.bs.modal', function() {
+		// Quando modal abrir
+		$("#procurarPrdutoCod").focus();
+	});
+	$('#modalEspecificacaoItem').on('hidden.bs.modal', function () {
+		// Qunado modal fechar
+		$("#procurarPrdutoCod").val("");
+		$("#descricaoCompletaEspecificacaoModal").html("");
+	});
+
+
+
+
+	// Modal cadastrar Produto
+	$("#modalCadastroProduto").on('shown.bs.modal', function() {
+		// Quando modal abrir
+		// $("#descricaoProdutoModal").focus();
+		$("#marcaProtudoModal-flexdatalist").focus();
+		$("#qtdProtudoModal").val(1);
+	});
+	$('#modalCadastroProduto').on('hidden.bs.modal', function () {
+		// Qunado modal fechar
+		$("#codProdutoModla").val("");
+		$("#descricaoProdutoModal").val("");
+		$("#marcaProtudoModal").val("");
+		$("#qtdProtudoModal").val("");
+		$("#unidadeProdutoMdal").val("");
+	});
+
+
+
+	function calcCampo(op, campoId){
+		var valor = $("#"+campoId).val();
+		if (valor != "" && !isNaN(valor)) {
+			if (op == "-" && parseInt(valor) > 1) 	$("#"+campoId).val(parseInt(valor)-1);
+			else if(op == "+") 						$("#"+campoId).val(parseInt(valor)+1);
+			else 									$("#"+campoId).val(1);
+		} else {
+			$("#"+campoId).val(1);
+		}
+	}
+</script>
+
+</body>
+
+<style type="text/css">
+	body{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+</style>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Enviar SMS</title>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+	<script type="text/javascript" src="js/jQuery.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	<!-- Scrips padrão -->
+	<script type="text/javascript" src="js/config/element.js"></script>
+	<script type="text/javascript" src="js/config/funcoes.js"></script>
+	<script type="text/javascript" src="js/config/menu.js"></script>
+	<script type="text/javascript" src="js/config/formulario.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/valorPorExtenco.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/bootbox.js"></script>
+	<script type="text/javascript" src="js/masked2.js"></script>
+	<script type="text/javascript" src="js/masked.js"></script>
+	<script type="text/javascript" src="js/toast.js"></script>
+	<script type="text/javascript" src="js/maskmoney.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<!-- <link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script> -->
+
+	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/toast.css">
+
+	<meta charset="utf-8">
+
+
+
+
+	<!-- Configurações do mapa -->
+	<link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
+</head>
+<body>
+	<center>
+		<h1>Enviar SMS</h1>
+
+		<div class="col-md-4 col-sm-3 col-xs-1"></div>
+		<div class="col-md-4 col-sm-6 col-xs-10">
+			<table class="table">
+				<tr>
+					<td>
+						from: 
+						<input class="form-control" type="text" id="from" >
+					</td>
+					<td>
+						to: 
+						<input class="form-control" type="text" id="to" >
+					</td>
+				</tr>
+				<tr>
+					<td>
+						schedule: 
+						<input class="form-control" type="text" id="schedule" >
+					</td>
+					<td>
+						msg: 
+						<input class="form-control" type="text" id="msg" >
+					</td>
+				</tr>
+				<tr>
+					<td>
+						callbackOption: 
+						<input class="form-control" type="text" id="callbackOption" >
+					</td>
+					<td>
+						id: 
+						<input class="form-control" type="text" id="id" >
+					</td>
+				</tr>
+				<tr>
+					<td>
+						aggregateId: 
+						<input class="form-control" type="text" id="aggregateId" >
+					</td>
+					<td>
+						flashSms: 
+						<input class="form-control" type="text" id="flashSms" >
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button class="btn btn-primary btn-block" onclick="enviar()">Enviar</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button class="btn btn-warning btn-block" onclick='tracaRotas()'>Teste Rota</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</center>
+
+
+
+<!-- Para rendeiriza o Mapa -->
+<center><div id="map" style="width: 80%;height: 500px;margin-left: 0px;"></div></center>
+<!-- <div id="map" style="position: absolute;margin-top: 0px;width: 100%;height: 100%;margin-left: 0px;"></div> -->
+
+<script type="text/javascript">
+
+	var map = "";
+	var directionsDisplay;
+	function initMap() {
+		directionsDisplay = new google.maps.DirectionsRenderer();
+		// Create a map object and specify the DOM element for display.
+		map = new google.maps.Map(document.getElementById('map'), {
+			// (-21.791066481181826, -46.56498469848634)
+			center: {lat: -21.799966481181826, lng: -46.56498469848634},
+			// rua dovilio taconi 150 poços de caldas minas gerais
+			//center: {lat: 3.0, lng: 20.00},
+	    	// mapTypeId: 'terrain',
+			zoom: 14
+		});
+
+		map.addListener('click', function(event) {
+			alert(event.latLng);
+		});
+
+		directionsDisplay.setMap(map);
+
+		// Marker =  new google.maps.Marker({
+		// 	position: {lat: -21.801517634953733, lng: -46.568141682073474},
+		// 	map: map,
+		// 	icon: cacamba_verde,
+		// 	title:"Minha Casa"
+		// });
+	}
+</script>
+
+
+
+
+<script type="text/javascript">
+	function enviar(){
+		/* https://maps.googleapis.com/maps/api/directions/json */
+
+		$.ajax({
+			url:'https://api-rest.zenvia360.com.br/services',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				"from": $("#from").val(),
+				"to": $("#to").val(),
+				"schedule": $("#schedule").val(),
+				"msg": $("#msg").val(),
+				"callbackOption": $("#callbackOption").val(),
+				"id": $("#id").val(),
+				"aggregateId": $("#aggregateId").val(),
+				"flashSms": $("#flashSms").val()
+			}
+		}).done( function(data){
+			console.log(data);
+			alert(data);
+		});
+	}
+
+	/*
+		R. Dovílio Taconi, 120 	- Jardim Quisisana, Poços de Caldas - MG, 37701-254, Brasil:
+			-21.798659,-46.56933
+		R. Pernambuco, 677		- Centro, 			Poços de Caldas - MG, 37701-021, Brasil:
+			-21.7843562,-46.5668704
+
+
+		origin=75+9th+Ave+New+York,+NY&destination=MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073&key=AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8
+
+	*/
+	var url = "https://maps.googleapis.com/maps/api/directions/json?origin=-21.798659,-46.56933&destination=-21.798659,-46.56933&waypoints=via:-21.7843562,-46.5668704&key=AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8";
+	console.log(url.length);
+
+	function tracaRotas(){
+		$.ajax({
+			url:'https://maps.googleapis.com/maps/api/directions/json?origin=-21.798659,-46.56933&destination=-21.798659,-46.56933&waypoints=via:-21.7843562,-46.5668704&key=AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8',
+			type: 'GET',
+			dataType: "json",
+			data: {
+				/*'origin': '75 9th Ave New York, NY',
+				'destination': 'MetLife Stadium 1 MetLife Stadium Dr East Rutherford, NJ+07073',
+				'key': 'AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8'*/
+			}
+		}).done( function(data){
+			console.log(data);
+			console.log(data.status);
+			console.log(data.routes[0]);
+			directionsDisplay.setDirections(data);
+			/*for (var i = 0; i < data.routes.length; i++) {
+				data.routes[i].setMap(map);
+			}*/
+		});
+	}
+</script>
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8&callback=initMap" async defer></script>
+</body>
+</html>
+
+
+<!-- AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8 -->
+<!-- AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk -->

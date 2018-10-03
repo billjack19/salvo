@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.ancestors * { 
+	display: block;
+	border: 2px solid lightblue;
+	color: lightgrey;
+	padding: 5px;
+	margin: 15px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("ul").find("#teste").css({"color": "red", "border": "2px solid red"});
+	alert($("ul").find("#teste")[0].innerHTML);
+	alert($("#nome")[0].value);
+	alert($("#nome")[0].value);
+	console.log($("#nome"));
+	alert(JSON.stringify($("#nome")));
+});
+</script>
+</head>
+
+<input id='nome' type='hidden' value='Jack' >
+
+<body class="ancestors">body (great-grandparent)
+	<div style="width:500px;">div (grandparent)
+		<ul>ul (direct parent)
+			<li>li (child)
+				<span id='teste'>span (grandchild)</span>
+				<span id='teste'>span (grandchild)</span>
+			</li>  
+			<li>li (child)
+				<span id='teste'>span (grandchild)</span>
+			</li> 
+		</ul>
+	</div>
+</body>
+
+</html>

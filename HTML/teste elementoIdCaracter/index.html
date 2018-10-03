@@ -1,0 +1,16 @@
+<html>
+<head>
+	<title>Teste Acesso elemento com id de caracter</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<div id="teste***">Teste</div>
+	<button id="btn212040***" onclick="alert('teste')"></button>
+	<!-- btn212040ORG -->
+	<script>
+		$("#btn212040***")[0].click();
+		// document.getElementById("btn212040***").click();
+		// alert(document.getElementById("teste***").innerHTML)
+	</script>
+</body>
+</html>

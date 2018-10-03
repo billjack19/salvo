@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+	    <script src="http://malsup.github.com/jquery.form.js"></script>
+</head>
+<body>
+
+	<form id="formulario" method="post" action="enviar.php" role="form">
+		<legend>Formulário</legend>
+		<div class="form-group">
+			<label>Nome</label>
+			<input class="form-control" type="text" name="nome" required autofocus/>
+		</div>
+		<div class="form-group">
+			<label>Email</label>
+			<input class="form-control" type="email" name="email" required/>
+		</div>
+		<div class="form-group">
+			<label>Mensagem</label>
+			<textarea class="form-control" name="mensagem" rows="5" required></textarea>
+		</div>
+		<input id="enviar" class="btn btn-primary" type="submit" value="Enviar" data-loading-text="Enviando..."/>
+	</form>
+
+
+<script type="text/javascript">
+	// Quando enviado o formulário
+	$('#formulario').on('submit', function () {
+	 
+	    // Armazenando informações do formulário em variáveis
+	    var nome = $("input[name=nome]").val();
+	    var email = $("input[name=email]").val();
+	    var mensagem = $("textarea[name=mensagem]").val();
+	 
+	    // Fazendo requisição AJAX
+	    $.post(this.action, {nome: nome, email: email, mensagem: mensagem}, function (resposta) {
+	        console.log(resposta);
+	    });
+	 
+	    // Retorna FALSE para que o formulário não seja enviado de forma convencional
+	    return false;
+	 
+	});
+
+	// Quando enviado o formulário
+	$('#formulario').ajaxForm(function (resposta) {
+	    console.log(resposta);
+	});
+
+
+
+	// Quando enviado o formulário
+	$('#formulario').on('submit', function () {
+	     // Armazenando objeto do botão para utilizá-lo posteriormente
+	    var botao = $('#enviar');
+	    // Exibindo indicador de carregamento (Bootstrap)
+	    // Docs: http://getbootstrap.com/javascript/#buttons
+	    botao.button('loading');
+	    // Enviando formulário
+	    $(this).ajaxSubmit({
+	        // Se enviado com sucesso
+	        success: function (resposta) {
+	            // Exibindo resposta do servidor
+	            console.log(resposta);
+	            // Escondendo indicador de carregamento
+	            botao.button('reset');
+	        },
+	        // Se acontecer algum erro
+	        error: function () {
+	            // Escondendo indicador de carregamento
+	            botao.button('reset');
+	        }
+	    });
+	    // Retorna FALSE para que o formulário não seja enviado de forma convencional
+	    return false;
+	});
+</script>
+
+</body>
+</html>

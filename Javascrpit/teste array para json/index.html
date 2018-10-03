@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Store and retrieve data from local storage.</h2>
+
+<p id="demo"></p>
+
+<script>
+function converterArrayParaJson(array){
+	var objJson = '{', indice = "", valor = "", vetor = [];
+	for (var i = 0; i < array.length; i++) {
+		vetor = array[i].split(":");
+		indice = "\"" + vetor[0] + "\"";
+		// indice = vetor[0];
+
+		if (vetor[2] == 'n') valor = vetor[1];
+		else valor = "\"" + vetor[1] + "\"";
+		
+		if (i == 0) objJson += indice + ":" + valor;
+		else objJson += "," + indice + ":" + valor;
+	}
+	objJson += "}";
+	console.log("\n\n\n\n\n\n\n"+objJson);
+	objJson = JSON.parse(objJson);
+	return objJson;
+}
+var dadosArray = [
+	"cliente_id:1:n",
+	"endereco:tesete:s",
+	"numero:1:n"
+]
+dadosArray = converterArrayParaJson(dadosArray);
+
+document.getElementById("demo").innerHTML = dadosArray.endereco;
+</script>
+
+</body>
+</html>
