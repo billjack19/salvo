@@ -1,0 +1,55 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "br.com.jackBiller.compras"
+        }
+    }
+}

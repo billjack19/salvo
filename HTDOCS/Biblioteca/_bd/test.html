@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- <link rel="stylesheet" type="text/css" href="../_bootstrap/css/bootstrap.css"> -->
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../_css/bootstrap.min.css">
+	<style type="text/css">
+		#num{
+			opacity: 
+		}
+	</style>
+	<script type="text/javascript">
+		function passar(){
+			var valor = document.getElementById('campo').value;
+			document.getElementById('num').innerHTML = valor;
+			// document.getElementById('num').style.opacity = 0;
+		}
+	</script>
+
+</head>
+<body>
+	<!-- Button trigger modal -->
+	<li role="presentation" class="active"><a href="#">Home <span id="num" class="badge">42</span></a></li>
+	<input type="text" id="campo">
+	<button onclick="passar()">Passar</button>
+	<center>
+<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal" style="font-size:25px">
+  Click aqui!!!
+</button>
+</center>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        	<span aria-hidden="true">&times;</span>
+		        </button>
+		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		    </div>
+		    <div class="modal-body">
+		        oi quero ver funcionar
+		    </div>
+	    </div>
+	</div>
+</div>
+</body>
+	<script src="../_js/jquery.min.js"></script>
+	<script type="text/javascript" src="../_js/bootstrap.min.js"></script>
+</html>
+<!-- 
+	default
+	primary
+	success
+	info
+	warning
+	danger
+ -->

@@ -1,0 +1,471 @@
+﻿<!DOCTYPE html>
+<html>
+<title>CDI Informática e Assessoria Ltda</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="CSS/w3.css">
+<link rel="stylesheet" href="CSS/CDI.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+	body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+	body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+	}
+/* Create a Parallax Effect */
+	.bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	}
+/* First image (Logo. Full height) */
+	.bgimg-1 {
+    background-image: url("imagens/FundoParallax.jpg");
+    min-height: 100%;
+	}
+/* Second image (Portfolio) */
+	.bgimg-2 {
+    background-image: url("/w3images/parallax2.jpg");
+    min-height: 400px;
+	}
+/* Third image (Contact) */
+	.bgimg-3 {
+    background-image: url("/w3images/parallax3.jpg");
+    min-height: 400px;
+	}
+	.w3-wide {letter-spacing: 10px;}
+	.w3-hover-opacity {cursor: pointer;}
+	.w3-bar .w3-button {
+    padding: 16px;
+	}
+	.w3-left, .w3-right, .w3-badge {cursor:pointer}
+	.w3-badge {height:13px;width:13px;padding:0}
+/* Turn off parallax scrolling for tablets and phones */
+	@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    	}
+	}
+	.mySlides {display: none}
+</style>
+<body>
+<!-- Navbar (sit on top) -->
+	<div class="w3-top">
+  	<div class="w3-bar w3-white w3-card-2" id="myNavbar">
+    	<a class="w3-bar-item w3-button w3-hover-black w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Menu">
+      	<i class="fa fa-2x fa-bars"></i>
+    	</a>
+    	<a href="#home" class="w3-bar-item w3-wide" style="width:260px"><img src="imagens/Logo.png" style="width:84%"></a>
+    <!-- Right-sided navbar links -->
+    	<div class="w3-right w3-hide-small w3-hide-medium">
+				<a href="#home" class="w3-bar-item w3-button cdi-txt"><i class="fa fa-2x fa-home"></i><br>HOME</a>
+	      <a href="#sobre" class="w3-bar-item w3-button cdi-txt"><i class="fa fa-2x fa-question-circle"></i><br>SOBRE</a>
+	      <a href="#solucoes" class="w3-bar-item w3-button cdi-txt"><i class="fa fa-2x fa-th"></i><br>SOLUÇÕES</a>
+	      <a href="#contato" class="w3-bar-item w3-button cdi-txt"><i class="fa fa-2x fa-envelope"></i><br>CONTATO</a>
+		    <button onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button cdi-txt"><i class="fa fa-2x fa-user-circle"></i><br>LOGIN</button>
+	    </div>
+	    
+		<!-- Navbar on small screens -->
+			<div id="navDemo" 
+				class="w3-sidebar w3-bar-block cdi-back w3-card-2 w3w3-animate-opacity w3-hide w3-hide-large w3-hide-medium"  style="display:none">
+		  	<a href="javascript:void(0);" onclick="toggleFunction()" class="w3-bar-item w3-button w3-hover-red" title="Fechar"><i class="fa fa-close"></i></a>
+				<a href="#home" onclick="toggleFunction()" class="w3-bar-item w3-button" title="Home"><i class="fa fa-home"></i> HOME</a>
+				<a href="#sobre" onclick="toggleFunction()" class="w3-bar-item w3-button" title="Sobre"><i class="fa fa-question-circle"></i> SOBRE</a>
+				<a href="#solucoes" onclick="toggleFunction()" class="w3-bar-item w3-button" title="Soluções"><i class="fa fa-th"></i> SOLUÇÕES</a>
+				<a href="#contato" onclick="toggleFunction()" class="w3-bar-item w3-button" title="Contato"><i class="fa fa-envelope"></i> CONTATO</a>
+				<a href="#id01" onclick="toggleFunction()" class="w3-bar-item w3-button" title="Login"><i class="fa fa-user"></i> LOGIN</a>
+			</div>
+			
+			<div id="id01" class="w3-modal">
+				<div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:600px">
+
+					<div class="w3-center"><br>
+						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+						<img src="imagens/LoginAvatar.png" alt="Avatar" style="width:20%" class="w3-circle w3-margin-top">
+					</div>
+
+					<form class="w3-container" action="/action_page.php">
+						<div class="w3-section">
+							<label><b>Usuário</b></label>
+							<input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Digite o Usuário " name="usrname" required>
+							<label><b>Senha</b></label>
+							<input class="w3-input w3-border" type="password" placeholder="Digite a Senha" name="psw" required>
+							<div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+								<button class="w3-button w3-block w3-green w3-padding w3-section w3-half" type="submit">Login</button>
+								<div class="w3-section w3-quarter"></div>
+								<button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-block w3-red w3-padding w3-section w3-quarter">Cancelar</button>
+								<span class="w3-right w3-padding w3-hide-small">Esqueceu a <a href="#">Senha?</a></span>
+							</div>
+							<!--<input class="w3-check w3-margin-top" type="checkbox" checked="checked"> Remember me-->
+						</div>
+					</form>
+				</div>
+			</div>
+			
+  	</div>
+	</div>
+
+	<header class="w3-display-container w3-padding-64" id="home">
+ 	<div class="w3-content w3-display-container w3-padding-16" style="max-width:100%">
+		<img class="w3-image w3-grayscale-min" src="imagens/Vendas.jpg" style="width:100%">
+		<div class="w3-padding w3-hide-small w3-padding-64 w3-display-topright" style="width:30%">
+			<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-padding-large w3-round-large">
+				<h1 class="w3-xlarge w3-center">Softwares Personalizados</h1>
+				<hr class="w3-opacity">
+				<p class="w3-center">Concretize suas idéias personalizando seu software de acordo com a demanda de sua empresa e otimize suas rotinas</p>
+				<p>
+				<a href="#solucoes" class="w3-button w3-block w3-round w3-cyan">Saiba mais</a></p>
+			</div>
+		</div>
+
+	  <div class="mySlides w3-animate-right">
+			<div class="w3-hide-small w3-padding-64 w3-display-bottomright" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Estoque.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema 	de Controle de Estoque e Armazenamento</div>
+					</div>
+				</div>
+			</div>
+			<div class="w3-hide-small w3-padding-64 w3-display-bottomleft" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Contrucao.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema de Gerenciamento de Instaladora</div>
+					</div>
+				</div>
+			</div>
+			<div class="w3-hide-small w3-padding-64 w3-display-bottommiddle" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Aco.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema de Controle de Armações Corte / Dobra</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	  <div class="mySlides w3-animate-right">
+			<div class="w3-hide-small w3-padding-64 w3-display-bottomleft" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Estoque.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema 	de Controle de Estoque e Armazenamento</div>
+					</div>
+				</div>
+			</div>
+			<div class="w3-hide-small w3-padding-64 w3-display-bottommiddle" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Contrucao.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema de Gerenciamento de Instaladora</div>
+					</div>
+				</div>
+			</div>
+			<div class="w3-hide-small w3-padding-64 w3-display-bottomright" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Aco.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema de Controle de Armações Corte / Dobra</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	  <div class="mySlidesImg w3-animate-opacity">
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+      	<p class="cdi-padding-1 cdi-txt w3-xxxlarge w3-left-align">Controle sua Produção</p>
+			</div>
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+      	<p class="cdi-header w3-xxxlarge w3-left-align">Controle sua Produção</p>
+			</div>
+		</div>
+	  <div class="mySlidesImg w3-animate-opacity">
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+      	<p class="cdi-padding-1 cdi-txt w3-xxxlarge w3-left-align">Gerencie sua Empresa</p>
+			</div>
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+      	<p class="cdi-header w3-xxxlarge w3-left-align">Gerencie sua Empresa</p>
+			</div>
+		</div>
+	  <div class="mySlidesImg w3-animate-opacity">
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+				<p class="cdi-padding-1 cdi-txt w3-xxxlarge w3-left-align">Administre seus Custos</p>
+			</div>
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+				<p class="cdi-header w3-xxxlarge w3-left-align">Administre seus Custos</p>
+			</div>
+		</div>
+	  <div class="mySlidesImg w3-animate-opacity">
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+				<p class="cdi-padding-1 cdi-txt w3-xxxlarge w3-left-align">Aumente suas Vendas</p>
+			</div>
+			<div class="w3-hide-small w3-padding w3-display-topleft" style="width:100%">
+				<p class="cdi-header w3-xxxlarge w3-left-align">Aumente suas Vendas</p>
+			</div>
+		</div>
+<!--
+	  <div class="mySlides w3-animate-opacity">
+			<div class="w3-padding w3-display-topright" style="width:70%">
+      	<p class="cdi-padding-1 cdi-txt w3-xxlarge w3-right-align">Notas Fiscais Eletronicas<br>SPED Fiscal e Contábil<br>Folha de Pagamento</p>
+			</div>
+			<div class="w3-padding w3-display-topright" style="width:70%">
+      	<p class="cdi-header w3-xxlarge w3-right-align">Notas Fiscais Eletronicas<br>SPED Fiscal e Contábil<br>Folha de Pagamento</p>
+			</div>
+			<div class="w3-hide-small w3-display-bottomleft w3-padding-32" style="width:30%">
+       	<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Aco.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema de Emissor de Notas Fiscais Eletronicas</div>
+					</div>
+				</div>
+    	</div>
+			<div class="w3-hide-small w3-display-topleft w3-padding-32" style="width:30%">
+       	<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Estoque.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Sistema de Gerenciamento Administrativo</div>
+					</div>
+      	</div>
+    	</div>
+			<div class="w3-hide-small w3-display-left" style="width:30%">
+				<div class="w3-black">
+					<div class="cdi-padding-small">
+						<img src="imagens/Contrucao.jpg" style="width:100%">
+						<div class="cdi-back w3-opacity-min w3-hover-opacity-off w3-round-small w3-padding w3-display-left">Geração de Arquivo SPED</div>
+					</div>
+      	</div>
+    	</div>
+   	</div>
+-->
+	<!--
+		<img class="mySlides w3-animate-opacity" src="imagens/Estoque.jpg" style="width:100%">
+		<img class="mySlides w3-animate-opacity" src="imagens/Aco.jpg" style="width:100%">
+		<img class="mySlides w3-animate-opacity" src="imagens/Contrucao.jpg" style="width:100%">
+		<div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:80%">
+			<div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+			<div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+			<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+			<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+			<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+			<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
+  	</div>
+  	-->
+	</div>
+</header>
+
+<!-- First Parallax Image with Logo Text -->
+<!--	
+	<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+		<div class="w3-display-middle" style="white-space:nowrap;">
+		</div>
+	</div>
+-->
+<!-- Container (About Section) -->
+	<div class="w3-content w3-container w3-padding-64 cdi-txt" id="sobre">
+	  <h2 class="w3-center w3-padding-16">SOBRE NÓS</h2>
+  	<h4 class="w3-center">CDI Informática e Assessoria Ltda</h4>
+	  <p>Fundada em 05 de outubro de 2005, a <b>CDI Informática e Assessoria Ltda</b> nasceu para oferecer Soluções em Informática e Assessoria Contábil para todos os ramos de atividade.<br>
+	  Desenvolvendo <b>Softwares Personalizados</b>, a CDI possui profissionais totalmente capacitados para atender as necessidades e expectativas dos clientes. Unidos a especialistas em <b>Gestão Contábil</b>, procuramos solucionar as carências do mercado empresarial através de capacitação, cortesia, ética, respeito e uma politica interna de qualidade.<br>
+  	Atendemos a vários ramos de atividade, o que nos proporciona um conhecimento diverso e possibilita o desenvolvimento de sistemas que atendem desde pequenos estabelecimentos à grandes empresas.<br>
+	  Atendendo às necessidades do mercado atual, a CDI investe em novas tecnologias para que os clientes tenham sempre serviços modernos e funcionais.</p>
+
+		<div class="w3-row-padding w3-center cdi-txt" style="margin-top:64px">
+			<div class="w3-third">
+				<i class="fa fa-key w3-margin-bottom w3-jumbo"></i>
+				<p class="w3-large"><b>Missão</b></p>
+				<p><em>Desenvolver Softwares customizados e prestar Assessoria Contábil de qualidade, otimizando rotinas e proporcionando soluções para um maior crescimento de nossos clientes.</em></p>
+			</div>
+			<div class="w3-third">
+				<i class="fa fa-eye w3-margin-bottom w3-jumbo"></i>
+				<p class="w3-large"><b>Visão</b></p>
+				<p><em>Trabalhamos com constante aprimoramento dos nossos produtos e serviços, respeitando e analisando as necessidades de cada cliente.</em></p>
+			</div>
+			<div class="w3-third">
+				<i class="fa fa-group w3-margin-bottom w3-jumbo"></i>
+				<p class="w3-large"><b>Valores</b></p>
+				<p><em>Buscar o desenvolvimento de nossa empresa, a fim de proporcionar o crescimento de nossos colaboradores, e assim, superar as expectativas de nossos clientes com responsabilidade, ética proporcional e excelência no atendimento.</em></p>
+			</div>
+    </div>
+	</div>
+				
+<!-- (Soluções Section) -->
+	<div class="w3-container w3-padding-64 cdi-back" id="solucoes">
+		<h2 class="w3-center w3-padding-16">SOLUÇÕES</h2>
+  	<h4 class="w3-center">Conheça nossos produtos</h4>
+		<div class="w3-quarter">
+			<p class="w3-large"><b>Soluções Administrativas</b></p>
+			<p class="w3-padding">
+			<em>
+			Controle Financeiro<br>
+			Nota Fiscal Eletronica<br>
+			SPED Fiscal e Contábil<br>
+			Folha de Pagamento<br>
+			</em></p>
+		</div>
+		<div class="w3-quarter">
+			<p class="w3-large w3-padding"><b>Soluções para Almoxarifado</b></p>
+			<p class="w3-padding">
+			<em>
+			Controle de Estoque<br>
+			Controle de Armazenamento de Bags<br>
+			Controle de Matéria prima de Produção<br>
+			</em></p>
+		</div>
+		<div class="w3-quarter">
+			<p class="w3-large w3-padding"><b>Soluções por Personalizadas</b></p>
+			<p class="w3-padding">
+			<em>
+			Gerenciamento de Instaladoras<br>
+			Controle de Empreiteiro<br>
+			Controle de Armações Corte/Dobra<br>
+			Controle de Matéria prima de Produção<br>
+			</em></p>
+		</div>
+		<div class="w3-quarter">
+			<p class="w3-large w3-padding"><b>Soluções Imobiliarias</b></p>
+			<p class="w3-padding">
+			<em>
+			Controle de Locação<br>
+			Controle de Administração de Imóveis<br>
+			Geração de Boletos<br>
+			</em></p>
+		</div>
+	</div>
+
+<!-- Container (Contact Section) -->
+	<div class="w3-content w3-container w3-padding-64 cdi-txt" id="contato">
+		<h2 class="w3-center w3-padding-16">CONTATO</h2>
+  	<h4 class="w3-center">Quer contratar ou saber mais sobre nossas Soluções?</h4>
+
+		<div class="w3-row w3-padding-32 w3-section">
+			<div class="w3-col m4 w3-container">
+				<!-- Add Google Maps -->
+				<div id="googleMap" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
+			</div>
+			<div class="w3-col m8 w3-panel">
+				<div class="w3-large w3-margin-bottom">
+					<i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Poços de Caldas, MG<br>
+					<i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Fone: 35 3697-5565 / 3715-1779<br>
+					<i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: cdi@cdiinfo.com.br<br>
+				</div>
+				<p>Ou envie-nos uma mensagem:</p>
+				<!--form action="/action_page.php" target="_blank">-->
+				<form>
+					<input class="w3-input w3-border" type="text" placeholder="Nome" required name="Nome"><br>
+					<input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"><br>
+					<input class="w3-input w3-border" type="text" placeholder="Assunto" required name="Assunto"><br>
+					<input class="w3-input w3-border" type="text" placeholder="Mensagem" required name="Mensagem"><br>
+					<button class="w3-button w3-right w3-section cdi-back" type="submit">
+						<i class="fa fa-paper-plane"></i> ENVIAR
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<!-- Footer -->
+	<footer class="w3-center w3-padding-16 cdi-back">
+		<a href="#home" class="w3-button w3-light-grey cdi-txt"><i class="fa fa-arrow-up w3-margin-right cdi-txt"></i>Início</a>
+		<p>Powered by CDI</p>
+	</footer>
+
+	<script>
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function toggleFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+
+		function w3_open() {
+			var mySidebar = document.getElementById("navDemo");
+    	if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+			} else {
+        mySidebar.style.display = 'block';
+			}
+		}
+
+// Close the sidebar with the close button
+		function w3_close() {
+			var mySidebar = document.getElementById("navDemo");
+    	mySidebar.style.display = "none";
+		}
+
+
+// Automatic Slideshow - change image every 4 seconds
+		var myIndex = 0;
+		carousel();
+
+		function carousel() {
+				var i;
+				var j;
+				var x = document.getElementsByClassName("mySlides");
+				var y = document.getElementsByClassName("mySlidesImg");
+				var dots = document.getElementsByClassName("demo");
+				var dotsy = document.getElementsByClassName("demo");
+				for (i = 0; i < x.length; i++) {
+					 x[i].style.display = "none";  
+				}
+				for (j = 0; j < y.length; j++) {
+					 y[j].style.display = "none";  
+				}
+				myIndex++;
+				if (myIndex > x.length) {myIndex = 1}    
+				x[myIndex-1].style.display = "block";  
+				if (myIndex > y.length) {myIndex = 1}    
+				y[myIndex-1].style.display = "block";  
+				setTimeout(carousel, 4000);    
+
+				for (i = 0; i < dots.length; i++) {
+					 dots[i].className = dots[i].className.replace(" w3-white", "");
+				}
+				dots[myIndex-1].className += " w3-white";
+				for (j = 0; j < dots.length; j++) {
+					 dotsy[j].className = dotsy[j].className.replace(" w3-white", "");
+				}
+				dotsy[myIndex-1].className += " w3-white";
+
+		}
+
+	// Navegação Slidshow	
+		var slideIndex = 1;
+		showDivs(slideIndex);
+
+		function plusDivs(n) {
+			showDivs(slideIndex += n);
+		}
+
+		function currentDiv(n) {
+			showDivs(slideIndex = n);
+		}
+
+		function showDivs(n) {
+			var i;
+			var x = document.getElementsByClassName("mySlides");
+			var dots = document.getElementsByClassName("demo");
+			if (n > x.length) {slideIndex = 1}    
+			if (n < 1) {slideIndex = x.length}
+			for (i = 0; i < x.length; i++) {
+				 x[i].style.display = "none";  
+			}
+			for (i = 0; i < dots.length; i++) {
+				 dots[i].className = dots[i].className.replace(" w3-white", "");
+			}
+			x[slideIndex-1].style.display = "block";  
+			dots[slideIndex-1].className += " w3-white";
+		}
+
+	</script>
+</body>
+</html>

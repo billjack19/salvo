@@ -1,0 +1,546 @@
+﻿<!doctype html>
+<html>
+<head>
+	<script>
+		/* IP do Web Service */
+		var hostWebService = "192.168.0.105";
+
+		/* IP das Imagens do servidor */
+		var hostServeImage = "192.168.0.105";
+
+		var portaWebService = ":8080";
+		var portaImgService = "80";
+		var caminhoWebService = "/PanquecasCDI2/web/";
+		var urlWebService = "http://"+hostWebService+portaWebService+caminhoWebService;
+		var parametrosWebService = "?tagmode=any&jsoncallback=?";
+		var listagem = false;
+
+		var vendedor = 0;
+		var filialGearl = 0;
+		var sequencia = 0;
+		var documentoGeral = "";
+	</script>
+
+	<meta charset="utf-8" />
+	<link rel='shortcut icon' href="img/icon.png" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+	<title>Panquecas CDI</title>
+
+	<script type="text/javascript" src="js/jQuery.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	
+	<!-- Scrips padrão -->
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/valorPorExtenco.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/bootbox.js"></script>
+	<script type="text/javascript" src="js/masked2.js"></script>
+	<script type="text/javascript" src="js/masked.js"></script>
+	<script type="text/javascript" src="js/toast.js"></script>
+	<script type="text/javascript" src="js/maskmoney.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/toast.css">
+</head>
+
+<body ng-app="myApp" onload="criarBancoDeDados();setarIpCampoConfig();">
+
+	<script type="text/javascript">
+		var dataDaVezRodando = pegarData();
+	</script>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="container-fluid " style="margin-left: 0px; margin-top: -50px;">
+				<div class="jumbotron">
+					<div class="row">
+						<div id="hiddenUsuario">
+							<!-- Para colocar o nome com todos os dados dinamicamente -->
+						</div>
+						<input type="hidden" value="0" id="vendedor">
+						<input type="hidden" value="0" id="filial">
+						<input type="hidden" value="0" id="editar">
+						<input type="hidden" value="0" id="sequencia">
+						<input type="hidden" value="0" id="documentoGeral">
+						<input type="hidden" value="0" id="mesaPesquisa">
+						<input type="hidden" value="inicial" id="statusGeral">
+						<input type="hidden" value="" id="qtd_n_cobrar">
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="jumbotron2">
+
+			<!-- Cabeçario Principal -->
+			<div class="col-md-12" id="cabecarioPrincipal">
+				<div style="margin-left: 15%; margin-right: 15%;">
+					<form id="formLogin" method="post">
+						<div class="col-md-12">
+							<h2 class="text-center">Login</h2>
+							<label class="label-float" for="name">Usuário:</label>
+							<input id="login" type="text" class="form-control" size="12pt" required>
+						</div>
+						<br>
+						<div class="col-md-12" id="subMenu">
+							<label class="label-float" for="name">Senha:</label>
+							<input id="password" type="password" class="form-control" size="12pt" required>
+						</div>
+						<br>
+						<div class="col-md-12"  id="listaConteudo">
+							<button type="submit" class="btn btn-primary btn-block">
+								Entrar
+							</button><br>
+							<br><br><br>
+							<img src="img/Logo.png" width="80%"><br>
+							<span id="msmErrorLogin"></span>
+							<br><br><br><br><br>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Lista da Pagina-->
+			<div class="col-md-12" id="listaPagina">
+				
+			</div>
+		</div>
+	</div>
+	<div class="jumbotron3">
+		<!-- <div class="col-md-12 rodape" id="rodapeDiv" style="opacity: 0;">
+			<table class="table">
+				<tr>
+					<td align="left" style="margin-left: 15px;width: 50%;">
+						<div style="background-color: #fff; width: 100%">
+							<img src="img/logo.png" width="100%">
+						</div>
+					</td>
+					<td>&nbsp;</td>
+					<td align="left">
+						<h4>
+							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;
+							<b>Developer:</b>&nbsp;&nbsp;Jack Biller
+						</h4>	
+					</td>
+				</tr>
+			</table>
+		</div> -->
+	</div>
+</div>
+
+
+<footer class="fixed-bottom">
+	<div class="row">
+		<div class="col-md-12" style="background-color: #fff;">
+			<table class="table">
+				<tr>
+					<td align="left">
+						<div id="botaoVoltarFixo">
+							
+						</div>
+					</td>
+					<td align="right">
+						<div id="botaoPesquisarFicha">
+							<button class="btn btn-primary" data-toggle='modal' data-target='#modalConfiguraIp'>
+								<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Configurar IP
+							</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</footer>
+
+
+<!-- Modal do Quatidade e do valor unitario do item -->
+<div class="modal fade" id="modalAdicinarItem" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Adicionar Item: <b><span id="modalNomeItem"></span></b></h4>
+			</div>
+			<div class="modal-body">
+				<!-- <table class="table"> -->
+					<!-- <tr> -->
+						<!-- <td colspan="3"> -->
+							<div class="col-xs-12" style="margin-bottom: 15px; ">
+								<label class="label-float" for="name">Quantidade: <span style="color: red;">*</span></label>
+							
+						<!-- </td> -->
+					<!-- </tr> -->
+					<!-- <tr> -->
+						<!-- <td> -->
+								<input id="modalQtdItem" type="tel" value='1' class="form-control" onkeydown="calculaTotalItem()" onkeyup="calculaTotalItem()" required>
+							</div>
+						<!-- </td> -->
+						<!-- <td> -->
+							<div class="col-xs-12" style="margin-bottom: 15px; ">
+								<div class="col-xs-6">
+									<button class="btn btn-default btn-block" onclick="calcQtdItem('+');">
+										<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+											<i class="fa fa-plus" aria-hidden="true"></i>
+										<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+									</button>
+								</div>
+							<!-- </td> -->
+							<!-- <td> -->
+								<div class="col-xs-6">
+									<button class="btn btn-default btn-block" onclick="calcQtdItem('-');">
+										<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+											<i class="fa fa-minus" aria-hidden="true"></i>
+										<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+									</button>
+								</div>
+								,
+							</div>
+						<!-- </td> -->
+					<!-- </tr> -->
+				<!-- </table> -->
+				<div class="col-xs-12" style="margin-bottom: 15px; ">
+					<label class="label-float" for="name">Valor Unitario (R$): <span style="color: red;">*</span></label>
+					<input id="modalVlrUnitarioItem" type="tel" class="form-control" disabled>
+					<input id="modalVlrUnitarioItemReal" type="hidden">
+				</div>
+
+				<div class="col-xs-12" style="margin-bottom: 15px; ">
+					<label class="label-float" for="name">Valor Total:</label>
+					<input id="modalVlrTotalItem" type="text" class="form-control" disabled>
+				</div>
+
+				<div id="operacoesItemModalAdicionar"></div>
+				<div class="hidden" id="conteudoComposicaoModalAdicionarItem" name="operacoesItemModalAdicionar"></div>
+				<div class="hidden" id="conteudoPreparoModalAdicionarItem" name="operacoesItemModalAdicionar"></div>
+				<div class="hidden" id="conteudoAdicionalModalAdicionarItem" name="operacoesItemModalAdicionar"></div>
+
+
+				<input type="hidden" id="modalIdItem">
+				<input type="hidden" id="modalGrupoItem">
+				<input type="hidden" id="modalSubGrupoItem">
+				<input type="hidden" id="modalUnidadeMedidaItem">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="adicionaItemAoPedido();">
+					<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar
+				</button>
+				<button type="button" class="btn btn-default" onclick="setStatus('pagina3');limparCamposModalItem();" data-dismiss="modal">
+					<i class="fa fa-times" aria-hidden="true"></i>&nbsp;Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Modal configura ip -->
+<div class="modal fade" id="modalConfiguraIp" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');setarIpCampoConfig();"  id="fecharModalIpBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Configurar IP: <b><span id="modalNomeItem"></span></b></h4>
+			</div>
+			<div class="modal-body">
+				<div id="divProgressIP" class="hidden">
+					<button class="btn btn-danger" onclick="cancelaBusca()">
+						Para Busca
+					</button>
+				</div>
+
+				<div id="divAutenticaIP">
+					<label class="label-float" for="name">Uuário: <span style="color: red;">*</span></label>
+					<input id="modalUsuarioIPConfig" type="text" class="form-control" required>
+
+					<label class="label-float" for="name">Chave: <span style="color: red;">*</span></label>
+					<input id="modalChaveIPConfig" type="password" class="form-control" required>
+					<button onclick='autenticarIp();' class="btn btn-success btn-block" style="margin-top: 15px;">Autenticar</button>
+				</div>
+				<div id="divOcultarIp" class="hidden">
+					<label class="label-float" for="name">IP: <span style="color: red;">*</span></label>
+					<input id="modalIpConfig" type="tel" class="form-control" required>
+
+					<label class="label-float" for="name">Porta: <span style="color: red;">*</span></label>
+					<input id="modalPortaConfig" type="tel" class="form-control" required>
+
+					<label class="label-float" for="name">Uuário: <span style="color: red;">*</span></label>
+					<input id="modalUsuarioConfig" type="text" class="form-control" required>
+
+					<label class="label-float" for="name">Chave: <span style="color: red;">*</span></label>
+					<input id="modalChaveConfig" type="password" class="form-control" required>
+				</div>
+				<br>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success hidden" id="confimerIpButton" onclick="adicionarIp($('#modalIpConfig').val());">
+					Confirmar IP
+				</button>
+				<button type="button" class="btn btn-default" onclick="setStatus('pagina3');setarIpCampoConfig();" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- Modal para visualizar itens do sub grupo -->
+<div class="modal fade" id="modalViewSubGrupo" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close"  id="fecharModalIpBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Grupo: <b><span id="modalSubGrupoDescricao"></span></b></h4>
+			</div>
+			<div class="modal-body" >
+				<div class="col-xs-12">
+					<div id="tabelaSubGrupoModal"></div>
+					<br>,
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="fecharModalSubGrupoItem" class="btn btn-default" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- Modal de visualização do pedido -->
+<div class="modal fade" id="modalVisualizarExcao" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('inicial');" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Pedido</h4>
+			</div>
+			<div class="modal-body">
+				<div id="conteudoComposicaoModalVisualizarExcao"></div>
+				<br>
+				<div class="modalPedidoItens"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="fecharModalViewPedido" onclick="setStatus('inicial');" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Modal para pegar numero da ficha e fazer conferencia de atendimento -->
+<div class="modal fade" id="modalMesaPedido" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" onclick="limparCamposModalMesaPedido();" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Entre com o número da mesa:</h4>
+			</div>
+			<div class="modal-body">
+				<div id="comboMesaModalMesa"></div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-info" onclick="n_editar();motarviewConsultarMesa();">Confirmar</button>
+				<button class="btn btn-default" id="fecharModalMesaPedido" onclick="limparCamposModalMesaPedido();" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="hidden" id="tabelaPedidoPendentes"></div>
+
+<!-- Scripts para configuração de pagina -->
+<script src="js/ajax/ajax_login.js"></script>
+<script src="js/ajax/ajax_pedido.js"></script>
+<script src="js/ajax/ajax_item.js"></script>
+<script src="js/ajax/ajax_mesa.js"></script>
+<script src="js/ajax/ajax_sql.js"></script>
+
+<script src="js/ajax/ajax_outros.js"></script>
+<script src="js/ajax/ajax_confgAndroid.js"></script>
+
+
+<script type="text/javascript">
+	var indiceIps = 0;
+	var ips_Global = "";
+
+	/* Escrevewer situação de conexão */
+	function testarConexao(){
+		$.ajax({
+			type: 'GET',
+			url: urlWebService+"Ping/ping/"+parametrosWebService,
+			contentType: "application/json",
+			jsonpCallback: "localJsonpCallback",
+			timeout: 2000,
+			error: function(){
+				console.log("Erro na requisição!");
+				$("#botaoVoltarFixo").html("<i class='fa fa-asterisk' style='color: red'></i> Sem conexão");
+				// falhaConexao();
+			}
+		}).done( function(data){
+			if (data == "1" || data == 1) {
+				$("#botaoVoltarFixo").html("<i class='fa fa-asterisk' style='color: green'></i> Você esta conectado");
+				montarListaMesasCombo();
+				document.getElementById("fecharModalIpBottun").click();
+			} else {
+				$("#botaoVoltarFixo").html("<i class='fa fa-asterisk' style='color: red'></i> Sem conexão");
+				console.log("Na localizou o um -> data: " + data);
+				// falhaConexao();
+			}
+		});
+	}
+
+	cancelaBusca()
+
+	function falhaConexao(){
+		var descricaoProgressBar = "";
+		var progress = "";
+		console.log("falhaConexao");
+		console.log("indiceIps: " + indiceIps);
+		console.log(ips_Global);
+		if(indiceIps != 0) {
+			if (indiceIps < ips_Global.length) {
+				console.log("Vai tentar o IP: " + ips_Global[indiceIps].ip);
+				descricaoProgressBar = "Buscando conexão (" + (indiceIps + 1) + "/" + ips_Global.length + ")";
+				progress = indiceIps * 100 / ips_Global.length;
+			}
+		} else {
+			descricaoProgressBar = "Buscando conexão...";
+			progress = "4";
+		}
+
+		$("#botaoVoltarFixo").html(
+				descricaoProgressBar //"<i class='fa fa-asterisk' style='color: blue'></i> Carregando<br>"
+			+ 	"<div class=\"progress\">"
+			+ 		"<div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\""
+			+ 	  "aria-valuenow=\"" + progress + "\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:" + progress + "%\">"
+			+ 		"</div>"
+			+ 	"</div>"
+			);
+
+		$("#divProgressIP")[0].className = "";
+		$("#divAutenticaIP")[0].className = "hidden";
+
+		if (indiceIps == 0) {
+			$.ajax({
+				url: "ip.json",
+				// type: 'GET',
+				dataType: 'text',// application/json',
+				error: function(){
+					console.log('Erro ao requisitar IPs!');
+				}
+			}).done( function(data){
+				if (typeof(data) == 'object') {
+					ips_Global = data;
+					console.log("Tentando Ip: " + ips_Global[indiceIps].ip);
+					tentarConexao(ips_Global[indiceIps].ip, ips_Global[indiceIps].porta);
+				} else {
+					try {
+						ips_Global = JSON.parse(data);
+						console.log("Tentando Ip: " + ips_Global[indiceIps].ip);
+						tentarConexao(ips_Global[indiceIps].ip, ips_Global[indiceIps].porta);
+					} catch(error){
+						console.log("Falha ao tentar converter Requisição de IPs em objeto " + error)
+					}
+				}
+			});
+		} else if(indiceIps < ips_Global.length){
+			console.log("Tentando Ip: " + ips_Global[indiceIps].ip);
+			tentarConexao(ips_Global[indiceIps].ip, ips_Global[indiceIps].porta);
+		} else {
+			$("#botaoVoltarFixo").html("<i class='fa fa-asterisk' style='color: red'></i> Não conseguiu localizar IP");
+		}
+	}
+
+	function tentarConexao(ip, porta){
+		indiceIps++;
+		$("#modalChaveConfig").val('2017');
+		$("#modalUsuarioConfig").val('ADM');
+		$("#modalIpConfig").val(ip);
+		$("#modalPortaConfig").val(porta);
+		adicionarIp();
+	}
+</script>
+
+
+<style>
+
+@media screen and (min-width: 450px)  {
+    [data-role=page]{height: 100% !important; position:relative !important; top:0 !important;}
+
+    .legenda{
+    	border-style: ridge;
+    	width: 50px;
+    	height: 25px;
+    }
+    .btn {
+    	height: 50px;
+    	font-size: 25px;
+    }
+    .form-control {
+    	height: 50px;
+    	font-size: 35px;
+    }
+    footer {
+    	position: fixed;
+    	height: 60px;
+    	bottom: 0px;
+    	width: 100%;
+    }
+
+    .fontTable{
+    	font-size: 25px;
+    	color: #fff;
+    }    
+}
+
+@media screen and (max-width: 450px) {
+    footer {
+    	position: fixed;
+    	height: 45px;
+    	bottom: 0px;
+    	width: 100%;
+    }
+
+    .fontTable{
+    	font-size: 20px;
+    	color: #fff;
+    }
+}
+	
+
+	.botoesTelaPedidoImprimir{
+		color:blue;
+	}
+
+
+</style>
+	<!-- <script type="text/javascript" src="cordova.js"></script> -->
+	<!-- <script type="text/javascript" src="js/index.js"></script> -->
+</body>
+</html>

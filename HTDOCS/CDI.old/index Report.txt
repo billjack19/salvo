@@ -1,0 +1,188 @@
+index.swf Movie Report
+-----------------------
+
+Frame #    Frame Bytes    Total Bytes    Scene
+-------    -----------    -----------    ----------------
+      1            648            648    index (AS 2.0 Classes Export Frame)
+      2             15            663    
+      3         123950         124613    home
+      4              2         124615    
+      5              2         124617    
+      6              2         124619    
+      7          11657         136276    
+      8              2         136278    
+      9              2         136280    
+     10              2         136282    
+     11              2         136284    
+     12          28465         164749    
+     13              2         164751    
+     14              2         164753    
+     15              2         164755    
+     16              2         164757    
+     17          20721         185478    
+     18              2         185480    
+     19              2         185482    
+     20              2         185484    
+     21              2         185486    
+     22          20368         205854    
+     23              2         205856    
+     24              2         205858    
+     25              2         205860    
+     26              2         205862    
+     27          15993         221855    
+     28              2         221857    
+     29              2         221859    
+     30              2         221861    
+     31              2         221863    
+     32           1177         223040    
+     33              2         223042    
+     34              2         223044    
+     35              2         223046    
+     36              2         223048    
+     37           1080         224128    
+     38              2         224130    
+     39              2         224132    
+     40              2         224134    
+     41              2         224136    
+     42            569         224705    
+     43              2         224707    
+     44              2         224709    
+     45              2         224711    
+     46              2         224713    
+     47          31662         256375    
+     48              2         256377    
+     49              2         256379    
+     50              2         256381    
+     51              2         256383    
+     52              2         256385    
+
+Scene                        Shape Bytes    Text Bytes    ActionScript Bytes
+-------------------------    -----------    ----------    ------------------
+index                                 54            46                   372
+home                                8066         13156                   733
+
+Symbol                       Shape Bytes    Text Bytes    ActionScript Bytes
+-------------------------    -----------    ----------    ------------------
+Copy 3                                 0             0                     0
+Copy 2                                 0             0                     0
+Symbol 28                            897            98                     0
+Tween 1                               54             0                     0
+Symbol 27                              0             0                     0
+Copy 4                                 0             0                     0
+Copy 1                                 0             0                     0
+Symbol 26                              0             0                     0
+Symbol 25                              0             0                     0
+Symbol 24                              0             0                     0
+Symbol 23                             66             0                     0
+Symbol 22                             60             0                     0
+Symbol 21                            842           152                     0
+Symbol 20                             54           481                     0
+Symbol 19                             54           129                     0
+Symbol 18                             54           135                     0
+Symbol 17                             54           164                     0
+Symbol 16                             54           481                     0
+Symbol 15                             54           481                     0
+Symbol 14                             54           189                     0
+Symbol 13                             54           174                     0
+Symbol 12                             54           162                     0
+Symbol 11                             51           153                     0
+Copy 20                                0             0                     0
+Symbol 1                              54           123                     0
+Symbol 2                              55           132                     0
+Symbol 3                              55           153                     0
+Symbol 4                              55           153                     0
+Symbol 5                              55           138                     0
+Symbol 6                              54           129                     0
+Symbol 7                              89           150                     0
+Symbol 8                               0             0                     0
+Symbol 9                               0             0                     0
+Copy 5                                 0             0                     0
+Copy 14                                0             0                     0
+Copy 15                                0             0                     0
+Copy 8                                 0             0                     0
+Symbol 10                             95             0                     0
+Copy 30                                0             0                     0
+but4                                  37             0                     0
+Copy 4                                 0             0                     0
+Copy 26                                0             0                     0
+barra                                  0             0                     0
+
+Font Name                 Bytes        Characters    
+----------------------    ---------    --------------
+tahoma                           31    
+ARIAL Bold                     2259     -CIabcdefilmnortá
+ARIAL                          5125     ()-.0123456789:@ACEFILMNPRTVabcdefilmnortx
+arial Bold Italic              1116     aceilqu
+Verdana                        2481     ACFPRadefghiorstu
+arial                          2046     BDIMacdilnost´ú
+arial Italic                    197     
+Berlin Sans FB                 2183     ()-35679:Tel
+Arno Pro Smbd SmText Bold       405    +
+Arial Narrow Bold              2061    AFSabdegilnruxç
+_sans Italic                     30    
+_sans                          8880     BCJMRabcdeimnopqrstuãí
+arial Bold                     5525     -/:ACDEFHILNOPRSTVabcdefgijklmnopqrstuvwzáãçéí
+_sans Bold                       30    
+
+ActionScript Bytes    Location
+------------------    --------
+               365    index:camada 1:1
+                 7    index:Layer 2:2
+                 2    home:Layer 2:1
+                18    home:Layer 2:1:No instance name assigned(Symbol 15)
+                22    home:Layer 2:1:No instance name assigned(Symbol 16)
+                76    home:Layer 2:1:No instance name assigned(Symbol 20)
+                15    home:Layer 2:1:No instance name assigned(Symbol 21)
+                13    home:Layer 1:1:No instance name assigned(Symbol 1)
+                16    home:Layer 1:1:No instance name assigned(Symbol 2)
+                20    home:Layer 1:1:No instance name assigned(Symbol 3)
+                22    home:Layer 1:1:No instance name assigned(Symbol 4)
+                18    home:Layer 1:1:No instance name assigned(Symbol 5)
+                36    home:Layer 1:1:No instance name assigned(Symbol 6)
+                17    home:Layer 1:1:No instance name assigned(Symbol 7)
+                13    home:Layer 1:1:No instance name assigned(Symbol 17)
+                17    home:Layer 1:1:No instance name assigned(Symbol 18)
+                36    home:Layer 1:1:No instance name assigned(Symbol 19)
+                 2    home:Layer 2:5
+                 2    home:Layer 2:10
+                 2    home:Layer 2:15
+                15    home:Layer 2:15:No instance name assigned(Symbol 28)
+                 2    home:Layer 2:20
+                87    home:Layer 2:20:No instance name assigned(but4)
+               195    home:Layer 2:20:No instance name assigned(but4)
+                 2    home:Layer 2:25
+                22    home:Layer 2:25:No instance name assigned(Symbol 11)
+                17    home:Layer 2:25:No instance name assigned(Symbol 12)
+                15    home:Layer 2:25:No instance name assigned(Symbol 13)
+                23    home:Layer 2:25:No instance name assigned(Symbol 14)
+                 2    home:Layer 2:30
+                 2    home:Layer 2:35
+                 2    home:Layer 2:40
+                 2    home:Layer 2:45
+
+Bitmap                     Compressed    Compression
+-----------------------    ----------  --------  -----------
+Bitmap 3                        6782       19024   JPEG Quality=100
+Bitmap 14                       2793        9540   JPEG Quality=100
+Bitmap 15                       2566        8460   JPEG Quality=100
+op copy                        16878      295104   Imported JPEG=102
+Bitmap 8                       50433      906240   JPEG Quality=100
+Bitmap 31                      13338       70380   JPEG Quality=100
+foto empresa                    8358      212680   Imported JPEG=102
+Untitled-9                       789        5460   Imported JPEG=102
+foto local                     18651      215952   Imported JPEG=102
+Bitmap 7                        1777        5084   JPEG Quality=100
+foto soft                      15221      214316   Imported JPEG=102
+icone soft                       908        5328   Imported JPEG=102
+fotos contatos                  8061      214316   Imported JPEG=102
+Bitmap 38                       2018        5808   JPEG Quality=100
+foto contabilidade             11251      214316   Imported JPEG=102
+Bitmap 12                       1807        5440   JPEG Quality=100
+foto pocket                     9942      214840   Imported JPEG=102
+Bitmap 28                       1676        4472   JPEG Quality=100
+Bitmap 20                      10006       48960   JPEG Quality=100
+Bitmap 21                       3382       11592   JPEG Quality=100
+
+
+
+

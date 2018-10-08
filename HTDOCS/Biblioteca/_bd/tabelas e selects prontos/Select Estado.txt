@@ -1,0 +1,30 @@
+<select>
+	<option value=''>Selecione...</option>
+	<option value='485' >Acre</option>
+	<option value='486' >Alagoas</option>
+	<option value='487' >Amapá</option>
+	<option value='488' >Amazonas</option>
+	<option value='489' >Bahia</option>
+	<option value='490' >Ceará</option>
+	<option value='491' >Distrito Federal</option>
+	<option value='492' >Espírito Santo</option>
+	<option value='493' >Goiás</option>
+	<option value='494' >Maranhão</option>
+	<option value='495' >Mato Grosso</option>
+	<option value='496' >Mato Grosso do Sul</option>
+	<option value='497' >Minas Gerais</option>
+	<option value='498' >Pará</option>
+	<option value='499' >Paraíba</option>
+	<option value='500' >Paraná</option>
+	<option value='501' >Pernambuco</option>
+	<option value='502' >Piauí</option>
+	<option value='504' >Rio Grande do Norte</option>
+	<option value='505' >Rio Grande do Sul</option>
+	<option value='503' >Rio de Janeiro</option>
+	<option value='506' >Rondônia</option>
+	<option value='507' >Roraima</option>
+	<option value='508' >Santa Catarina</option>
+	<option value='509' >São Paulo</option>
+	<option value='510' >Sergipe</option>
+	<option value='511' >Tocantins</option>
+</select>

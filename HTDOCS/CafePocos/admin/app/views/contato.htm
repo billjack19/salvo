@@ -1,0 +1,27 @@
+
+<h1>Contato</h1>
+
+<div class="col-md-4 col-xs-12">
+	<div class="input-group">
+		<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_contato" accesskey="b">
+		<span class="input-group-addon" style="padding: 0;">
+			<button onclick="buscar_contato()" class="btn">
+				<i class="fa fa-search" aria-hidden="true"></i>
+			</button>
+		</span>
+	</div>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!adicionar_contato" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Contato
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoContato"></div>
+
+<script type="text/javascript" src="app/js/ajax/ajax_lista_contato.js"></script>

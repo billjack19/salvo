@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Casa Duarte - Entregas</title>
+	<script>
+		/* IP do Web Service */
+		// var hostWebService = "192.168.100.15";
+		var hostWebService = "localhost";
+
+		/* IP das Imagens do servidor */
+		var hostServeImage = "192.168.0.105";
+
+		var portaWebService = ":8080";
+		var portaImgService = "80";
+
+		var caminhoWebService = "/Casa_Duarte/app/";
+		var urlWebService = "http://"+hostWebService+portaWebService+caminhoWebService;
+		var parametrosWebService = "?tagmode=any&jsoncallback=?";
+		var listagem = false;
+
+		var vendedor = 0;
+		var filialGearl = 0;
+		var sequencia = 0;
+		var documentoGeral = "";
+	</script>
+	<meta charset="utf-8">
+
+	<link rel='shortcut icon' href="img/IconeCDI_32.ico" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">    
+</head>
+<body><!-- Este metodo (carregarContatos()) se localiza no index.js que fica na pasta raiz -->
+
+	<div id="mapa"></div><!-- style="width:100%;height:100%;" -->
+
+	<div class="logotipo" id="divImagensLogos">
+		<div class="logotipo1">
+			<img src="img/LogoTipo.png" width="40%">
+		</div>
+		<div class="logotipo2 imgFundoSome">
+			<img src="img/Logo.png" class="imgFundoSomeIMG" width="40%">
+			<style type="text/css">
+				/*.imgFundoSome:hover .imgFundoSomeIMG{
+					margin-left: -50px;
+				}*/
+			</style>
+		</div>
+	</div>
+
+	<div id="voltarConteudoRotas" onclick="setar_conteudoRotas('block','none', 'alert');">
+		<i class="fa fa-chevron-right"></i>
+	</div>
+
+	<div id="conteudoRotas" style="display: none;">
+		<div id="btn_fechar_card">
+
+			<span id="btn_voltar_card_acao" onclick="minimizarPagina()" title="Detelhes Rota">
+				Detalhar rota <i class="fa fa-arrow-right"></i>
+			</span>
+
+			<span id="btn_fechar_card_acao" onclick="setar_conteudoRotas('none','block', 'setar');">
+				<i class="fa fa-times"></i>
+			</span>
+		</div>
+		<div style="margin-top: -30px;" id="paginaPrincipal" class="col-xs-12">
+			<h3>Rotas</h3>
+			<style type="text/css">
+				.marginCima{
+					margin-top: -15px;
+				}
+				.tamanhoTabela{
+					width: 100%;
+				}
+			</style>
+			<table class="tamanhoTabela">
+				<tr>
+					<td width="20px" onclick="alertaValor($('#selectDeSelecaoDeRotas').val());setarTodasRotasVerifica()" >
+						<input type="checkbox" id="checkTodasRotas" class="form-control" checked>
+					</td>
+					<td>
+						<h5>&nbsp;&nbsp;<!-- Visualizar --> Todas as Rotas</h5>
+					</td>
+				</tr>
+			</table>
+			<table class="tamanhoTabela marginCima">
+				<tr>
+					<td width="20px" onclick="setarPedidoPendenteVerificar()">
+						<input type="checkbox" id="checkPedidoPedente" class="form-control" checked>
+					</td>
+					<td>
+						<h5>&nbsp;&nbsp; Pendentes</h5>
+					</td>
+				</tr>
+			</table>
+			<table class="tamanhoTabela marginCima">
+				<tr>
+					<td width="20px" onclick="setarTodasRotas()">
+						<input type="checkbox" id="checkHora_Saida" class="form-control" checked>
+					</td>
+					<td>
+						<h5>&nbsp;&nbsp; Em Rota</h5>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<button class="btn btn-block btn-primary" onclick="imprimiMapa()">
+							<i class="fa fa-print"></i>&nbsp;&nbsp;Impirmir Mapa
+						</button>
+					</td>
+				</tr>
+			</table>
+			<table class="tamanhoTabela">
+				<tr>
+					<!-- Aqui é renderizado o select de seleção de rotas -->
+					<td id="selectOpcaoDeRotas"></td>
+					<!-- Aqui é a parte da imagem que muda conforme a seleção do selec acima -->
+					<td width="20%" style="padding-left: 10px;" id="pacoteCorDemostrativo"></td>
+				</tr>
+			</table>
+			<br>
+			<!-- Aqui é renderizados varias div contendo  -->
+			<div id="infoRotaDemostrativo"></div>
+		</div>
+		<div class="hidden" id='paginaExtendida' style="margin-top: 5px;">
+			<div id="locaisDeEntregaDemostrativo"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+		function alertaValor(numeroDaRota){ // cor
+			var cor = document.getElementById("rota_cor"+numeroDaRota).value;
+			var subTabelas = document.getElementsByName("subTabelaPedido");
+			for (var i = 0; i < subTabelas.length; i++) subTabelas[i].className = "hidden";
+
+			$("#pacoteCorDemostrativo").html("<img src=\"img/"+cor+"/pacote_"+cor+".png\">");
+			var descritivoRota = document.getElementsByName("locais_demostrativo");
+			for (var i = 0; i < descritivoRota.length; i++) {
+				descritivoRota[i].className = "hidden";
+			}
+			document.getElementById("local_"+numeroDaRota).className = "descritivoRota";
+			document.getElementById("localInfo_"+numeroDaRota).className = "descritivoRota2";
+			if (!document.getElementById("checkTodasRotas").checked ) setarRotaExclusiva(numeroDaRota);
+		}
+		function setarTodasRotasVerifica(){
+			if ( document.getElementById("checkTodasRotas").checked ) setarTodasRotas();
+		}
+
+		function setarPedidoPendenteVerificar(){
+			if ( document.getElementById("checkPedidoPedente").checked ) setarTodosMarcadoresPendentes();
+			else DES_setarTodosMarcadoresPendentes();
+		}
+
+		
+		var extendida = true;
+		function setar_conteudoRotas(conteudoRotas, voltarConteudoRotas, tipo){
+			document.getElementById("voltarConteudoRotas").style.display = voltarConteudoRotas;
+			document.getElementById("conteudoRotas").style.display = conteudoRotas;
+			if (extendida) minimizarPagina();
+		}
+
+		function minimizarPagina(){
+			if (extendida) {
+				document.getElementById("paginaPrincipal").className = "col-xs-12";
+				document.getElementById("paginaExtendida").className = "hidden";
+				document.getElementById("conteudoRotas").style.width = "20%";
+				document.getElementById("btn_voltar_card_acao").innerHTML = "Detalhar <i class=\"fa fa-arrow-right\"></i>";
+				extendida = false;
+			} else {
+				document.getElementById("paginaPrincipal").className = "col-xs-4";
+				document.getElementById("paginaExtendida").className = "col-xs-8";
+				document.getElementById("conteudoRotas").style.width = "60%";
+				document.getElementById("btn_voltar_card_acao").innerHTML = "Esconder detalhes <i class=\"fa fa-arrow-left\"></i>";
+				extendida = true;
+			}
+		}
+		minimizarPagina();
+
+		function abrirTabelaItens(pedido){
+			if (document.getElementById("subTabelaItens"+pedido).className == "hidden"){
+				document.getElementById("subTabelaItens"+pedido).className = "";
+				document.getElementById("iconInterativoPedido_"+pedido).innerHTML = "<i class='fa fa-minus'></i>";
+			} else {
+				document.getElementById("subTabelaItens"+pedido).className = "hidden";
+				document.getElementById("iconInterativoPedido_"+pedido).innerHTML = "<i class='fa fa-plus'></i>";
+			}
+		}
+	</script>
+
+
+	<div id="voltarConteudoRegiao" onclick="setar_conteudoRegiao('block','none');">
+		<i class="fa fa-chevron-left"></i>
+	</div>
+	<div id="conteudoRegiao" style="display: none;">
+		<div id="btn_fechar_card" onclick="setar_conteudoRegiao('none','block');">
+			<span id="btn_fechar_card_acao">
+				<i class="fa fa-times"></i>
+			</span>
+		</div>
+		<div id="refioesListadas" style="margin-top: -30px;">
+			<h3>Regiões</h3>
+			<table class="table">
+				<tr>
+					<td align="center" width="50%" class="btn" style="font-size: 15px;" onclick="selecionarTodasRegioes()">
+						Marcar <!-- Todos -->
+					</td>
+					<td align="center" hwidth="50%" class="btn" style="font-size: 15px;" onclick="deselecionarTodasRegioes()">
+						Desmarcar <!-- Todos -->
+					</td>
+				</tr>
+			</table>
+			<br>
+			<!-- Aqui é uma tabela de marcar e desmacar as regiões que deseja ver  -->
+			<div id="regioesDemostrativo" class="regioesDemostrativo"></div>
+		</div>
+		<div id="bairrosPorRegioes" style="margin-top: -30px;display: none;">
+			<h3 id="nomeRegiaoDescricaoBairro"></h3>
+			<button class="btn btn-primary btn-block" onclick="voltarMenuRegiao()">
+				<i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Voltar
+			</button><br>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function listarBairrosRegiao(codigoRegiao, descricaoRegiao){
+			document.getElementById("refioesListadas").style.display = "none";
+			document.getElementById("bairrosPorRegioes").style.display = "block";
+			document.getElementById("bairrosZona_"+codigoRegiao).style.display = "block";
+			document.getElementById("nomeRegiaoDescricaoBairro").innerHTML = descricaoRegiao;
+		}
+
+		function voltarMenuRegiao(){
+			document.getElementById("refioesListadas").style.display = "block";
+			document.getElementById("bairrosPorRegioes").style.display = "none";
+			var bairros  = document.getElementsByName("divBairros");
+			for (var i = bairros.length - 1; i >= 0; i--) {
+				bairros[i].style.display = "none";
+			}
+		}
+
+
+		function setar_conteudoRegiao(conteudoRegiao, voltarConteudoRegiao){
+			document.getElementById("voltarConteudoRegiao").style.display = voltarConteudoRegiao;
+			document.getElementById("conteudoRegiao").style.display = conteudoRegiao;
+		}
+	</script>
+
+
+	<div id="visualizacaoCaminhaoInfo" style="display: none;">
+		<div id="btn_fechar_card" onclick="document.getElementById('visualizacaoCaminhaoInfo').style.display = 'none'">
+			<span id="btn_fechar_card_acao">
+				<i class="fa fa-times"></i>
+			</span>
+		</div>
+		<div style="margin-top: -30px;">
+			<h3>Informações Gerais</h3>
+			<div id="conteudoInfGeralCaminhao"></div>
+		</div>
+
+	</div>
+
+
+
+
+	<!-- ******************************************************************************************** -->
+	<!-- ** Modal Visualizar padido e dados do cliente * -->
+	<!-- ******************************************************************************************** -->
+	<div class="modal fade" id="modalPedidoVisualiza" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Pedido: <b><span id="modalPedidoVisualizaPedido"></span></b></h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<tr>
+							<td align="right"  style="border-right-style: solid;">
+								<b><spna class="label-float" for="name">Endereço: </spna></b>
+							</td>
+							<td>
+								<spna id="modalPedidoVisualizaEndereco"></spna>
+							</td>
+						</tr>
+						<tr>
+							<td align="right"  style="border-right-style: solid;">
+								<b><spna class="label-float" for="name">Cliente:</spna></b>
+							</td>
+							<td>
+								<spna id="modalPedidoVisualizaCliente"></spna>
+							</td>
+						</tr>
+						<tr>
+							<td align="right"  style="border-right-style: solid;">
+								<b><spna class="label-float" for="name">Telefone(s):</spna></b>
+							</td>
+							<td>
+								<span id="modalPedidoVisualizaTelefone"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right"  style="border-right-style: solid;">
+								<b><spna class="label-float" for="name">Placa:</spna></b>
+							</td>
+							<td>
+								<span id="modalPedidoVisualizaPlaca"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right"  style="border-right-style: solid;">
+								<b><spna class="label-float" for="name">Motorista:</spna></b>
+							</td>
+							<td>
+								<span id="modalPedidoVisualizaMotorista"></span>
+							</td>
+						</tr>
+					</table>
+					<div id="gradeItensPedido"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Fechar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="js/jQuery.js"></script> -->
+	<script type="text/javascript" src="js/bootstrap.js"></script>  
+	<script src="index2.js"></script>
+
+    <!-- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyATZEPgRLDkT7rt-1otx1yZaugXL_bF2yw"></script> -->
+    <!-- AIzaSyDdN8gMhaAs_ICTukLZRu4ScG7mSxdwYs0 -->
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdN8gMhaAs_ICTukLZRu4ScG7mSxdwYs0"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATZEPgRLDkT7rt-1otx1yZaugXL_bF2yw&callback=initialize" async defer></script> -->
+	<!--  sensor=false -->
+	
+	<!-- Arquivo de inicialização do mapa -->
+	<script src="js/mapa2.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<script type="text/javascript">
+
+		function setarDataFiltroRota(){
+			document.getElementById("dataFiltroRotas").value = pegarData();
+		}
+		/* setarDataFiltroRota(); */
+
+		var naoConectado = true;
+		var indiceGeralIp_Global = 0;
+		var listIpsTeste = "";
+
+		function conectarServe(){
+			$.ajax({
+				type: 'GET',
+				url: "ip.json",
+				contentType: "application/json",
+				jsonpCallback: "localJsonpCallback"
+			}).done( function(data){
+				if (typeof(data) == "string") data = JSON.parse(data);
+				/* console.log(data); */
+				listIpsTeste = data;
+				testeConectServer();
+			});
+		}
+
+		function testeConectServer(){
+			try{
+				var hostWebServiceTeste = listIpsTeste[indiceGeralIp_Global].ip;
+				var pseudoUrlWebService = "http://"+hostWebServiceTeste+portaWebService+caminhoWebService;
+				indiceGeralIp_Global++;
+				/*
+					console.log(pseudoUrlWebService+"Ping/ping/"+hostWebServiceTeste+parametrosWebService);
+					console.log(pseudoUrlWebService+"Ping/ping"+parametrosWebService); 
+				*/
+				$.ajax({
+					url: pseudoUrlWebService+"Ping/ping/"+parametrosWebService,
+					type: 'GET',
+					contentType: "application/json",
+					jsonpCallback: "localJsonpCallback",
+					error: function(){
+						console.log("Sem conexão com o servidor! (FALHA NA REQUISIÇÃO) Tentando o ip: " + hostWebServiceTeste);
+						testeConectServer();
+					}
+				}).done( function(data){
+					console.log(data);
+					if ((data == 1 || data == "1") && naoConectado) {
+						naoConectado = false;
+						hostWebService = hostWebServiceTeste;
+						urlWebService = "http://"+hostWebService+portaWebService+caminhoWebService;
+						initialize();
+					} else {
+						console.log("Sem conexão com o servidor!\n\nRETONO DA REQUISIÇÃO: \n" + data + "\n\nTentando o ip: " + hostWebServiceTeste);
+						testeConectServer();
+					}
+				});
+			}catch(error){
+				/* vai acontecer caso ele tente todas o ips da lista */
+				console.log("Sem conexão com o servidor! Já tentou todos os ips do arquivo ip.json");
+			}
+		}
+		conectarServe();
+	</script>
+</body>
+</html>
+
+<!-- 
+-21.789688644275998, -46.56108856201172
+-21.789688644275998, -46.562654972076416
+
+if lngOld > lngNew 	/** o caminhao está apontado para esquerda */
+else 				/** o caminhao está paontado para direita  */
+
+-21.789708568852834, -46.561421155929565
+ -->

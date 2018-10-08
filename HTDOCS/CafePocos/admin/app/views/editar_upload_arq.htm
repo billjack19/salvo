@@ -1,0 +1,42 @@
+
+
+<h1>Editar: Upload Arq</h1>
+
+<div class="text-right">
+	<a href="principal.php#!upload_arq" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Descrição &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="descricao_upload_arq" accesskey="i">
+</div>
+<div class="col-md-4">
+	<br>Tipo &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="tipo_upload_arq" >
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_upload_arq" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacaoupload_arq">
+			<script>$("#data_atualizacaoupload_arq").val("1")</script>
+			
+		<button class="btn btn-success" onclick='atualizarrRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Atualizar
+		</button>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="app/js/ajax/ajax_editar_upload_arq.js"></script>
+
+<div id="scriptsAdicionais"></div>

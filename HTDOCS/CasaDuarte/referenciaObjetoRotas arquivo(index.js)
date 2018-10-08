@@ -1,0 +1,1681 @@
+[
+	{
+		"indece": 0,
+		"origem":"-21.786636415451827,-46.56014308333397",
+		"destino":"-21.786636415451827,-46.56014308333397",
+		"entregas":[
+			{
+				"location":"-21.7868245,-46.5642889",
+				"stopover":true
+			},
+			{
+				"location":"-21.7929233,-46.5619135",
+				"stopover":true
+			}
+		],
+		"rotaDetalhe":{
+			"codigo":1,
+			"endInicial":"-21.786636415451827,-46.56014308333397",
+			"endFinal":"-21.786636415451827,-46.56014308333397",
+			"endEntrega":[
+				{
+					"codigo":[390],
+					"endEntrega":"-21.7868245,-46.5642889",
+					"latitude":"-21.7868245",
+					"longitude":"-46.5642889",
+					"descEndEndrega":"RUA SÃO PAULO, 349 - CENTRO\r\nPOÇOS DE CALDAS - MG Cep:37701-012",
+					"pedido":"014404",
+					"quantidade":0,
+					"bool_entrega":0,
+					"bool_cancelado":0,
+					"cliente":{
+						"codigo":999999,
+						"nome":"CONSUMIDOR",
+						"telefone":[
+							"3537222801 "
+						]
+					},
+					"itens":[
+						{
+							"codigo":5145,
+							"descricao":"TELHA CONFIBRA 2.44X.50-AMIANTO (VOGATEX",
+							"quantidade":2,
+							"unidade":"PC"
+						}
+					]
+				},
+				{
+					"codigo":[391],
+					"endEntrega":"-21.7929233,-46.5619135",
+					"latitude":"-21.7929233",
+					"longitude":"-46.5619135",
+					"descEndEndrega":"AVENIDA SANTO ANTÔNIO 70, HOTEL MIAMI",
+					"pedido":"014412",
+					"quantidade":0,
+					"bool_entrega":0,
+					"bool_cancelado":0,
+					"cliente":{
+						"codigo":10163,
+						"nome":"BORGHETTI PARTICIPACOES LTDA.",
+						"telefone":[
+							"0037221108 "
+						]
+					},
+					"itens":[
+						{
+							"codigo":886,
+							"descricao":"TIJOLO FURADO PC",
+							"quantidade":500,
+							"unidade":"UN"
+						}
+					]
+				}
+			],
+			"caminhao":{
+				"codigo":4,
+				"placa":"GVH-8580   - FORD / F 4000",
+				"latitude":"-21.799232199446397",
+				"longitude":"-46.51482582092285",
+				"capacidade":"3000,0"
+			},
+			"motorista":{
+				"codigo":4,
+				"nome":"indefinido",
+				"telefone":[]
+			},
+			"distancia":0,
+			"duracao":0,
+			"pesoTotal":"2572,28",
+			"observacao":"1 gabinete\r\n2 cal\r\n3 viviane\r\n",
+			"ck_inativo":0,
+			"ck_entregue":0,
+			"hora_saida":"16:50:34"
+		},
+		"cor":{
+			"cor":"blue",
+			"traducao":"Azul"
+		}
+	},
+
+
+
+	{
+		"origem":"-21.786636415451827,-46.56014308333397",
+		"destino":"-21.786636415451827,-46.56014308333397",
+		"entregas":[
+			{
+				"location":"-21.7912000,-46.5752430",
+				"stopover":true
+			}
+		],
+		"entregasDetalhe":[
+			{
+				"codigo":[662,663,664,665,666],
+				"endEntrega":"-21.7912000,-46.5752430",
+				"latitude":"-21.7912000",
+				"longitude":"-46.5752430",
+				"descEndEndrega":"RUA DESEMBARGADOR PONTES DA FONSECA, 210 - JARDIM SANTA AUGUSTA\r\nPEDIDO POR ADEJACI  9 9109-2402",
+				"pedido":"014415",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":999999,
+					"nome":"CONSUMIDOR",
+					"telefone":[
+						"3537222801 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":1,
+						"unidade":"SC"
+					},
+					{
+						"codigo":1,
+						"descricao":"AREIA FINA LATA                        @",
+						"quantidade":10,
+						"unidade":"UN"
+					},
+					{
+						"codigo":3,
+						"descricao":"AREIA GROSSA LATA",
+						"quantidade":10,
+						"unidade":"PC"
+					},
+					{
+						"codigo":886,
+						"descricao":"TIJOLO FURADO PC",
+						"quantidade":100,
+						"unidade":"UN"
+					},
+					{
+						"codigo":1183,
+						"descricao":"TAXA DE ENTREGA",
+						"quantidade":1,
+						"unidade":"UN"
+					}
+				]
+			}
+		],
+		"rotaDetalhe":{
+			"codigo":2,
+			"endInicial":"-21.786636415451827,-46.56014308333397",
+			"endFinal":"-21.786636415451827,-46.56014308333397",
+			"endEntrega":[
+				{
+					"codigo":[662,663,664,665,666],
+					"endEntrega":"-21.7912000,-46.5752430",
+					"latitude":"-21.7912000",
+					"longitude":"-46.5752430",
+					"descEndEndrega":"RUA DESEMBARGADOR PONTES DA FONSECA, 210 - JARDIM SANTA AUGUSTA\r\nPEDIDO POR ADEJACI  9 9109-2402",
+					"pedido":"014415",
+					"quantidade":0,
+					"bool_entrega":0,
+					"bool_cancelado":0,
+					"cliente":{
+						"codigo":999999,
+						"nome":"CONSUMIDOR",
+						"telefone":[
+							"3537222801 "
+						]
+					},
+					"itens":[
+						{
+							"codigo":5151,
+							"descricao":"CIMENTO SACO 50 KG      CP4",
+							"quantidade":1,
+							"unidade":"SC"
+						},
+						{
+							"codigo":1,
+							"descricao":"AREIA FINA LATA                        @",
+							"quantidade":10,
+							"unidade":"UN"
+						},
+						{
+							"codigo":3,
+							"descricao":"AREIA GROSSA LATA",
+							"quantidade":10,
+							"unidade":"PC"
+						},
+						{
+							"codigo":886,
+							"descricao":"TIJOLO FURADO PC",
+							"quantidade":100,
+							"unidade":"UN"
+						},
+						{
+							"codigo":1183,
+							"descricao":"TAXA DE ENTREGA",
+							"quantidade":1,
+							"unidade":"UN"
+						}
+					]
+				}
+			],
+			"caminhao":{
+				"codigo":6,
+				"placa":"HBY-0399   - ATEGO 2425 / M. BENZ",
+				"capacidade":"30000,0"
+			},
+			"motorista":{
+				"codigo":6,
+				"nome":"indefinido",
+				"telefone":[]
+			},
+			"distancia":0,
+			"duracao":0,
+			"pesoTotal":"4167,5",
+			"observacao":"AJUDANTE MATEUS",
+			"ck_inativo":0,
+			"ck_entregue":0,
+			"hora_saida":"11:00:07"
+		},
+		"cor":{
+			"cor":"red",
+			"traducao":"Vermelha"
+		}
+	},
+	{
+		"origem":"-21.786636415451827,-46.56014308333397",
+		"destino":"-21.786636415451827,-46.56014308333397",
+		"entregas":[
+			{
+				"location":"-21.7902556,-46.5629541",
+				"stopover":true
+			},
+			{
+				"location":"-21.7902556,-46.5629541",
+				"stopover":true
+			}
+		],
+		"entregasDetalhe":[
+			{
+				"codigo":[955,956,957,958,959,960],
+				"endEntrega":"-21.7902556,-46.5629541",
+				"latitude":"-21.7902556",
+				"longitude":"-46.5629541",
+				"descEndEndrega":"RUA CORREIA NETO, 421 - CENTRO   *   PEDIDO POR SIMONE 9 8868-2622",
+				"pedido":"015373",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":3982,
+					"nome":"MARCOS GULHERME DA SILVA",
+					"telefone":[
+						"35988682622"
+					]
+				},
+				"itens":[
+					{
+						"codigo":4,
+						"descricao":"AREIA GROSSA M3",
+						"quantidade":1,
+						"unidade":"M3"
+					},
+					{
+						"codigo":13,
+						"descricao":"AREIA FINA M3 SILVINHO                 @",
+						"quantidade":0.5,
+						"unidade":"MT"
+					},
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":5,
+						"unidade":"SC"
+					},
+					{
+						"codigo":1980,
+						"descricao":"FITA CREPE 50MM X 50 M                 @",
+						"quantidade":2,
+						"unidade":"PC"
+					},
+					{
+						"codigo":886,
+						"descricao":"TIJOLO FURADO PC",
+						"quantidade":20,
+						"unidade":"UN"
+					},
+					{
+						"codigo":7473,
+						"descricao":"TRUECAL 5 LTS",
+						"quantidade":1,
+						"unidade":"LT"
+					}
+				]
+			},
+			{
+				"codigo":[961],
+				"endEntrega":"-21.7902556,-46.5629541",
+				"latitude":"-21.7902556",
+				"longitude":"-46.5629541",
+				"descEndEndrega":"RUA CORREIA NETO, 421 - CENTRO   *   PEDIDO POR SIMONE 9 8868-2622",
+				"pedido":"015374",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":3982,
+					"nome":"MARCOS GULHERME DA SILVA",
+					"telefone":[
+						"35988682622"
+					]
+				},
+				"itens":[
+					{
+						"codigo":22696,
+						"descricao":"BLOCO CONCRETO 15X20X40                @",
+						"quantidade":30,
+						"unidade":"UN"
+					}
+				]
+			}
+		],
+		"rotaDetalhe":{
+			"codigo":110,
+			"endInicial":"-21.786636415451827,-46.56014308333397",
+			"endFinal":"-21.786636415451827,-46.56014308333397",
+			"endEntrega":[
+				{
+					"codigo":[955,956,957,958,959,960],
+					"endEntrega":"-21.7902556,-46.5629541",
+					"latitude":"-21.7902556",
+					"longitude":"-46.5629541",
+					"descEndEndrega":"RUA CORREIA NETO, 421 - CENTRO   *   PEDIDO POR SIMONE 9 8868-2622",
+					"pedido":"015373",
+					"quantidade":0,
+					"bool_entrega":0,
+					"bool_cancelado":0,
+					"cliente":{
+						"codigo":3982,
+						"nome":"MARCOS GULHERME DA SILVA",
+						"telefone":[
+							"35988682622"
+						]
+					},
+					"itens":[
+						{
+							"codigo":4,
+							"descricao":"AREIA GROSSA M3",
+							"quantidade":1,
+							"unidade":"M3"
+						},
+						{
+							"codigo":13,
+							"descricao":"AREIA FINA M3 SILVINHO                 @",
+							"quantidade":0.5,
+							"unidade":"MT"
+						},
+						{
+							"codigo":5151,
+							"descricao":"CIMENTO SACO 50 KG      CP4",
+							"quantidade":5,
+							"unidade":"SC"
+						},
+						{
+							"codigo":1980,
+							"descricao":"FITA CREPE 50MM X 50 M                 @",
+							"quantidade":2,
+							"unidade":"PC"
+						},
+						{
+							"codigo":886,
+							"descricao":"TIJOLO FURADO PC",
+							"quantidade":20,
+							"unidade":"UN"
+						},
+						{
+							"codigo":7473,
+							"descricao":"TRUECAL 5 LTS",
+							"quantidade":1,
+							"unidade":"LT"
+						}
+					]
+				},
+				{
+					"codigo":[961],
+					"endEntrega":"-21.7902556,-46.5629541",
+					"latitude":"-21.7902556",
+					"longitude":"-46.5629541",
+					"descEndEndrega":"RUA CORREIA NETO, 421 - CENTRO   *   PEDIDO POR SIMONE 9 8868-2622",
+					"pedido":"015374",
+					"quantidade":0,
+					"bool_entrega":0,
+					"bool_cancelado":0,
+					"cliente":{
+						"codigo":3982,
+						"nome":"MARCOS GULHERME DA SILVA",
+						"telefone":[
+							"35988682622"
+						]
+					},
+					"itens":[
+						{
+							"codigo":22696,
+							"descricao":"BLOCO CONCRETO 15X20X40                @",
+							"quantidade":30,
+							"unidade":"UN"
+						}
+					]
+				}
+			],
+			"caminhao":{
+				"codigo":3,
+				"placa":"GQD-5007   - FORD/ F  350",
+				"latitude":"-21.79582030204647",
+				"longitude":"-46.520699858665466",
+				"capacidade":"2500,0"
+			},
+			"motorista":{
+				"codigo":1,
+				"nome":"Jose Antonio de Freitas",
+				"telefone":[
+					"3591545461 ",
+					"35984271995"
+				]
+			},
+			"distancia":0,
+			"duracao":0,
+			"pesoTotal":"2585,2",
+			"observacao":"AJUDANTE MARCOS  EM TESTE",
+			"ck_inativo":0,
+			"ck_entregue":0,
+			"hora_saida":"0"
+		},
+		"cor":{
+			"cor":"purple",
+			"traducao":"Roxo"
+		}
+	},
+	{
+		"origem":"-21.786636415451827,-46.56014308333397",
+		"destino":"-21.786636415451827,-46.56014308333397",
+		"entregas":[
+			{
+				"location":"-21.7862355,-46.6415419",
+				"stopover":true
+			},
+			{
+				"location":"-21.7823994,-46.58569",
+				"stopover":true
+			},
+			{
+				"location":"-21.7862355,-46.6415419",
+				"stopover":true
+			},
+			{
+				"location":"-21.7985233,-46.5856001",
+				"stopover":true
+			},
+			{
+				"location":"-21.7823424,-46.6307049",
+				"stopover":true
+			},
+			{
+				"location":"-21.7823424,-46.6307049",
+				"stopover":true
+			}
+		],
+		"entregasDetalhe":[
+			{
+				"codigo":[998,999,1000],
+				"endEntrega":"-21.7862355,-46.6415419",
+				"latitude":"-21.7862355",
+				"longitude":"-46.6415419",
+				"descEndEndrega":"RUA SALVADOR FLORES, 226 - CHÁCARA SÃO FRANCISCO\r\nPOÇOS DE CALDAS - MG (AREIA ENSACADA 1 LATA POR SACO)",
+				"pedido":"015368",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":1580,
+					"nome":"VILMAR SIQUEIRA",
+					"telefone":[
+						"3537141339 ",
+						"3599870005 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":5,
+						"descricao":"CAL HIDRATADO P/REBOQUE 20 KG",
+						"quantidade":2,
+						"unidade":"UN"
+					},
+					{
+						"codigo":4,
+						"descricao":"AREIA GROSSA M3",
+						"quantidade":0.5,
+						"unidade":"M3"
+					},
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":3,
+						"unidade":"SC"
+					}
+				]
+			},
+			{
+				"codigo":[985,986,987,988,989,990,991,992,993],
+				"endEntrega":"-21.7823994,-46.58569",
+				"latitude":"-21.7823994",
+				"longitude":"-46.58569",
+				"descEndEndrega":"AVENIDA CHAMPAGNAT, 1248 - SÃO DOMINGOS\r\nPOÇOS DE CALDAS - MG Cep:37701-391   *   PEDIDO POR RANDAL 9 8825-3183",
+				"pedido":"015402",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":999999,
+					"nome":"CONSUMIDOR",
+					"telefone":[
+						"3537222801 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":6549,
+						"descricao":"COLHER PEDREIRO Nº 07 BRASFORT R.8030",
+						"quantidade":1,
+						"unidade":"UN"
+					},
+					{
+						"codigo":5153,
+						"descricao":"MARTELO BORRACHA 40MM PRETO-FUZIL    @",
+						"quantidade":1,
+						"unidade":"UN"
+					},
+					{
+						"codigo":5760,
+						"descricao":"DESEMP. ACO 8X8MM DENTADA 12X24-MOMFORT",
+						"quantidade":1,
+						"unidade":"UN"
+					},
+					{
+						"codigo":10317,
+						"descricao":"PIA PS1500 PIA430 1,50X0,52 CUBA SIMPLES- FABRINOX",
+						"quantidade":1,
+						"unidade":"PC"
+					},
+					{
+						"codigo":109,
+						"descricao":"BUCHAS S.10",
+						"quantidade":25,
+						"unidade":"UN"
+					},
+					{
+						"codigo":1220,
+						"descricao":"ARG. PLASMAR 20 KG",
+						"quantidade":4,
+						"unidade":"UN"
+					},
+					{
+						"codigo":2098,
+						"descricao":"REJ. QUARTZOLIT CZA PLATINA 1KG",
+						"quantidade":1,
+						"unidade":"UN"
+					},
+					{
+						"codigo":1369,
+						"descricao":"ESPACADOR 5 MM(AZUL)100PCS-JUNTAPRUMO",
+						"quantidade":1,
+						"unidade":"UN"
+					},
+					{
+						"codigo":1427,
+						"descricao":"CAIXA PLASTICO P/MASSA-",
+						"quantidade":1,
+						"unidade":"UN"
+					}
+				]
+			},
+			{
+				"codigo":[1001],
+				"endEntrega":"-21.7862355,-46.6415419",
+				"latitude":"-21.7862355",
+				"longitude":"-46.6415419",
+				"descEndEndrega":"RUA SALVADOR FLORES, 226 - CHÁCARA SÃO FRANCISCO\r\nPOÇOS DE CALDAS - MG Cep:37704-401",
+				"pedido":"015432",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":1580,
+					"nome":"VILMAR SIQUEIRA",
+					"telefone":[
+						"3537141339 ",
+						"3599870005 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":885,
+						"descricao":"TIJOLO COMUM PC                        @",
+						"quantidade":50,
+						"unidade":"UN"
+					}
+				]
+			},
+			{
+				"codigo":[983,984],
+				"endEntrega":"-21.7985233,-46.5856001",
+				"latitude":"-21.7985233",
+				"longitude":"-46.5856001",
+				"descEndEndrega":"RUA LONDRES, 224 - JARDIM EUROPA\r\nPOÇOS DE CALDAS - MG Cep:37716-124",
+				"pedido":"015461",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":10193,
+					"nome":"DONIZETE APARECIDO DE SOUZA",
+					"telefone":[
+						"3537151779 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":4,
+						"descricao":"AREIA GROSSA M3",
+						"quantidade":2,
+						"unidade":"M3"
+					},
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":10,
+						"unidade":"SC"
+					}
+				]
+			},
+			{
+				"codigo":[994,995,996],
+				"endEntrega":"-21.7823424,-46.6307049",
+				"latitude":"-21.7823424",
+				"longitude":"-46.6307049",
+				"descEndEndrega":"AVENIDA FERRERO, 125 - BORTOLAN NORTE I(RUA ARAPONGA125 CAMPO DA CACHOEIRA)\r\nPOÇOS DE CALDAS - MG Cep:37704-500",
+				"pedido":"015463",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":10200,
+					"nome":"ELIANA VIEIRA DE MOTA VALCASARA CAMARGO",
+					"telefone":[
+						"3537229901 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":5,
+						"descricao":"CAL HIDRATADO P/REBOQUE 20 KG",
+						"quantidade":3,
+						"unidade":"UN"
+					},
+					{
+						"codigo":1,
+						"descricao":"AREIA FINA LATA                        @",
+						"quantidade":8,
+						"unidade":"UN"
+					},
+					{
+						"codigo":4,
+						"descricao":"AREIA GROSSA M3",
+						"quantidade":1,
+						"unidade":"M3"
+					}
+				]
+			},
+			{
+				"codigo":[997],
+				"endEntrega":"-21.7823424,-46.6307049",
+				"latitude":"-21.7823424",
+				"longitude":"-46.6307049",
+				"descEndEndrega":"AVENIDA FERRERO, 125 - BORTOLAN NORTE I(RUA ARAPONGA 125 CAMPO DA CACHOEIRA)\r\nPOÇOS DE CALDAS - MG Cep:37704-500",
+				"pedido":"015464",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":10200,
+					"nome":"ELIANA VIEIRA DE MOTA VALCASARA CAMARGO",
+					"telefone":[
+						"3537229901 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":4,
+						"unidade":"SC"
+					}
+				]
+			}
+		],
+"rotaDetalhe":{
+	"codigo":112,
+	"endInicial":"-21.786636415451827,-46.56014308333397",
+	"endFinal":"-21.786636415451827,-46.56014308333397",
+	"endEntrega":[
+		{
+			"codigo":[998,999,1000],
+			"endEntrega":"-21.7862355,-46.6415419",
+			"latitude":"-21.7862355",
+			"longitude":"-46.6415419",
+			"descEndEndrega":"RUA SALVADOR FLORES, 226 - CHÁCARA SÃO FRANCISCO\r\nPOÇOS DE CALDAS - MG (AREIA ENSACADA 1 LATA POR SACO)",
+			"pedido":"015368",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":1580,
+				"nome":"VILMAR SIQUEIRA",
+				"telefone":[
+					"3537141339 ",
+					"3599870005 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":5,
+					"descricao":"CAL HIDRATADO P/REBOQUE 20 KG",
+					"quantidade":2,
+					"unidade":"UN"
+				},
+				{
+					"codigo":4,
+					"descricao":"AREIA GROSSA M3",
+					"quantidade":0.5,
+					"unidade":"M3"
+				},
+				{
+					"codigo":5151,
+					"descricao":"CIMENTO SACO 50 KG      CP4",
+					"quantidade":3,
+					"unidade":"SC"
+				}
+			]
+		},
+		{
+			"codigo":[985,986,987,988,989,990,991,992,993],
+			"endEntrega":"-21.7823994,-46.58569",
+			"latitude":"-21.7823994",
+			"longitude":"-46.58569",
+			"descEndEndrega":"AVENIDA CHAMPAGNAT, 1248 - SÃO DOMINGOS\r\nPOÇOS DE CALDAS - MG Cep:37701-391   *   PEDIDO POR RANDAL 9 8825-3183",
+			"pedido":"015402",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":6549,
+					"descricao":"COLHER PEDREIRO Nº 07 BRASFORT R.8030",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":5153,
+					"descricao":"MARTELO BORRACHA 40MM PRETO-FUZIL    @",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":5760,
+					"descricao":"DESEMP. ACO 8X8MM DENTADA 12X24-MOMFORT",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":10317,
+					"descricao":"PIA PS1500 PIA430 1,50X0,52 CUBA SIMPLES- FABRINOX",
+					"quantidade":1,
+					"unidade":"PC"
+				},
+				{
+					"codigo":109,
+					"descricao":"BUCHAS S.10",
+					"quantidade":25,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1220,
+					"descricao":"ARG. PLASMAR 20 KG",
+					"quantidade":4,
+					"unidade":"UN"
+				},
+				{
+					"codigo":2098,
+					"descricao":"REJ. QUARTZOLIT CZA PLATINA 1KG",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1369,
+					"descricao":"ESPACADOR 5 MM(AZUL)100PCS-JUNTAPRUMO",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1427,
+					"descricao":"CAIXA PLASTICO P/MASSA-",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1001],
+			"endEntrega":"-21.7862355,-46.6415419",
+			"latitude":"-21.7862355",
+			"longitude":"-46.6415419",
+			"descEndEndrega":"RUA SALVADOR FLORES, 226 - CHÁCARA SÃO FRANCISCO\r\nPOÇOS DE CALDAS - MG Cep:37704-401",
+			"pedido":"015432",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":1580,
+				"nome":"VILMAR SIQUEIRA",
+				"telefone":[
+					"3537141339 ",
+					"3599870005 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":885,
+					"descricao":"TIJOLO COMUM PC                        @",
+					"quantidade":50,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[983,984],
+			"endEntrega":"-21.7985233,-46.5856001",
+			"latitude":"-21.7985233",
+			"longitude":"-46.5856001",
+			"descEndEndrega":"RUA LONDRES, 224 - JARDIM EUROPA\r\nPOÇOS DE CALDAS - MG Cep:37716-124",
+			"pedido":"015461",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10193,
+				"nome":"DONIZETE APARECIDO DE SOUZA",
+				"telefone":[
+					"3537151779 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":4,
+					"descricao":"AREIA GROSSA M3",
+					"quantidade":2,
+					"unidade":"M3"
+				},
+				{
+					"codigo":5151,
+					"descricao":"CIMENTO SACO 50 KG      CP4",
+					"quantidade":10,
+					"unidade":"SC"
+				}
+			]
+		},
+		{
+			"codigo":[994,995,996],
+			"endEntrega":"-21.7823424,-46.6307049",
+			"latitude":"-21.7823424",
+			"longitude":"-46.6307049",
+			"descEndEndrega":"AVENIDA FERRERO, 125 - BORTOLAN NORTE I(RUA ARAPONGA125 CAMPO DA CACHOEIRA)\r\nPOÇOS DE CALDAS - MG Cep:37704-500",
+			"pedido":"015463",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10200,
+				"nome":"ELIANA VIEIRA DE MOTA VALCASARA CAMARGO",
+				"telefone":[
+					"3537229901 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":5,
+					"descricao":"CAL HIDRATADO P/REBOQUE 20 KG",
+					"quantidade":3,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1,
+					"descricao":"AREIA FINA LATA                        @",
+					"quantidade":8,
+					"unidade":"UN"
+				},
+				{
+					"codigo":4,
+					"descricao":"AREIA GROSSA M3",
+					"quantidade":1,
+					"unidade":"M3"
+				}
+			]
+		},
+		{
+			"codigo":[997],
+			"endEntrega":"-21.7823424,-46.6307049",
+			"latitude":"-21.7823424",
+			"longitude":"-46.6307049",
+			"descEndEndrega":"AVENIDA FERRERO, 125 - BORTOLAN NORTE I(RUA ARAPONGA 125 CAMPO DA CACHOEIRA)\r\nPOÇOS DE CALDAS - MG Cep:37704-500",
+			"pedido":"015464",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10200,
+				"nome":"ELIANA VIEIRA DE MOTA VALCASARA CAMARGO",
+				"telefone":[
+					"3537229901 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":5151,
+					"descricao":"CIMENTO SACO 50 KG      CP4",
+					"quantidade":4,
+					"unidade":"SC"
+				}
+			]
+		}
+	],
+"caminhao":{
+	"codigo":5,
+	"placa":"GQD-5006   - MERCEDES V - M. B. / M. BENZ 1111",
+	"capacidade":"8000,0"
+},
+"motorista":{
+	"codigo":2,
+	"nome":"Daniel Cristofolete",
+	"telefone":[
+		"35984271822"
+	]
+},
+"distancia":0,
+"duracao":0,
+"pesoTotal":"6598,0",
+"observacao":"AJUDANTE MATEUS  * MERCEDES VERMELHO *",
+"ck_inativo":0,
+"ck_entregue":0,
+"hora_saida":"0"
+},
+"cor":{
+	"cor":"orange",
+	"traducao":"Laranja"
+}
+},
+{
+	"origem":"-21.786636415451827,-46.56014308333397",
+	"destino":"-21.786636415451827,-46.56014308333397",
+	"entregas":[
+		{
+			"location":"-21.8054361,-46.55025149999999",
+			"stopover":true
+		},
+		{
+			"location":"-21.795969,-46.547311",
+			"stopover":true
+		},
+		{
+			"location":"-21.7887336,-46.5643512",
+			"stopover":true
+		},
+		{
+			"location":"-21.782626,-46.5651269",
+			"stopover":true
+		},
+		{
+			"location":"-21.787399,-46.555386",
+			"stopover":true
+		},
+		{
+			"location":"-21.7887336,-46.5643512",
+			"stopover":true
+		}
+	],
+	"entregasDetalhe":[
+		{
+			"codigo":[1014,1015,1016,1017,1018,1019,1020],
+			"endEntrega":"-21.8054361,-46.55025149999999",
+			"latitude":"-21.8054361",
+			"longitude":"-46.55025149999999",
+			"descEndEndrega":"RUA CANJARANA, 347 - VILA CAIO JUNQUEIRA\r\nPOÇOS DE CALDAS - MG Cep:37704-187",
+			"pedido":"015443",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":1271,
+					"descricao":"VALVULA AMERIC.S/ADAPT.(PLAST.)VA2-ASTRA",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1356,
+					"descricao":"PIA GRAN.NAT. OCRE DIAMANTE 1.20X55-FENIX @",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1498,
+					"descricao":"SIFAO SANFONADO SSA 40. SSP 40-ASTRA",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":2955,
+					"descricao":"TORN. P/ JARDIM 1130 AM. CHAV. BIANCO",
+					"quantidade":1,
+					"unidade":"PC"
+				},
+				{
+					"codigo":6546,
+					"descricao":"MAXI TORN. ULTRA 220V/5500W REF 371879",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":438,
+					"descricao":"FITA VEDAROSCA 1/2 X 50 MT - NOVA",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":10031,
+					"descricao":"BUCHA DE RED. C/ ROSCA 3/4 X 1/2",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1012],
+			"endEntrega":"-21.795969,-46.547311",
+			"latitude":"-21.795969",
+			"longitude":"-46.547311",
+			"descEndEndrega":"RUA DONA LALÁ AMARAL, 229 - SANTA LÚCIA\r\nPOÇOS DE CALDAS - MG Cep:37704-079",
+			"pedido":"015447",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":6670,
+					"descricao":"CX.D`AGUA PLAST TP AZUL  500 LTS-SINTEC",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1007,1008],
+			"endEntrega":"-21.7887336,-46.5643512",
+			"latitude":"-21.7887336",
+			"longitude":"-46.5643512",
+			"descEndEndrega":"RUA PREFEITO CHAGAS, 346 - CENTRO\r\nPOÇOS DE CALDAS - MG Cep:37701010",
+			"pedido":"015467",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10127,
+				"nome":"RENATA SALES ZINCONE LISE",
+				"telefone":[
+					"3537229001 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":4,
+					"descricao":"AREIA GROSSA M3",
+					"quantidade":0.5,
+					"unidade":"M3"
+				},
+				{
+					"codigo":15,
+					"descricao":"PEDRA BRITA Nº 1 M3",
+					"quantidade":0.5,
+					"unidade":"M3"
+				}
+			]
+		},
+		{
+			"codigo":[1009],
+			"endEntrega":"-21.782626,-46.5651269",
+			"latitude":"-21.782626",
+			"longitude":"-46.5651269",
+			"descEndEndrega":"RUA ASSIS FIGUEIREDO, 481 - CENTRO\r\nPOÇOS DE CALDAS - MG Cep:37701-000",
+			"pedido":"015489",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":3199,
+				"nome":"COMERCIAL S.V. LTDA",
+				"telefone":[
+					"3537142050 ",
+					"3537210937 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":20067,
+					"descricao":"REJ. QUARTZOLIT BRANCO     5KG",
+					"quantidade":8,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1013],
+			"endEntrega":"-21.787399,-46.555386",
+			"latitude":"-21.787399",
+			"longitude":"-46.555386",
+			"descEndEndrega":"RUA MONTEIRO LOBATO, 299 - SÃO JOÃO\r\nPOÇOS DE CALDAS - MG Cep:37701-110",
+			"pedido":"015495",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":2929,
+				"nome":"LEANDRO PEREIRA TRAMONTE OUTROS",
+				"telefone":[
+					"3537219998 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":7153,
+					"descricao":"VEDEX 200L",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1010,1011],
+			"endEntrega":"-21.7887336,-46.5643512",
+			"latitude":"-21.7887336",
+			"longitude":"-46.5643512",
+			"descEndEndrega":"RUA PREFEITO CHAGAS, 346 - CENTRO\r\nPOÇOS DE CALDAS - MG",
+			"pedido":"015500",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10127,
+				"nome":"RENATA SALES ZINCONE LISE",
+				"telefone":[
+					"3537229001 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":2066,
+					"descricao":"REJ. QUARTZOLIT BEGE       1KG",
+					"quantidade":3,
+					"unidade":"FD"
+				},
+				{
+					"codigo":10165,
+					"descricao":"ARG. PLASMAR PORCELANATO INTERNA 20 KG.",
+					"quantidade":3,
+					"unidade":"SC"
+				}
+			]
+		}
+	],
+"rotaDetalhe":{
+	"codigo":113,
+	"endInicial":"-21.786636415451827,-46.56014308333397",
+	"endFinal":"-21.786636415451827,-46.56014308333397",
+	"endEntrega":[
+		{
+			"codigo":[1014,1015,1016,1017,1018,1019,1020],
+			"endEntrega":"-21.8054361,-46.55025149999999",
+			"latitude":"-21.8054361",
+			"longitude":"-46.55025149999999",
+			"descEndEndrega":"RUA CANJARANA, 347 - VILA CAIO JUNQUEIRA\r\nPOÇOS DE CALDAS - MG Cep:37704-187",
+			"pedido":"015443",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":1271,
+					"descricao":"VALVULA AMERIC.S/ADAPT.(PLAST.)VA2-ASTRA",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1356,
+					"descricao":"PIA GRAN.NAT. OCRE DIAMANTE 1.20X55-FENIX @",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1498,
+					"descricao":"SIFAO SANFONADO SSA 40. SSP 40-ASTRA",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":2955,
+					"descricao":"TORN. P/ JARDIM 1130 AM. CHAV. BIANCO",
+					"quantidade":1,
+					"unidade":"PC"
+				},
+				{
+					"codigo":6546,
+					"descricao":"MAXI TORN. ULTRA 220V/5500W REF 371879",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":438,
+					"descricao":"FITA VEDAROSCA 1/2 X 50 MT - NOVA",
+					"quantidade":1,
+					"unidade":"UN"
+				},
+				{
+					"codigo":10031,
+					"descricao":"BUCHA DE RED. C/ ROSCA 3/4 X 1/2",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1012],
+			"endEntrega":"-21.795969,-46.547311",
+			"latitude":"-21.795969",
+			"longitude":"-46.547311",
+			"descEndEndrega":"RUA DONA LALÁ AMARAL, 229 - SANTA LÚCIA\r\nPOÇOS DE CALDAS - MG Cep:37704-079",
+			"pedido":"015447",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":6670,
+					"descricao":"CX.D`AGUA PLAST TP AZUL  500 LTS-SINTEC",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1007,1008],
+			"endEntrega":"-21.7887336,-46.5643512",
+			"latitude":"-21.7887336",
+			"longitude":"-46.5643512",
+			"descEndEndrega":"RUA PREFEITO CHAGAS, 346 - CENTRO\r\nPOÇOS DE CALDAS - MG Cep:37701010",
+			"pedido":"015467",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10127,
+				"nome":"RENATA SALES ZINCONE LISE",
+				"telefone":[
+					"3537229001 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":4,
+					"descricao":"AREIA GROSSA M3",
+					"quantidade":0.5,
+					"unidade":"M3"
+				},
+				{
+					"codigo":15,
+					"descricao":"PEDRA BRITA Nº 1 M3",
+					"quantidade":0.5,
+					"unidade":"M3"
+				}
+			]
+		},
+		{
+			"codigo":[1009],
+			"endEntrega":"-21.782626,-46.5651269",
+			"latitude":"-21.782626",
+			"longitude":"-46.5651269",
+			"descEndEndrega":"RUA ASSIS FIGUEIREDO, 481 - CENTRO\r\nPOÇOS DE CALDAS - MG Cep:37701-000",
+			"pedido":"015489",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":3199,
+				"nome":"COMERCIAL S.V. LTDA",
+				"telefone":[
+					"3537142050 ",
+					"3537210937 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":20067,
+					"descricao":"REJ. QUARTZOLIT BRANCO     5KG",
+					"quantidade":8,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1013],
+			"endEntrega":"-21.787399,-46.555386",
+			"latitude":"-21.787399",
+			"longitude":"-46.555386",
+			"descEndEndrega":"RUA MONTEIRO LOBATO, 299 - SÃO JOÃO\r\nPOÇOS DE CALDAS - MG Cep:37701-110",
+			"pedido":"015495",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":2929,
+				"nome":"LEANDRO PEREIRA TRAMONTE OUTROS",
+				"telefone":[
+					"3537219998 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":7153,
+					"descricao":"VEDEX 200L",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1010,1011],
+			"endEntrega":"-21.7887336,-46.5643512",
+			"latitude":"-21.7887336",
+			"longitude":"-46.5643512",
+			"descEndEndrega":"RUA PREFEITO CHAGAS, 346 - CENTRO\r\nPOÇOS DE CALDAS - MG",
+			"pedido":"015500",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":10127,
+				"nome":"RENATA SALES ZINCONE LISE",
+				"telefone":[
+					"3537229001 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":2066,
+					"descricao":"REJ. QUARTZOLIT BEGE       1KG",
+					"quantidade":3,
+					"unidade":"FD"
+				},
+				{
+					"codigo":10165,
+					"descricao":"ARG. PLASMAR PORCELANATO INTERNA 20 KG.",
+					"quantidade":3,
+					"unidade":"SC"
+				}
+			]
+		}
+	],
+"caminhao":{
+	"codigo":3,
+	"placa":"GQD-5007   - FORD/ F  350",
+	"latitude":"-21.79582030204647",
+	"longitude":"-46.520699858665466",
+	"capacidade":"2500,0"
+},
+"motorista":{
+	"codigo":1,
+	"nome":"Jose Antonio de Freitas",
+	"telefone":[
+		"3591545461 ",
+		"35984271995"
+	]
+},
+"distancia":0,
+"duracao":0,
+"pesoTotal":"4856,01",
+"observacao":"AJUDANTE  MATEUS *",
+"ck_inativo":0,
+"ck_entregue":0,
+"hora_saida":"0"
+},
+"cor":{
+	"cor":"gray",
+	"traducao":"Cinza"
+}
+},
+{
+	"origem":"-21.786636415451827,-46.56014308333397",
+	"destino":"-21.786636415451827,-46.56014308333397",
+	"entregas":[
+		{
+			"location":"null,null",
+			"stopover":true
+		},
+		{
+			"location":"null,null",
+			"stopover":true
+		}
+	],
+	"entregasDetalhe":[
+		{
+			"codigo":[1021,1022,1023],
+			"endEntrega":"null,null",
+			"descEndEndrega":"RUA ORESTES ACCIARI, 87 - JARDIM PHILADÉLPHIA 2   *   PEDIDO POR FLÁVIA  9 8806-6115",
+			"pedido":"015426",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":5151,
+					"descricao":"CIMENTO SACO 50 KG      CP4",
+					"quantidade":3,
+					"unidade":"SC"
+				},
+				{
+					"codigo":10165,
+					"descricao":"ARG. PLASMAR PORCELANATO INTERNA 20 KG.",
+					"quantidade":6,
+					"unidade":"SC"
+				},
+				{
+					"codigo":14,
+					"descricao":"PEDRA BRITA Nº 1  LATA                 @",
+					"quantidade":10,
+					"unidade":"UN"
+				}
+			]
+		},
+		{
+			"codigo":[1024,1025,1026,1027,1028],
+			"endEntrega":"null,null",
+			"descEndEndrega":"RUA BENEDITO RAMOS DOS REIS, 10 - SANTANA DO PEDREGAL\r\nPOÇOS DE CALDAS - MG Cep:37701-139   *   PEDIDO POR JAIME  9 9139-6863",
+			"pedido":"015496",
+			"quantidade":0,
+			"bool_entrega":0,
+			"bool_cancelado":0,
+			"cliente":{
+				"codigo":999999,
+				"nome":"CONSUMIDOR",
+				"telefone":[
+					"3537222801 "
+				]
+			},
+			"itens":[
+				{
+					"codigo":13,
+					"descricao":"AREIA FINA M3 SILVINHO                 @",
+					"quantidade":0.5,
+					"unidade":"MT"
+				},
+				{
+					"codigo":4,
+					"descricao":"AREIA GROSSA M3",
+					"quantidade":0.5,
+					"unidade":"M3"
+				},
+				{
+					"codigo":5151,
+					"descricao":"CIMENTO SACO 50 KG      CP4",
+					"quantidade":5,
+					"unidade":"SC"
+				},
+				{
+					"codigo":5,
+					"descricao":"CAL HIDRATADO P/REBOQUE 20 KG",
+					"quantidade":5,
+					"unidade":"UN"
+				},
+				{
+					"codigo":1183,
+					"descricao":"TAXA DE ENTREGA",
+					"quantidade":1,
+					"unidade":"UN"
+				}
+			]
+		}
+	],
+	"rotaDetalhe":{
+		"codigo":114,
+		"endInicial":"-21.786636415451827,-46.56014308333397",
+		"endFinal":"-21.786636415451827,-46.56014308333397",
+		"endEntrega":[
+			{
+				"codigo":[1021,1022,1023],
+				"endEntrega":"null,null",
+				"descEndEndrega":"RUA ORESTES ACCIARI, 87 - JARDIM PHILADÉLPHIA 2   *   PEDIDO POR FLÁVIA  9 8806-6115",
+				"pedido":"015426",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":999999,
+					"nome":"CONSUMIDOR",
+					"telefone":[
+						"3537222801 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":3,
+						"unidade":"SC"
+					},
+					{
+						"codigo":10165,
+						"descricao":"ARG. PLASMAR PORCELANATO INTERNA 20 KG.",
+						"quantidade":6,
+						"unidade":"SC"
+					},
+					{
+						"codigo":14,
+						"descricao":"PEDRA BRITA Nº 1  LATA                 @",
+						"quantidade":10,
+						"unidade":"UN"
+					}
+				]
+			},
+			{
+				"codigo":[1024,1025,1026,1027,1028],
+				"endEntrega":"null,null",
+				"descEndEndrega":"RUA BENEDITO RAMOS DOS REIS, 10 - SANTANA DO PEDREGAL\r\nPOÇOS DE CALDAS - MG Cep:37701-139   *   PEDIDO POR JAIME  9 9139-6863",
+				"pedido":"015496",
+				"quantidade":0,
+				"bool_entrega":0,
+				"bool_cancelado":0,
+				"cliente":{
+					"codigo":999999,
+					"nome":"CONSUMIDOR",
+					"telefone":[
+						"3537222801 "
+					]
+				},
+				"itens":[
+					{
+						"codigo":13,
+						"descricao":"AREIA FINA M3 SILVINHO                 @",
+						"quantidade":0.5,
+						"unidade":"MT"
+					},
+					{
+						"codigo":4,
+						"descricao":"AREIA GROSSA M3",
+						"quantidade":0.5,
+						"unidade":"M3"
+					},
+					{
+						"codigo":5151,
+						"descricao":"CIMENTO SACO 50 KG      CP4",
+						"quantidade":5,
+						"unidade":"SC"
+					},
+					{
+						"codigo":5,
+						"descricao":"CAL HIDRATADO P/REBOQUE 20 KG",
+						"quantidade":5,
+						"unidade":"UN"
+					},
+					{
+						"codigo":1183,
+						"descricao":"TAXA DE ENTREGA",
+						"quantidade":1,
+						"unidade":"UN"
+					}
+				]
+			}
+		],
+		"caminhao":{
+			"codigo":3,
+			"placa":"GQD-5007   - FORD/ F  350",
+			"latitude":"-21.79582030204647",
+			"longitude":"-46.520699858665466",
+			"capacidade":"2500,0"
+		},
+		"motorista":{
+			"codigo":1,
+			"nome":"Jose Antonio de Freitas",
+			"telefone":[
+				"3591545461 ",
+				"35984271995"
+			]
+		},
+		"distancia":0,
+		"duracao":0,
+		"pesoTotal":"2280,0",
+		"observacao":"ajudante mateus",
+		"ck_inativo":0,
+		"ck_entregue":0,
+		"hora_saida":"0"
+	},
+	"cor":{
+		"cor":"gray",
+		"traducao":"Cinza"
+	}
+}
+]

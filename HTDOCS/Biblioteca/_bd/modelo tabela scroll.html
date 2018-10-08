@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    #header-fixed {
+      position: fixed;
+      top: 0px; display:none;
+      background-color:white;
+  }
+  </style>
+  <script type="text/javascript">
+    var tableOffset = $("#table-1").offset().top;
+  var $header = $("#table-1 > thead").clone();
+  var $fixedHeader = $("#header-fixed").append($header);
+
+  $(window).bind("scroll", function() {
+      var offset = $(this).scrollTop();
+
+      if (offset >= tableOffset && $fixedHeader.is(":hidden")) {
+          $fixedHeader.show();
+      }
+      else if (offset < tableOffset) {
+          $fixedHeader.hide();
+      }
+  });
+  </script>
+</head>
+<body>
+  <table id="header-fixed">
+    <thead>
+      <tr>
+        <th>Col1</th>
+        <th>Col2</th>
+        <th>Col3</th>
+      </tr>
+    </thead>
+    <tbody>
+       <tr>
+         <td>info</td>
+         <td>info</td>
+         <td>info</td>
+       </tr>
+       <tr>
+         <td>info</td>
+         <td>info</td>
+         <td>info</td>
+       </tr>
+       <tr>
+         <td>info</td>
+         <td>info</td>
+         <td>info</td>
+       </tr>
+    </tbody>
+  </table>
+</body>
+</html>
+

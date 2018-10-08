@@ -1,0 +1,98 @@
+
+
+<h1>Adicionar: Posicao Café</h1>
+
+<div class="text-right">
+	<a href="principal.php#!posicao_cafe" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="number" class="form-control" id="cliente" accesskey="i">
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="200" class="form-control" id="fazenda" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="200" class="form-control" id="cidade" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="200" class="form-control" id="insc_est" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="50" class="form-control" id="safra" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="lote" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="lote_cliente" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="date" class="form-control" id="entrada" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="10" class="form-control" id="nfe_fiscal" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="200" class="form-control" id="padrao" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="50" class="form-control" id="preparo" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="number" class="form-control" id="kilos" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="number" class="form-control" id="sacas" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="number" class="form-control" id="per_umi" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="number" class="form-control" id="per_imp" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="number" class="form-control" id="per_cat" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="number" class="form-control" id="per_def" >
+</div>
+<div class="col-md-4">
+	<br> &nbsp;&nbsp;
+	<input type="text" maxlength="200" class="form-control" id="cert" >
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao">
+			<script>$("#data_atualizacao").val("1")</script>
+			
+		<button class="btn btn-success" onclick='gravarRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="app/js/ajax/ajax_adicionar_posicao_cafe.js"></script>
+

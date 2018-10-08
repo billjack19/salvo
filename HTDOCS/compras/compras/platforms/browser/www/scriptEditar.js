@@ -1,0 +1,4 @@
+/* Editar */
+function selecionarPedido(){
+
+}

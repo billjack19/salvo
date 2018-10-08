@@ -1,0 +1,28 @@
+<div class='info '>
+	<a href="http://www.buscacep.correios.com.br/servicos/dnec/index.do" target="_blank" class="cep-link">
+		Não sei meu CEP
+	</a>
+	<li class='fields disabled-address'>
+
+	<div class='field street'>
+		<label for='street_1' class='required'>
+			Endereço 
+			<em>*</em>
+		</label>
+		<div class='input-box'>
+			<input type='text' name='street[]' id='street_1' value='' title='Endereço' class='input-text required-entry validate-no-html-tags' maxlength='70' autocomplete='off' autocorrect='off' placeholder='Ex: Rua Alameda das Araras' />
+		</div>
+	</div>
+
+	<div class='field numero'>
+	<label for='address:numero_endereco' class='required'>
+		Número 
+		<em>*</em>
+	</label>
+	<div class='input-box'>
+		<input type='tel' name='address[numero_endereco]' id='address:numero_endereco' value='' title='Número' class='input-text required-entry validate-no-html-tags' maxlength='10' autocomplete='off' placeholder='Ex: 478' />
+	</div>
+</div>
+<div class='field complemento nonemargin'>
+<label for='address:complemento_endereco' class=''>Complemento</label>
+<div class='input-box'><input type='text' name='address[complemento_endereco]' id='address:complemento_endereco' value='' title='Complemento' class='input-text validate-no-html-tags' maxlength='15' autocomplete='off' autocorrect='off' placeholder='Ex: Apto 42' /></div></div></li><li class='fields nativo'><div class='field bairro'><label for='address:bairro' class='required'>Bairro <em>*</em></label><div class='input-box'><input type='text' name='address[bairro]' id='address:bairro' value='' title='Número' class='input-text required-entry validate-no-html-tags' maxlength='60' autocomplete='off' autocorrect='off' placeholder='Ex: Vila Maria' /></div></div><div class='field estado'><label for='region_id' class='required'>Estado <em>*</em></label><select id='region_id' name='address[region_id]' class='styled-select required-entry validate-select' title='Estado'><option value=''>Selecione...</option><option value='485' >Acre</option><option value='486' >Alagoas</option><option value='487' >Amapá</option><option value='488' >Amazonas</option><option value='489' >Bahia</option><option value='490' >Ceará</option><option value='491' >Distrito Federal</option><option value='492' >Espírito Santo</option><option value='493' >Goiás</option><option value='494' >Maranhão</option><option value='495' >Mato Grosso</option><option value='496' >Mato Grosso do Sul</option><option value='497' >Minas Gerais</option><option value='498' >Pará</option><option value='499' >Paraíba</option><option value='500' >Paraná</option><option value='501' >Pernambuco</option><option value='502' >Piauí</option><option value='504' >Rio Grande do Norte</option><option value='505' >Rio Grande do Sul</option><option value='503' >Rio de Janeiro</option><option value='506' >Rondônia</option><option value='507' >Roraima</option><option value='508' >Santa Catarina</option><option value='509' >São Paulo</option><option value='510' >Sergipe</option><option value='511' >Tocantins</option></select></div><div class='field cidade select-cidade nonemargin'><label for='city_id' class='required'>Cidade <em>*</em></label><select id='city_id' name='address[city_id]' class='styled-select required-entry validate-no-html-tags' title='Cidade'><option value=''>Selecione...</option></select><div id='city_id_loading' style='display: none'></div></div><div class='field cidade nonemargin'><div class='input-box'><input type='text' name='address[city]' id='city' value='' title='city' class='input-text '  /></div></div><div class='field cod_municipio nonemargin'><div class='input-box'><input type='text' name='address[cod_municipio]' id='cod_municipio' value='' title='city' class='input-text '  /></div></div></li><li class='fields estrangeiro'><div class='field bairro'><label for='address:bairro' class=''>Bairro</label><div class='input-box'><input type='text' name='address[bairro]' id='address:bairro' value='' title='Número' class='input-text validate-no-html-tags' maxlength='60' autocomplete='off' autocorrect='off' placeholder='Ex: Vila Maria' /></div></div><div class='field estado-estrangeiro displaynone'><label for='region_id_estrangeiro' class=''>Estado</label><div class='input-box'><input type='text' name='address[region_id]' id='region_id_estrangeiro' value='EX' title='Estado' class='input-text validate-no-html-tags' maxlength='60' autocomplete='off' autocorrect='off' placeholder='Ex: Nevada' /></div></div><div class='field cidade-estrangeiro nonemargin'><label for='city_estrangeiro' class='required'>Cidade <em>*</em></label><div class='input-box'><input type='text' name='address[city]' id='city_estrangeiro' value='' title='Cidade' class='input-text validate-no-html-tags' maxlength='60' autocomplete='off' autocorrect='off' placeholder='Ex: Las Vegas' /></div></div><div class='field cod_municipio_estrangeiro displaynone'><div class='input-box'><input type='text' name='address[cod_municipio]' id='cod_municipio_estrangeiro' value='999999' title='city' class='input-text '  /></div></div></li><li class='fields disabled-address'><div class='field ponto_referencia full'><label for='address:ponto_referencia' class=''>Ponto de Referência</label><div class='input-box'><input type='text' name='address[ponto_referencia]' id='address:ponto_referencia' value='' title='Ponto de Referência' class='input-text validate-no-html-tags' maxlength='70' autocomplete='off' autocorrect='off' placeholder='Ex: Ao lado da Saraiva' /></div></div></li></ul></div> 

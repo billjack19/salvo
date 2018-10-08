@@ -1,0 +1,67 @@
+
+
+<h1>Adicionar: Configurar Site</h1>
+
+<div class="text-right">
+	<a href="principal.php#!configurar_site" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Titulo &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="titulo_configurar_site" accesskey="i">
+</div>
+<div class="col-md-4">
+	<br>Titulo Menu &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="titulo_menu_configurar_site" >
+</div>
+<div class="col-md-4">
+	<br>Cor Pagina &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="cor_pagina_configurar_site" >
+</div>
+<div class="col-md-4">
+	<br>Contra Cor Pagina &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="contra_cor_pagina_configurar_site" >
+</div>
+<div class="col-md-4">
+	<br>Imagem Icone &nbsp;&nbsp;<span style='color: red'>*</span>
+	<button onclick="chamarModalImagem('imagem_icone_configurar_site', 'adicionar_configurar_site', 'img')" class="btn" >
+		Selecionar Imagem
+	</button>
+	<input type="text" class="form-control" id="imagem_icone_configurar_site" disabled>
+</div>
+<div class="col-md-4">
+	<br>Imagem Logo &nbsp;&nbsp;<span style='color: red'>*</span>
+	<button onclick="chamarModalImagem('imagem_logo_configurar_site', 'adicionar_configurar_site', 'img')" class="btn" >
+		Selecionar Imagem
+	</button>
+	<input type="text" class="form-control" id="imagem_logo_configurar_site" disabled>
+</div>
+<div class="col-md-4">
+	<br>Bem Vindo &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="bem_vindo_configurar_site" >
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_configurar_site" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao_configurar_site">
+			<script>$("#data_atualizacao_configurar_site").val("1")</script>
+			
+		<button class="btn btn-success" onclick='gravarRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="app/js/ajax/ajax_adicionar_configurar_site.js"></script>
+

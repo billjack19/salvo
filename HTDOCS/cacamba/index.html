@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  	<script>
+  		var hostWebService = "192.168.0.199";
+  		var arquivoTXT = "login1";
+  		var portaWebService = ":8080";
+  		var caminhoWebService = "/CacambaCDI/webresources/";
+  		var urlWebService = "http://"+hostWebService+portaWebService+caminhoWebService;
+  		var parametrosWebService = "?tagmode=any&jsoncallback=?";
+  		// var arrayJogos = new Array();
+  		// var arrayJogadores = new Array();
+  		var listagem = false;
+
+  		var toast_position = 'bottom-center';
+		var toast_extAlign = 'center';
+  	</script>
+
+  	<script type="text/javascript">
+  		var urlGoogleMaps = "https://maps.google.com/maps/api/geocode/json";
+  		var chaveGoogleMaps = "&key=AIzaSyAhiMsOZoOhu4m5SHG4l_ij6WEHcJdf71A";
+
+  	</script>
+
+  	<meta charset="utf-8" />
+	<link rel='shortcut icon' href="img/cacamba_verde.png" />
+  	<meta name="format-detection" content="telephone=no" />
+  	<meta name="msapplication-tap-highlight" content="no" />
+  	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  	<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+  	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+  	<title>Monitoramento de Caçambas</title>
+
+  	<script type="text/javascript" src="js/jQuery.js"></script>
+
+  	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+  	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+  	
+  	<!-- Scrips padrão -->
+  	<script type="text/javascript" src="js/scripts.js"></script>
+  	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+  	<script type="text/javascript" src="js/bootbox.js"></script>
+  	<script type="text/javascript" src="js/masked2.js"></script>
+  	<script type="text/javascript" src="js/masked.js"></script>
+  	<script type="text/javascript" src="js/toast.js"></script>
+  	<script type="text/javascript" src="js/maskmoney.js"></script>
+  	<script type="text/javascript" src="js/moment.js"></script>
+
+  	<!-- Biblioteca dataList usando Jquery  -->
+  	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+  	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+  	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+  	<link rel="stylesheet" type="text/css" href="css/toast.css">
+
+
+	<link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
+
+	<link rel="stylesheet" media="screen" href="css/style_particles.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/googleMaps.css"> -->
+</head>
+<body onload="$('#login').focus();">
+<!-- <body> -->
+
+
+
+<div id="hiddenUsuario"></div><!-- Para colocar o nome com todos os dados dinamicamente -->
+<div class="hidden"><!-- Para colocar os filtros -->
+	<input type="checkbox" id="filtro_cliente" checked="true">
+	<input type="checkbox" id="filtro_cacamba_cinza" checked="true">
+	<input type="checkbox" id="filtro_cacamba_vermelha" checked="true">
+	<input type="checkbox" id="filtro_cacamba_verde" checked="true">
+	<input type="checkbox" id="filtro_caminhao" checked="true">
+</div>
+
+
+
+<!-- Mapa -->
+<div id="map" style="position: absolute;margin-top: 0px;width: 100%;height: 100%;margin-left: 0px;"></div>
+
+
+<!-- Filtros para o mapa -->
+<!-- <div id="cabecarioFiltro" class="hidden">
+	<table class="table">
+		
+	</table>
+</div> -->
+
+
+
+<!-- Logo CDI no canto -->
+<div class="imagemLogo">
+	<img src="img/Logo.png" width="100%">
+</div>
+
+<div class="imagemLogo2" id="logoEmpresaLogada">
+	<!-- <img src="img/Logo.png" width="100%"> -->
+</div>
+
+
+
+<!-- Area de aperação -->
+<div class="hidden areaTotalOperacao" id="novaJanelaOperacao">
+	<div class="" id="particles-js" style="width: 100%;height: 25%;background-color: #ddd;margin-top: 0px;margin-left: 0px;"></div>
+	<div id="usuarioLagadoView2" class="divNomeUsuario2"></div>
+	<div id="areaOperacao" class="areaOperacaoStyle"></div>
+</div>
+
+
+
+<!-- Operações -->
+<div id="divBotoesOperacoes" class="hidden" style="position: absolute;margin-top: 1%;width: 99%;margin-right: 10px;">
+	<input type="hidden" id="filtro" value="0">
+	<div id="usuarioLagadoView" class="divNomeUsuario"></div>
+
+	<!-- Botões de configuração do modal -->
+	<button class="hidden" id="confirmarCacambaButton" data-toggle='modal' data-target='#modalComfirmaCacamba'>
+		</button>
+	<button class="hidden" id="recolherCacambaButton" data-toggle='modal' data-target='#modalRecolherCacamba'>
+		</button>
+	<button class="hidden" id="finalizarCacambaButton" data-toggle='modal' data-target='#modalFinalizarCacamba'>
+		</button>
+
+	<!-- Botões de operação -->
+	<div class="btn-group" role="group" aria-label="...">
+
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+				<i class="fa fa-filter" aria-hidden="true"></i>&nbsp;&nbsp;Filtro
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu text-left">
+				<li>
+					<button id="linha_cliente"  class="linhaFiltro btn-block" onclick="marcaFiltro('_cliente');">
+						<b><img src="img/cliente.png">&nbsp;&nbsp;&nbsp;Cliente</b>
+					</button>
+				</li>
+				<li>
+					<button id="linha_cacamba_cinza" class="linhaFiltro btn-block" onclick="marcaFiltro('_cacamba_cinza');">
+						<b><img src="img/cacamba_temp.png">&nbsp;&nbsp;&nbsp;Caçamba Pedida</b>
+					</button>
+				</li>
+				<li>
+					<button id="linha_cacamba_vermelha" class="linhaFiltro btn-block" onclick="marcaFiltro('_cacamba_vermelha');">
+						<b><img src="img/cacamba_vermelha.png">&nbsp;&nbsp;&nbsp;Caçamba em Uso</b>
+					</button>
+				</li>
+				<li>
+					<button id="linha_cacamba_verde" class="linhaFiltro btn-block" onclick="marcaFiltro('_cacamba_verde');">
+						<b><img src="img/cacamba_verde.png">&nbsp;&nbsp;&nbsp;Caçamba há Recolher</b>
+					</button>
+				</li>
+				<li>
+					<button id="linha_caminhao" class="linhaFiltro btn-block" onclick="marcaFiltro('_caminhao');">
+						<b><img src="img/truck.png">&nbsp;&nbsp;&nbsp;Caminhão</b>
+					</button>
+				</li>
+			</ul>
+		</div>
+
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu text-left">
+				<li>
+					<button class="btn-default btn-block btn" id="buttonCacambaResidencial" data-toggle='modal' data-target='#modalAdicinarMarcador'>
+						&nbsp;<i class="fa fa-home" aria-hidden="true"></i>&nbsp;&nbsp;
+						Caçamba Residencial&nbsp;
+					</button>
+				</li>
+				<li>
+					<button class="btn-default btn-block btn" id="buttonCacambaCliente" data-toggle='modal' data-target='#modalcacambaCliente' onclick="listarClientesCombo();">
+						&nbsp;<i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;
+						Caçamba Cliente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</button>
+				</li>
+			</ul>
+		</div>
+
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;Cadastro
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<button type="button" id="buttonCliente" class="btn btn-default btn-block" onclick="chamarTelaCliente();">
+						<i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;Cliente
+					</button>
+				</li>
+				<li>
+					<button type="button" id="buttonCacambaCadastro" class="btn btn-default btn-block" onclick="chamarTelaCacamba();">
+						<i class="fa fa-archive" aria-hidden="true"></i>&nbsp;&nbsp;Caçamba
+					</button>
+				</li>
+				<li>
+					<button type="button" id="buttonCaminhao" class="btn btn-default btn-block" onclick="chamarTelaCaminhao();">
+						<i class="fa fa-truck" aria-hidden="true"></i>&nbsp;&nbsp;Caminhão
+					</button>
+				</li>
+				<li>
+					<button type="button" id="buttonMotorista" class="btn btn-default btn-block" onclick="chamarTelaMotorista();">
+						<i class="fa fa-id-card" aria-hidden="true"></i>&nbsp;&nbsp;Motrista
+					</button>
+				</li>
+			</ul>
+		</div>
+
+		<button class="btn-default btn" id="buttonAtualizar" onclick="atualizaPosicaoCaminhao();atualizaCacamba();">
+			<i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;Atualizar
+		</button>
+
+	</div><br>
+	<!-- Campos de Filtro por Regiões -->
+	<div class="col-xs-7" id="divCamposBuscaRgiao" style="position: fixed;top: 50px;right: 20px;">
+		<table class="table">
+			<tr>
+				<td>
+					<div class='input-group'>
+						<div class='input-group-addon' id="buttonBuscaSubRegiao" onclick="listarSubRegiaoCombo($('#regiaoInputList').val());">
+							Região
+						</div>
+						<div id="comboRegioesDiv">
+							<input type="text" class="form-control" value="Sem registro de Regiões" disabled>
+						</div>
+					</div>
+				</td>
+				<td>&nbsp;</td>
+				<td>
+					<div class='input-group'>
+						<div class='input-group-addon' id="buttonMostraSubRegiao" onclick="selecionarSubRegiao();">
+							Sub Região
+						</div>
+						<div id="comboSubRegioesDiv">
+							<input type="text" class="form-control" value="Sem registro de Sub Regiões" disabled>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+
+
+
+	
+<div id="loginUsuario" style="position: absolute;margin-top: 0px;width: 100%;height: 100%;margin-left: 0px;">
+	<div class="col-md-12 camposLogin" id="cabecarioPrincipal">
+		<form id="formLogin" method="post">
+			<div class="col-md-12 text-center">
+				<h1 class="text-center" style="font-size: 100px;">
+					<i class="fa fa-user-circle" aria-hidden="true"></i>
+				</h1>
+				<h1 style="margin-top: -35px;font-size: 60px;">Login</h1><br>
+			</div>
+			<div class="col-md-12">
+				<div class="input-group">
+						<div class="input-group-addon" style="background-color: #428bca;">
+							<i class="fa fa-user-o" aria-hidden="true"></i>
+						</div>
+						<input id="login" placeholder="Usuário" type="text" class="form-control camposLoginInput" size="12pt" required>
+				</div>
+			</div>
+			<br>
+			<div class="col-md-12">
+				<div class="input-group">
+						<div class="input-group-addon" style="background-color: #d9534f;">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</div>
+						<input id="password" placeholder="Senha" type="password" class="form-control camposLoginInput" size="12pt" required>
+				</div>
+			</div>
+			<br>
+			<div class="col-md-12">
+				<div class="input-group">
+						<div class="input-group-addon" style="background-color: #5cb85c;">
+							<i class="fa fa-id-card" aria-hidden="true"></i>
+						</div>
+						<input id="cnpj_login" placeholder="CNPJ" type="text" class="form-control camposLoginInput" size="12pt" required>
+				</div>
+			</div>
+			<br>
+			<div class="col-md-12">
+				<button type="submit" class="btn btn-primary btn-block">
+					Entrar
+				</button><br>
+				<br><br><br>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+
+<!-- Modal endereço para marcador -->
+<div class="modal fade" id="modalAdicinarMarcador" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Adicionar Caçamba:</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-xs-6">
+					<label>Título: <span style="color: red;">*</span></label>
+					<input id="modalTituloEndereco" type="text" class="form-control" required>
+				</div>
+				<div class="col-xs-6">
+					<label>CEP: <span style="color: red;">*</span></label>
+					<div class="input-group">
+						<input id="modalCEPEndereco" type="text" rel=cep class="form-control" onkeyup="buscaPorCep();" required>
+						<div class="input-group-addon" id="carregarCep">
+							<i class="fa fa-location-arrow" aria-hidden="true"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xs-9">
+					<label>Endereço: <span style="color: red;">*</span></label>
+					<input id="modalEnderecoEndereco" type="text" class="form-control" disabled required>
+				</div>
+
+				<div class="col-xs-3">
+					<label>Numero: <span style="color: red;">*</span></label>
+					<input id="modalNumeroEndereco" type="number" class="form-control" required>
+				</div>
+
+				<div class="col-xs-5">
+					<label>Bairro: <span style="color: red;">*</span></label>
+					<input id="modalBairroEndereco" type="text" class="form-control" disabled required>
+				</div>
+
+				<div class="col-xs-5">
+					<label>Cidade: <span style="color: red;">*</span></label>
+					<input id="modalCidadeEndereco" type="text" class="form-control" disabled required>
+				</div>
+				<!-- <div id="comboCidadeModalEndereco"></div> -->
+
+				<div class="col-xs-2">
+					<label>UF: <span style="color: red;">*</span></label>
+					<input id="comboUfModalEndereco" type="text" class="form-control" disabled required>
+				</div>
+				<br><br><br><br><br><br><br><br><br><br>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="marcadorPorEndereço();">Adicionar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal para adicionar Caçamba através do Cliente -->
+<div class="modal fade" id="modalcacambaCliente" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Adicinar Caçamaba (Cliente):</h4>
+			</div>
+			<div class="modal-body">
+
+				<label class="label-float" for="name">Cliente:</label>
+				<div id="comboClienteModalCacambaCliente"></div>
+				<div id="descricaoClienteModalCacambaCliente"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="adicionarCacambaClienteSQL();">Confirmar</button>
+				<button type="button" class="btn btn-primary" onclick="descricaoClienteModal();">Verifica</button>
+				<button type="button" class="btn btn-info" id="fecharModalCacambaCliente" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Modal Confirma Pedido de Caçamba -->
+<div class="modal fade" id="modalComfirmaCacamba" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Camfirmar Pedido Caçamba:</h4>
+			</div>
+			<div class="modal-body">
+
+				<label class="label-float" for="name">Titulo:</label>
+				<div id="modalTituloConfirma"></div>
+				<!-- <input id="modalTituloConfirma" type="text" class="form-control" disabled> -->
+				<input type="hidden" id="modalIdCacambaCanfirma">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="canfirmarPedidoCacamba();">Confirmar</button>
+				<button type="button" class="btn btn-danger" onclick="excluirPedidoCacamba();">Excluir</button>
+				<button type="button" class="btn btn-info" id="fecharModalComfirmaCacamba" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Recolher Pedido Caçamba -->
+<div class="modal fade" id="modalRecolherCacamba" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Mandar Recolher Caçamba:</h4>
+			</div>
+			<div class="modal-body">
+
+				<label class="label-float" for="name">Titulo:</label>
+				<input id="modalTituloRecolher" type="text" class="form-control" disabled>
+				<input type="hidden" id="modalIdCacambaRecolher">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="recolherPedidoCacamba();">Confirmar</button>
+				<button type="button" class="btn btn-info" id="fecharModalRecolherCacamba" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Finalizar Pedido Caçamba -->
+<div class="modal fade" id="modalFinalizarCacamba" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Finalizar Pedido Caçamba:</h4>
+			</div>
+			<div class="modal-body">
+				<label class="label-float" for="name">Titulo:</label>
+				<input id="modalTituloFinalizar" type="text" class="form-control" disabled>
+				<input type="hidden" id="modalIdCacambaFinalizar">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="finalizarPedidoCacamba();">Confirmar</button>
+				<button type="button" class="btn btn-info" id="fecharModalFinalizarCacamba" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="js/ajax/ajax_localizacao.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_cacamba.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_caminhao.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_login.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_outros.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_cacamba_residencial.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_cliente.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_cliente_marcador.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_cacamba_cliente.js"></script>
+<script type="text/javascript" src="js/ajax/ajax_local_entrega.js"></script>
+
+
+<script src="js/particles.min.js"></script>
+<script src="js/app_particles.js"></script>
+
+<div id="caminhaosControle"></div>
+
+<input type="hidden" id="atualizaPosicaoLat">
+<input type="hidden" id="atualizaPosicaoLng">
+<input type="hidden" id="caminhaoId">
+
+<script type="text/javascript">
+	mask();
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD45i0F7YMsIRrpkDNOwU2CU-SK9hj5Cw8&callback=initMap" async defer></script>
+<div class="hidden">
+	</body>
+</div>
+</html>

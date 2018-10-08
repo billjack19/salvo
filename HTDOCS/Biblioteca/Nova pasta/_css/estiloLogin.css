@@ -1,0 +1,116 @@
+body {
+	background-image: url(../_imagens/login/fundo.jpg);
+}
+
+div#quadro {
+	position: absolute;
+	background-color: rgba(69,79,86,.9);
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	width: 367px;
+	height: 450px;
+	left: 470px;
+	top: 75px;
+	font-family: sans-serif arial;
+}
+
+img#cara {
+	position: absolute;
+	left: 135px;
+	top: 50px;
+}
+
+img#loga {
+	position: absolute;
+	left: 33px;
+	top: 215px;
+}
+
+img#passw {
+	position: absolute;
+	left: 33px;
+	top: 305px;
+}
+
+h3#entre {
+	position: absolute;
+	color: white;
+	left: 100px;
+	top: 130px;
+}
+
+input#in1[type=text]{
+	position: absolute;
+	border: none;
+	background-color: #FAFFBD;
+    height:40px;
+    top: 230px;
+    left: 30px;
+    font-size: 12pt;
+    padding-left: 10px;
+    font-family: inherit;
+}
+
+input#in2[type=password]{
+	position: absolute;
+	border: none;
+	background-color: #FAFFBD;
+    height:40px;
+    top: 325px;
+    left: 30px;
+    font-size: 12pt;
+    padding-left: 10px;
+    font-family: inherit;
+}
+
+a#e1 {
+	font-family: inherit;
+	font-size: 9pt;
+	color: white;
+	position: absolute;
+	top: 215px;
+	left: 50px;
+}
+
+a#e2 {
+	font-family: inherit;
+	font-size: 9pt;
+	color: white;
+	position: absolute;
+	top: 309px;
+	left: 50px;
+}
+
+
+
+.botao{
+	position: absolute;
+	font:normal 16px Tahoma, Geneva, sans-serif;
+	font-style:italic;
+	color:#ffffff;
+	background:rgba(255,255,255,0);
+	border: none;
+	top: 400px;
+	left: 280px;
+
+}
+.botao:hover{
+	-webkit-transition: all .2s ease-in;
+   	-moz-transition: all .2s ease-in;
+	-webkit-transform: scale(1.2);
+	-moz-transform: scale(1.2);
+}
+
+a:hover{
+	-webkit-transition: all .2s ease-in;
+   	-moz-transition: all .2s ease-in;
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+}
+
+div#div_nivel {
+	position: relative;
+	top: 380px;
+	left: 25px;
+	color: white;
+}

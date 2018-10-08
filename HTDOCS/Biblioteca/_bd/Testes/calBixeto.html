@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		function calcBixeto(){
+			var ano = document.getElementById('ano').value;
+			var resut = document.getElementById('resut').innerHTML;
+			var ano = parseInt(ano);
+
+			if ((ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 == 0)))
+				alert("É bixeto");
+			else alert("Não é bixeto");
+		}
+	</script>
+</head>
+<body>
+	<h1>Digite o ano</h1>
+	<input type="text" id="ano">
+	<button onclick="calcBixeto()">Calcular</button>
+	<p id="resut"></p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+/*.botao_tetris{
+	position: absolute;
+	top: 40px;
+	left: 530px;
+}*/
+/*#rola{
+	position: absolute;
+	top: 50%;
+	left: 40%;
+
+}
+#esqueda{
+	position: absolute;
+	top: 60%;
+	left: 10%;
+}
+
+#baixo{
+	position: absolute;
+	top: 70%;
+	left: 20%;
+}
+#direita{
+	position: absolute;
+	top: 60%;
+	left: 30%;
+}*/
+.jogo{
+	position: center;
+	/*background-color: #fff;*/
+	
+}
+.tetrisParaJogar{
+	width: 1000px;
+	height: auto;
+	border-radius: 10px;
+}
