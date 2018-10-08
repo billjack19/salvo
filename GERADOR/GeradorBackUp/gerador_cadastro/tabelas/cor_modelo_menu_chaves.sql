@@ -1,0 +1,4 @@
+
+-- Chaves da cor_modelo_menu
+-- Gerando em: 05/08/2018 23:35:03
+-- Pelo Gerador JK-19

@@ -1,0 +1,24 @@
+
+<h1>Tópicos Cards</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_topicos_cards" accesskey="b" onkeyup='buscar_topicos_cards()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!adicionar_topicos_cards" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Tópicos Cards
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoTopicos_cards"></div>
+
+<script type="text/javascript">
+	verificaAcess('topicos_cards');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_lista_topicos_cards.js"></script>

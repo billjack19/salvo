@@ -1,0 +1,81 @@
+
+-- Dados da tabela grade
+-- Gerando em: 05/08/2018 23:35:03
+-- Pelo Gerador JK-19
+
+TRUNCATE `grade`;
+
+-- Dados da tabela: 
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 1, '2018-01-02 08:21:20', 9, 'cliente_site', 'orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 2, '2018-01-02 08:21:36', 9, 'orcamento', 'item_orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 3, '2018-01-02 10:28:39', 9, 'configurar_site', 'cards');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 5, '2018-01-02 10:28:58', 9, 'configurar_site', 'slide_show');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 6, '2018-01-02 10:29:09', 9, 'configurar_site', 'endereco_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 8, '2018-01-02 13:47:21', 9, 'configurar_site', 'loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 9, '2018-01-02 15:41:29', 9, 'loja', 'topicos_loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 10, '2018-01-02 16:04:45', 9, 'configurar_site', 'destaque_grupo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 11, '2018-01-08 08:45:54', 10, 'loja', 'topicos_loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 12, '2018-01-12 11:03:07', 11, 'configurar_site', 'cards');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 13, '2018-01-12 11:03:15', 11, 'configurar_site', 'destaque_grupo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 14, '2018-01-12 11:03:25', 11, 'configurar_site', 'slide_show');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 15, '2018-01-12 11:03:41', 11, 'configurar_site', 'loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 19, '2018-01-12 11:07:14', 11, 'configurar_site', 'endereco_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 20, '2018-01-13 09:37:13', 11, 'saiba_mais', 'adicional_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 21, '2018-01-22 10:05:11', 11, 'teste', 'teste_grade');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 22, '2018-01-23 09:59:55', 12, 'jogo', 'manhas');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 23, '2018-01-24 16:48:56', 13, 'cliente_site', 'orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 24, '2018-01-24 16:49:03', 13, 'orcamento', 'item_orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 25, '2018-01-24 16:49:13', 13, 'configurar_site', 'cards');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 26, '2018-01-24 16:49:23', 13, 'configurar_site', 'destaque_grupo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 27, '2018-01-24 16:49:55', 13, 'configurar_site', 'endereco_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 28, '2018-01-24 16:50:09', 13, 'configurar_site', 'slide_show');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 29, '2018-01-24 16:50:25', 13, 'configurar_site', 'loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 30, '2018-01-24 16:50:59', 13, 'loja', 'topicos_loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 31, '2018-01-27 10:08:58', 12, 'console', 'jogo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 32, '2018-01-30 10:17:33', 15, 'configurar_site', 'cards');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 33, '2018-01-30 10:17:44', 15, 'configurar_site', 'destaque_grupo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 34, '2018-01-30 10:17:52', 15, 'configurar_site', 'endereco_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 35, '2018-01-30 10:18:04', 15, 'configurar_site', 'slide_show');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 36, '2018-01-30 10:18:11', 15, 'configurar_site', 'loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 37, '2018-01-30 10:18:21', 15, 'cliente_site', 'orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 38, '2018-01-30 10:18:30', 15, 'orcamento', 'item_orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 39, '2018-01-30 10:18:42', 15, 'loja', 'topicos_loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 40, '2018-01-30 14:43:01', 15, 'saiba_mais', 'adicional_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 42, '2018-02-06 15:50:47', 15, 'cards', 'topicos_cards');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 43, '2018-02-07 17:25:08', 17, 'andar', 'vagas');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 44, '2018-02-22 10:04:15', 18, 'jogos', 'historico_jogo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 45, '2018-03-22 10:39:52', 19, 'topicos', 'apostilas');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 46, '2018-03-22 14:56:16', 19, 'topicos', 'livros');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 47, '2018-03-23 08:08:58', 19, 'topicos', 'revista');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 48, '2018-03-23 08:09:09', 19, 'revista', 'volumes');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 49, '2018-04-02 09:42:19', 20, 'viagem', 'viagem_item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 50, '2018-04-02 09:42:26', 20, 'pedido', 'pedido_item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 51, '2018-04-11 16:55:04', 20, 'regiao', 'bairro');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 52, '2018-04-12 16:59:02', 20, 'cliente', 'cliente_contato');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 53, '2018-05-21 14:34:41', 23, 'orcamento', 'orcamento_item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 54, '2018-05-21 14:34:50', 23, 'grupo', 'item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 55, '2018-06-14 09:15:48', 24, 'grupo', 'item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 56, '2018-06-14 09:15:59', 24, 'item', 'item_unidade_medida');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 57, '2018-06-14 09:16:07', 24, 'cliente', 'cliente_contato');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 58, '2018-06-14 09:16:16', 24, 'cliente', 'cliente_endereco');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 59, '2018-06-14 09:16:27', 24, 'pedido', 'pedido_item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 60, '2018-06-14 09:16:32', 24, 'pedido', 'pedido_pagamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 61, '2018-06-14 09:16:40', 24, 'pedido_pagamento', 'pedido_pagamento_extorno');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 62, '2018-06-14 09:33:39', 24, 'caixa_movimentacao', 'caixa_operacao');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 63, '2018-06-14 10:40:44', 24, 'empresa', 'filial');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 64, '2018-07-11 17:33:04', 25, 'cliente_site', 'orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 65, '2018-07-11 17:33:12', 25, 'orcamento', 'item_orcamento');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 66, '2018-07-11 17:33:23', 25, 'configurar_site', 'cards');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 67, '2018-07-11 17:33:31', 25, 'configurar_site', 'destaque_grupo');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 68, '2018-07-11 17:33:41', 25, 'configurar_site', 'endereco_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 69, '2018-07-11 17:33:49', 25, 'configurar_site', 'slide_show');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 70, '2018-07-11 17:34:01', 25, 'configurar_site', 'loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 71, '2018-07-11 17:34:07', 25, 'loja', 'topicos_loja');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 72, '2018-07-13 09:22:12', 25, 'saiba_mais', 'adicional_site');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 73, '2018-07-13 14:16:29', 25, 'new_sjt', 'paginas');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 74, '2018-07-16 10:05:50', 25, 'item', 'fotos');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 75, '2018-07-27 14:34:35', 25, 'grupo', 'item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 76, '2018-07-30 15:25:16', 23, 'pedido', 'compra');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 77, '2018-07-30 15:25:22', 23, 'compra', 'compra_item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 78, '2018-07-30 15:34:33', 23, 'pedido', 'pedido_item');
+INSERT INTO grade ( `id_grade`, `descricao_grade`, `projetos_id`, `tabela_primaria`, `tabela_grade`) VALUES ( 79, '2018-08-05 15:21:07', 26, 'pessoa', 'telefone');

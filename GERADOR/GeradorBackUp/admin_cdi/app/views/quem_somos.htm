@@ -1,0 +1,24 @@
+
+<h1>Quem Somos</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_quem_somos" accesskey="b" onkeyup='buscar_quem_somos()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!adicionar_quem_somos" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Quem Somos
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoQuem_somos"></div>
+
+<script type="text/javascript">
+	verificaAcess('quem_somos');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_lista_quem_somos.js"></script>

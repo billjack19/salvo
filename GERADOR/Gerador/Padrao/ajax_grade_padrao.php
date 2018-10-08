@@ -1,0 +1,45 @@
+<?php
+
+
+
+$sql = "SHOW TABLES";
+$verifica = $pdo->query($sql);
+$nomeTable = "";
+$listaGradesAjaxLista = "";
+foreach ($verifica as $dados2) {
+	$nomeTable = $dados2[0];
+
+	if (!in_array($nomeTable, $tabelasPadrao)){
+		$sql = "SHOW COLUMNS FROM $nomeTable";
+		$verifica = $pdo->query($sql);
+
+		$id_tabela = "";
+		$colunas = "";
+		$contColuna = 0;
+
+		foreach ($verifica as $dados) {
+			if ($dados[3] == "PRI") {
+				$id_tabela = $dados[0];
+			}
+			$contColuna++;
+			$colunas .= $contColuna == 1 ? $dados[0] : ",".$dados[0];
+		}
+
+		// $classeName = gerarAjaxGradeLista($nomeTable, $id_tabela, $colunas, $projetoNome, $pdo, $camposGrade);
+		// $listaAjaxLista .= "<li>".$classeName."</li>";
+
+		$classeName = gerarAjaxGradeLista($nomeTable, $id_tabela, $colunas, $projetoNome, $pdo, $camposGrade);
+		if ($classeName != "") {
+			$classeName = explode("+", $classeName);
+			for ($i=0; $i < sizeof($classeName); $i++) $listaGradesAjaxLista .= "<li>".$classeName[$i]."</li>";
+		}
+	}
+}
+
+function gerarAjaxGradeLista($nomeTabela, $id_tabela, $colunas, $projetoNome, $pdo, $camposGrade){
+	include "Padrao/ajax_grade_include.php";
+	return $nomeArquivos;
+	// criarArquivo("../GeradorProjetos/$projetoNome/app/js/ajax/$classeNameAjax.js", $contrudoAjax);
+	// return $classeNameAjax;
+}
+?>
