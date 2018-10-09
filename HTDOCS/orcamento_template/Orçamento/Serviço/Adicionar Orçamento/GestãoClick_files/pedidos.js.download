@@ -1,0 +1,1391 @@
+var cacheEquip = {};
+$(document).ready(function(){
+    $.extend(jQuery.validator.messages, {required: ''});
+    $('form').validate({
+        ignore: [],
+        onfocusout: function(e) {
+              this.element(e);
+        },
+        onkeyup: false,
+        rules:{
+            'data[Pedido][data]': {
+                  dateBR: 'both'
+            },
+            'data[Pedido][previsao_entrega]': {
+                dateBR: 'both'
+            },
+            'data[Pedido][forma_pagamento]':{
+    	        required: (controller == 'ordens_servicos' ? false : true),
+    	    }
+        },
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
+            }
+        },
+        submitHandler: function(form){
+            if(validaPedido() && validaDesconto()){
+            	validaEstoque(form);
+            }
+        }
+    });
+
+    $('#ClienteId').tokenInput('/clientes/buscaClientes',{
+        inputClass: 'form-control',
+        modalClass: 'modal-frame-large',
+        linkNew:'/clientes/adicionar/?modal=true',
+        inputClass: 'form-control',
+        hintText: 'Digite no mínimo 3 caracteres',
+        minChars: 0,
+        required:(controller == 'vendas_balcao' ? false : true),
+        permissionLinkNew:permissaoCadastrarCliente,
+        resultsFormatter: function(item){
+            complementoCliente = '';
+            if(item.nome_fantasia != ''){
+                complementoCliente += item.nome_fantasia;
+            }
+            if(item.cpf_cnpj != ''){
+                if(complementoCliente != ''){
+                    complementoCliente += ' - ';
+                }
+                complementoCliente += item.cpf_cnpj;
+            }
+            if(complementoCliente != ''){
+                complementoCliente  = '<div><small class = "text-muted">'+complementoCliente+'</small></div>';
+            }
+            return '<li>' + item.nome + complementoCliente + '</li>'
+        },
+
+        onAdd: function(item){
+            $('#NomeCliente').val(item.nome);
+            cacheEquip = {};
+        },
+        onDelete: function(item){
+            $('#NomeCliente').val('');
+            cacheEquip = {};
+        },
+    });
+
+    $('#TransportadoraId').tokenInput('/transportadoras/buscaTransportadoras',{
+        modalClass: 'modal-frame-large',
+        linkNew:'/transportadoras/adicionar/?modal=true',
+        inputClass: 'form-control-table',
+        hintText: 'Digite no mínimo 3 caracteres',
+        minChars: 0,
+        resultsFormatter: function(item){
+            cpfCnpj = '';
+            if(item.cpf_cnpj != ''){
+                cpfCnpj = ' - '+item.cpf_cnpj;
+            }
+            return '<li>' + item.nome + cpfCnpj +'</li>'
+        },
+        permissionLinkNew:permissaoCadastrarTransportadora,
+        onAdd: function(item){
+            $('#NomeTransportadora').val(item.nome);
+        },
+        onDelete: function(item){
+            $('#NomeTransportadora').val('');
+        },
+    });
+
+    $('#CentroCustoId').tokenInput('/centros_custos/buscaCentrosCustos',{
+        modalClass: 'modal-frame-large',
+        linkNew:'/centros_custos/adicionar/?modal=true',
+        inputClass: 'form-control-table',
+        hintText: 'Digite no mínimo 3 caracteres',
+        minChars: 0,
+        permissionLinkNew:permissaoCadastrarCentroCusto,
+        onAdd: function(item){
+            $('#NomeCentroCusto').val(item.nome);
+        },
+        onDelete: function(item){
+            $('#NomeCentroCusto').val('');
+        },
+    });
+
+    if(controller == 'orcamentos_produtos'){
+        refUsuario = 'orcamento-produto';
+    }else if(controller == 'orcamentos_servicos'){
+        refUsuario = 'orcamento-servico';
+    }else if(controller == 'vendas_produtos'){
+        refUsuario = 'pedido-produto';
+    }else if(controller == 'vendas_servicos'){
+        refUsuario = 'pedido-servico';
+    }else if(controller == 'vendas_balcao'){
+        refUsuario = 'pdv';
+    }else{
+        refUsuario = 'ordem-servico';
+    }
+
+    $('#UsuarioId').tokenInput('/usuarios/buscaUsuarios/?ref='+refUsuario,{
+        inputClass: 'form-control',
+        modalClass: 'modal-frame-large',
+        method:'POST',
+        linkNew:'/usuarios/adicionar/?modal=true',
+        inputClass: 'form-control',
+        permissionLinkNew:permissaoCadastrarUsuario,
+        onAdd: function(item){
+            $('#NomeVendedor').val(item.nome);
+        },
+        onDelete: function(item){
+            $('#NomeVendedor').val('');
+        },
+    });
+
+    if($('#TecnicoId').length > 0){
+        $('#TecnicoId').tokenInput('/usuarios/buscaUsuarios/?ref='+refUsuario,{
+            inputClass: 'form-control',
+            modalClass: 'modal-frame-large',
+            method:'POST',
+            linkNew:'/usuarios/adicionar/?modal=true',
+            inputClass: 'form-control',
+            permissionLinkNew:permissaoCadastrarUsuario,
+            onAdd: function(item){
+                $('#NomeTecnico').val(item.nome);
+            },
+            onDelete: function(item){
+                $('#NomeTecnico').val('');
+            },
+        });
+    }
+
+    $('.remove-produto').live('click',function(){
+        if(controller == 'ordens_servicos' || controller == 'orcamentos_servicos' || controller == 'vendas_servicos' || quantidadeProduto > 1){
+            $(this).parent().parent().remove();
+            calculaValorTotal();
+            quantidadeProduto--;
+            if(quantidadeProduto > 0){
+                $('#PedidoExisteEstoque').val(1);
+                $('#adicionar-produto').html('Adicionar outro produto');
+            }else{
+                $('#PedidoExisteEstoque').val(0);
+                $('#adicionar-produto').html('Adicionar produto');
+            }
+            validaColunaVariacao();
+            calculaValorProdutos();
+        }
+    });
+
+    $('.remove-servico').live('click',function(){
+        if(controller == 'ordens_servicos' || controller == 'orcamentos_produtos' || controller == 'vendas_produtos' || controller == 'vendas_balcao' || quantidadeServico > 1){
+            $(this).parent().parent().remove();
+            calculaValorTotal();
+            quantidadeServico--;
+            if(quantidadeServico > 0){
+                $('#adicionar-servico').html('<i class="glyphicon glyphicon-plus-sign margin-right-5px"></i>Adicionar outro serviço');
+            }else{
+                $('#adicionar-servico').html('<i class="glyphicon glyphicon-plus-sign margin-right-5px"></i>Adicionar serviço');
+            }
+            calculaValorServicos();
+        }
+    });
+
+    $('.remove-equipamento').live('click',function(){
+        //if(quantidadeEquipamento > 1){
+            $(this).parent().parent().remove();
+            quantidadeEquipamento--;
+        //}
+        //if(quantidadeEquipamento == 1){
+            //$('.remove-equipamento').parent().addClass('hidden');
+        //}else{
+            $('.remove-equipamento').parent().removeClass('hidden');
+        //}
+    });
+
+    displayHide = null;
+    $('#produtos .estoque-variacao').live('change',function(){
+        aqui = $(this);
+        if(aqui.attr('movimenta-estoque') == 1){
+            if(aqui.val() != ''){
+                iVariacao = 0;
+                $('#produtos .estoque-variacao').each(function() {
+                    if($(this).val() == aqui.val()){
+                        iVariacao++;
+                    }
+                });
+
+                if(iVariacao > 1 && aqui.parents('tr').find('.possui-variacao').val() == 1){
+                    //aqui.val('');
+                    //bootbox.error('Está variação já foi selecionada!');
+                    //return false;
+                }
+
+                produtoId = aqui.parents('tr').find('.produto-id').val();
+                quantidadeEstoque = variacoesEstoques[produtoId][aqui.val()];
+                classeDisplayEstoque = 'success';
+                if(moeda2float(quantidadeEstoque) <= 0){
+                    classeDisplayEstoque = 'danger';
+                }
+                aqui.parents('tr').find('.quantidade').tooltip('disable');
+                aqui.parents('tr').find('.quantidade').attr('data-original-title', 'Estoque atual: '+quantidadeEstoque);
+                aqui.parents('tr').find('.quantidade').attr('quantidade',moeda2float(quantidadeEstoque));
+                aqui.parents('tr').find('.quantidade').hover(function(){
+                    if(moeda2float(quantidadeEstoque) > 0){
+                	    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').removeClass('danger');
+                	    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').addClass('success');
+                    }else{
+                        aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').addClass('danger');
+                	    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').removeClass('success');
+                    }
+                    clearTimeout(displayHide);
+                });
+                aqui.parents('tr').find('.quantidade').tooltip('enable');
+                aqui.parents('tr').find('.quantidade').tooltip('show');
+                if(moeda2float(quantidadeEstoque) > 0){
+            	    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').removeClass('danger');
+            	    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').addClass('success');
+                }else{
+                    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').addClass('danger');
+            	    aqui.parents('tr').find('.tooltip-inner,.tooltip-arrow').removeClass('success');
+                }
+                if(displayHide){
+                    clearTimeout(displayHide);
+                    displayHide = null;
+                }
+                displayHide = setTimeout(function(){
+                    $('.quantidade').tooltip('hide');
+                },2000);
+            }else{
+                aqui.parents('tr').find('.quantidade').tooltip('disable');
+                aqui.parents('tr').find('.quantidade').tooltip('hide');
+                aqui.parents('tr').find('.quantidade').attr('quantidade',0);
+            }
+        }
+    });
+
+    $('#produtos .quantidade').live('change',function(){
+        quantidade = moeda2float($(this).val());
+        if(quantidade == '' || quantidade == 0){
+            $(this).val('');
+            return false;
+        }
+        calculaValorProdutos();
+    });
+
+    $('#servicos .quantidade').live('change',function(){
+        quantidade = moeda2float($(this).val());
+        if(quantidade == '' || quantidade == 0){
+            $(this).val('');
+            return false;
+        }
+        calculaValorServicos();
+    });
+
+    $('#produtos .tipo').live('change',function(){
+        if($(this).val() != ''){
+            $(this).parents('tr').find('.nome-tipo-valor').val($(this).find('option:selected').text());
+            produtoId = $(this).parents('tr').find('.produto-id').val();
+            quantidade = moeda2float($(this).parents('tr').find('.quantidade').val());
+            valorVenda = tiposValores[produtoId][$(this).val()];
+            valorTotalComposicao = quantidade * moeda2float(valorVenda);
+            $(this).parents('tr').find('.valor-venda').val(valorVenda);
+            $(this).parents('tr').find('.valor-total').val(float2moeda(valorTotalComposicao));
+        }else{
+            $(this).parents('tr').find('.nome-tipo-valor').val('');
+        }
+        calculaValorProdutos();
+    });
+
+    $('#produtos .valor-venda, #produtos .desconto-valor-p, #produtos .desconto-porcentagem-p').live('change',function(){
+        calculaValorProdutos();
+    });
+
+    $('#servicos .valor-venda, #servicos .desconto-valor-p, #servicos .desconto-porcentagem-p').live('change',function(){
+        calculaValorServicos();
+    });
+
+    $('#servicos .valor-total').live('change',function(){
+        calculaValorUnitarioServicos();
+    });
+
+    $('#produtos .valor-total').live('change',function(){
+        calculaValorUnitarioProdutos();
+    });
+
+    $('#produtos .campo-desconto').live('change',function(){
+        $(this).parents('tr').find('.desconto-valor-p').val('');
+        $(this).parents('tr').find('.desconto-porcentagem-p').val('');
+        if($(this).val() == 'R$'){
+            $(this).parents('tr').find('.desconto-valor-p').removeClass('hidden');
+            $(this).parents('tr').find('.desconto-porcentagem-p').addClass('hidden');
+        }else{
+            $(this).parents('tr').find('.desconto-valor-p').addClass('hidden');
+            $(this).parents('tr').find('.desconto-porcentagem-p').removeClass('hidden');
+        }
+        calculaValorProdutos();
+    });
+
+    $('#servicos .campo-desconto').live('change',function(){
+        $(this).parents('tr').find('.desconto-valor-p').val('');
+        $(this).parents('tr').find('.desconto-porcentagem-p').val('');
+        if($(this).val() == 'R$'){
+            $(this).parents('tr').find('.desconto-valor-p').removeClass('hidden');
+            $(this).parents('tr').find('.desconto-porcentagem-p').addClass('hidden');
+        }else{
+            $(this).parents('tr').find('.desconto-valor-p').addClass('hidden');
+            $(this).parents('tr').find('.desconto-porcentagem-p').removeClass('hidden');
+        }
+        calculaValorServicos();
+    });
+
+    $('#PedidoValorServicos, #PedidoValorProdutos, #PedidoValorFrete, #PedidoDescontoValor, #PedidoDescontoPorcentagem, #PedidoCobrarFreteCliente, #PedidoValorOutros').live('change',function(){
+        calculaValorTotal();
+    });
+
+    $('#PedidoFormaPagamentoId').live('change', function(){
+
+        if($(this).val() == ''){
+            $('#PedidoNumeroParcelasInput').attr('disabled', false).parent().removeClass('hidden');
+            $('#PedidoNumeroParcelasSelect').attr('disabled', true).html('<option value = "">Selecione</option>').parent().addClass('hidden');
+        }else{
+            $('#PedidoNumeroParcelasInput').attr('disabled', true).parent().addClass('hidden');
+            $('#carregando').show();
+            $.post('/formas_pagamentos/buscaFormaPagamento',{id:$(this).val(),valorTotal:moeda2float($('#PedidoValorTotal').val()),dataInicio:$('#PedidoData').val()},function(retorno){
+                retorno = $.parseJSON(retorno);
+                $('#PedidoIntervaloDias').val(retorno.intervalo_parcelas);
+                $('#PedidoDataPrimeiraParcela').val(retorno.data_primeira_parcela);
+                parcelas = '';
+
+                iParcela = 0;
+                while(iParcela < retorno.maximo_parcelas){
+                    iParcela++;
+                    parcelas += '<option value = "'+iParcela+'">'+iParcela+(iParcela == 1 ? ' vez' : ' vezes')+'</option>';
+                }
+                $('#PedidoNumeroParcelasSelect').attr('disabled', false).html(parcelas).parent().removeClass('hidden');
+                $('#carregando').hide();
+            });
+        }
+    });
+
+    $('#PedidoFormaPagamentoV').live('ifChanged', function(){
+        if($(this).is(':checked')){
+            $('#a-prazo').addClass('hidden');
+            $('#PedidoNumeroParcelas').val(1);
+            geraParcelas();
+            $('#PedidoNumeroParcelas').removeClass('required');
+            $('#FormaPagamento').hide();
+        }
+    });
+
+    $('#PedidoFormaPagamentoP').live('ifChanged', function(){
+        if($(this).is(':checked')){
+            if(moeda2float($('#PedidoValorTotal').val()) == 0){
+                bootbox.error('O valor total não pode ser igual a <b>zero</b>.');
+                $('#a-prazo').addClass('hidden');
+
+                $('#PedidoFormaPagamentoV').prop('checked', false);
+                $('#PedidoFormaPagamentoP').prop('checked', false);
+
+                $('#PedidoFormaPagamentoV').iCheck({
+                    checkboxClass: 'icheckbox_minimal',
+                    radioClass: 'iradio_minimal'
+                });
+
+                $('#PedidoFormaPagamentoP').iCheck({
+                    checkboxClass: 'icheckbox_minimal',
+                    radioClass: 'iradio_minimal'
+                });
+
+                return false;
+            }
+            $('#a-prazo').removeClass('hidden');
+            $('#PedidoNumeroParcelas').addClass('required');
+            $('#FormaPagamento').hide();
+        }
+    });
+
+    $('#PedidoPeriodicidade').live('change',function(){
+        if($(this).val() == 'I'){
+            $('#PedidoIntervaloDias').attr('readonly', false).parent().addClass('required');
+        }else{
+            $('#PedidoIntervaloDias').attr('readonly', true).parent().removeClass('required');
+            $('#PedidoIntervaloDias').val('');
+        }
+    });
+
+    iParcela = geraCodigoNumero();
+    $('#adicionar-parcela').live('click',function(){
+        parcela = '';
+        parcela += '<tr>';
+            parcela += '<td><input name="data[PedidosParcela]['+iParcela+'][data_vencimento]" minlength="10" maxlength="10" class="datepicker mascara-data required col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete="off" type="text"/></td>';
+            parcela += '<td><input name="data[PedidosParcela]['+iParcela+'][valor]" class="mascara-valor valor-parcela col-sm-12 col-lg-12 col-md-12 form-control-table required" autocomplete="off" type="text"/></td>';
+            parcela += '<td>';
+                parcela += '<input name="data[PedidosParcela]['+iParcela+'][forma_pagamento_id]" id = "parcela-'+iParcela+'" class="col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete="off" type = "text"/>';
+                parcela += '<input name="data[PedidosParcela]['+iParcela+'][nome_forma_pagamento]" class="nome-forma-pagamento" type = "hidden"/>';
+            parcela += '</td>';
+            if(controller == 'vendas_produtos' || controller == 'vendas_servicos' || controller == 'vendas_balcao' || controller == 'ordens_servicos'){
+                parcela += '<td>';
+                    parcela += '<input name="data[PedidosParcela]['+iParcela+'][categoria_id]" id = "parcela-'+iParcela+'" class="col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete="off" type = "text"/>';
+                    parcela += '<input name="data[PedidosParcela]['+iParcela+'][nome_categoria]" class="nome-categoria" type = "hidden"/>';
+                parcela += '</td>';
+            }
+            parcela += '<td><input class="col-sm-12 col-lg-12 col-md-12 form-control-table" type="text" autocomplete="off" name="data[PedidosParcela]['+iParcela+'][observacao]"></td>';
+            parcela += '<td class = "text-center"><a href = "javascript:;" class = "remove-parcela btn btn-xs btn-danger"><i class = "glyphicon glyphicon-remove"></i></a></td>';
+        parcela += '</tr>';
+
+        $('#parcelas table tr').last().after(parcela);
+
+        $('[name="data[PedidosParcela]['+iParcela+'][forma_pagamento_id]"]').tokenInput('/formas_pagamentos/buscaFormasPagamentos/?tipo=C',{
+            modalClass: 'modal-frame-large',
+            linkNew:'/formas_pagamentos/adicionar/?modal=true&ref=data[PedidosParcela]['+iParcela+'][forma_pagamento_id]',
+            inputClass: 'form-control',
+            cache:false,
+            permissionLinkNew:permissaoCadastrarFormaPagamento,
+            onAdd: function(item){
+                $(this).parents('td').find('.nome-forma-pagamento').val(item.nome);
+            },
+            onDelete: function(item){
+                $(this).parents('td').find('.nome-forma-pagamento').val('');
+            }
+        });
+        if(controller == 'vendas_produtos' || controller == 'vendas_servicos' || controller == 'vendas_balcao' || controller == 'ordens_servicos'){
+            if($('[name="data[PedidosParcela]['+iParcela+'][categoria_id]"]').length > 0){
+                $('[name="data[PedidosParcela]['+iParcela+'][categoria_id]"]').tokenInput('/categorias_movimentacoes_financeiras/buscaCategorias/?tipo=C',{
+                    modalClass: 'modal-frame-large',
+                    linkNew:'/categorias_movimentacoes_financeiras/adicionar/?modal=true&ref=data[PedidosParcela]['+iParcela+'][categoria_id]',
+                    inputClass: 'form-control',
+                    cache:false,
+                    required: false,
+                    permissionLinkNew:permissaoCadastrarCategoria,
+                    onAdd: function(item){
+                        $(this).parents('td').find('.nome-categoria').val(item.nome);
+                    },
+                    onDelete: function(item){
+                        $(this).parents('td').find('.nome-categoria').val('');
+                    }
+                });
+
+                if(categoriaMovimentacaoFinanceira.id != undefined){
+                    $('[name="data[PedidosParcela]['+iParcela+'][categoria_id]"]').tokenInput('add', {id: categoriaMovimentacaoFinanceira.id, nome: categoriaMovimentacaoFinanceira.nome});
+                }
+            }
+        }
+        iParcela = geraCodigoNumero();
+    });
+
+    $('.remove-parcela').live('click',function(){
+        if(pegaQuantidadeParcelas() > 2){
+            $(this).parent().parent().remove();
+        }
+    });
+
+    /*$('#PedidoDescontoValor,#PedidoDescontoPorcentagem').live('blur',function(){
+        descontoValor = moeda2float($('#PedidoDescontoValor').val());
+        descontoPorcentagem = moeda2float($('#PedidoDescontoPorcentagem').val());
+        if(descontoValor != 0){
+            $('#PedidoDescontoValor').attr('readonly', false);
+            $('#PedidoDescontoPorcentagem').attr('readonly', true).val('');
+        }else if(descontoPorcentagem != 0){
+            $('#PedidoDescontoPorcentagem').attr('readonly', false);
+            $('#PedidoDescontoValor').attr('readonly', true).val('');
+        }else{
+            $('#PedidoDescontoPorcentagem').attr('readonly', false);
+            $('#PedidoDescontoValor').attr('readonly', false);
+        }
+    });
+
+    $('#PedidoDescontoValor,#PedidoDescontoPorcentagem').blur();
+    */
+    $('#PedidoCanalVendaId').live('change',function(){
+        $('#PedidoNomeCanalVenda').val($(this).find('option:selected').text());
+    });
+
+    $('#PedidoCanalVendaId').change();
+
+    $('#PedidoSituacao').live('change',function(){
+        if($(this).val() == ''){
+            $('#PedidoNomeSituacao').val('');
+        }else{
+            $('#PedidoNomeSituacao').val($(this).find('option:selected').text());
+        }
+    });
+    $('#PedidoSituacao').change();
+
+    $('#PedidoExibirPagamento').live('ifChanged',function(){
+        if($(this).is(':checked')){
+            $('#area-pagamentos').removeClass('hidden').find('input').attr('disabled', false);
+        }else{
+            $('#area-pagamentos').addClass('hidden').find('input').attr('disabled', true);
+        }
+    });
+
+    $('#PedidoExibirPagamento').trigger('ifChanged');
+
+    $('#PedidoData').on('changeDate', function(selected){
+        if($('#PedidoFormaPagamentoId').val() == '' || $('#PedidoFormaPagamentoId').val() == undefined){
+            $('#PedidoDataPrimeiraParcela').val($(this).val());
+        }
+    });
+});
+
+var quantidadeProduto = 0;
+var iProdutos = 0;
+var tiposValores = [];
+var variacoesEstoques = [];
+function adicionarProduto(focar){
+    produto = '';
+    produto += '<tr>';
+    produto += '<td>';
+    produto += '<input type = "hidden" class = "produto-id" possui-variacao = "0">';
+    produto += '<input type = "hidden" name = "data[PedidosProduto]['+iProdutos+'][possui_variacao]" class = "possui-variacao" value = "0">';
+    produto += '<input type = "hidden" name = "data[PedidosProduto]['+iProdutos+'][movimenta_estoque]" class = "movimenta-estoque" value = "1">';
+    produto += '<input type="text" id = "produto-'+iProdutos+'" name="data[PedidosProduto]['+iProdutos+'][produto_id]" class = "required col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off">';
+    produto += '<input type = "hidden" name = "data[PedidosProduto]['+iProdutos+'][nome_produto]" class = "nome-produto">';
+    produto += '<input type = "hidden" name = "data[PedidosProduto]['+iProdutos+'][sigla_unidade]" class = "sigla-unidade">';
+    produto += '</td>';
+    produto += '<td class = "coluna-variacao">';
+    produto += '<div class = "produto-variacao hidden"><select class="estoque-variacao col-sm-12 col-lg-12 col-md-12 form-control-table" movimenta-estoque = "1" name="data[PedidosProduto]['+iProdutos+'][estoque_id]"><option value = "">Selecione</option></select></div>';
+    produto += '<div class = "produto-detalhes"><input type="text" name="data[PedidosProduto]['+iProdutos+'][detalhes]" class = "col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></div>';
+    produto += '</td>';
+    produto += '<td><input type="text" name="data[PedidosProduto]['+iProdutos+'][quantidade]" quantidade = "0" data-toggle = "tooltip" data-placement = "top" title = "" readonly = "readonly" class = "required quantidade mascara-quantidade col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></td>';
+    produto += '<td class = "coluna-valor hidden">';
+    produto +='<select name="data[PedidosProduto]['+iProdutos+'][tipo_valor_id]" readonly = "readonly" class = "required tipo col-sm-12 col-lg-12 col-md-12 form-control-table"><option value = "" autocomplete = "off">----</option></select>';
+    produto += '<input type = "hidden" name = "data[PedidosProduto]['+iProdutos+'][nome_tipo_valor]" class = "nome-tipo-valor">';
+    produto += '</td>';
+    produto += '<td>';
+        produto += '<input type="hidden" name="data[PedidosProduto]['+iProdutos+'][valor_custo]" class = "valor-custo">';
+        produto += '<input type="text" name="data[PedidosProduto]['+iProdutos+'][valor_venda]" casas = "'+casasDecimaisValor+'" readonly = "readonly" class = "required valor-venda mascara-valor col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off">';
+    produto += '</td>';
+    produto += '<td>';
+        produto += '<div class="input-group">';
+            produto += '<input class="desconto-valor-p mascara-valor col-sm-12 col-lg-12 col-md-12 form-control" name="data[PedidosProduto]['+iProdutos+'][desconto_valor]" style = "min-width:90px" autocomplete="off" type="text"  casas = "'+casasDecimaisValor+'" readonly = "readonly">';
+            produto += '<input class="desconto-porcentagem-p hidden mascara-valor col-sm-12 col-lg-12 col-md-12 form-control" name="data[PedidosProduto]['+iProdutos+'][desconto_porcentagem]" style = "min-width:90px" autocomplete="off" type="text"  casas = "'+casasDecimaisValor+'" readonly = "readonly">';
+            produto += '<span class="input-group-btn">';
+                produto += '<select name = "data[PedidosProduto]['+iProdutos+'][tipo_desconto]" class = "campo-desconto col-sm-12 col-lg-12 col-md-12 form-control" readonly = "readonly"><option value = "R$">R$</option><option value = "%">%</option></select>';
+            produto += '</span>';
+        produto += '</div>';
+    produto += '</td>';
+    produto += '<td><input type="text" name="data[PedidosProduto]['+iProdutos+'][valor_total]" readonly = "readonly" class = "required valor-total mascara-valor col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></td>';
+    produto += '</td>';
+    produto += '<td class = "text-center"><a href = "javascript:;" class = "remove-produto btn btn-xs btn-danger"><i class = "glyphicon glyphicon-remove"></i></a></td>';
+    produto += '</tr>';
+    $('#produtos table tr').last().after(produto);
+    validaColunaTipoValor();
+    $('#produto-'+iProdutos).tokenInput(function(){
+        produtos = [];
+        /*$('#produtos table tr .produto-id').each(function() {
+            if($(this).val() != ''){
+                if($(this).attr('possui-variacao') == 0){
+                    produtos.push($(this).val());
+                }
+            }
+        });*/
+        return '/produtos/buscaProdutos/?produtos='+produtos+'&loja='+lojaAtual+'&ajaxGet=true';
+    },{
+        modalClass: 'modal-frame-small',
+        inputClass: 'col-sm-12 col-lg-12 col-md-12 form-control-table',
+        required:true,
+        linkNoRegister:true,
+        linkNew:'/produtos/adicionar/?modal=true&referencia=data[PedidosProduto]['+iProdutos+'][produto_id]',
+        permissionLinkNew:permissaoCadastrarProduto,
+        hintText: 'Digite no mínimo 3 caracteres',
+        minChars: 0,
+        resultsFormatter: function(item){ return '<li>'+item.nome+'<div><small class = "text-muted">'+item.codigo+'</small></div></li>' },
+        onAdd: function(item){
+            if(focar && item.possui_variacao == 0){
+                tokenFocus.parents('tr').find('.quantidade').focus();
+            }
+            if(item.ProdutosTiposValoresProduto != null && item.ProdutosTiposValoresProduto.length > 1){
+                $('.coluna-valor').removeClass('hidden');
+            }else{
+                $('.coluna-valor').addClass('hidden');
+            }
+            if(item.detalhes == undefined){
+                item.detalhes = '';
+            }
+            tokenFocus.parents('tr').find('.produto-id').attr('possui-variacao', item.possui_variacao);
+            tokenFocus.parents('tr').find('.possui-variacao').val(item.possui_variacao);
+            tokenFocus.parents('tr').find('.movimenta-estoque').val(item.movimenta_estoque);
+            tokenFocus.parents('tr').find('.quantidade').attr('movimenta-estoque', item.movimenta_estoque);
+            tokenFocus.parents('tr').find('.produto-id').val(item.id);
+            tokenFocus.parents('tr').find('.nome-produto').val(item.nome);
+            tokenFocus.parents('tr').find('.sigla-unidade').val(item.nome_unidade);
+            tokenFocus.parents('tr').find('.valor-custo').val(item.valor_custo);
+            tokenFocus.parents('tr').find('.tipo').attr('produto-id', item.id);
+            tokenFocus.parents('tr').find('.produto-detalhes input').attr('readonly', false).val(item.detalhes);
+            quantidade = formataQuantidade(1,casasDecimaisQuantidade);
+            if(item.quantidade != undefined){
+                quantidade = item.quantidade;
+            }
+            tokenFocus.parents('tr').find('.quantidade').val(quantidade);
+            opcoesTipo = '';
+            valorVenda = float2moeda(0,casasDecimaisValor);
+            tiposValores[item.id] = [];
+
+            if(item.tipo_desconto != undefined){
+                tokenFocus.parents('tr').find('.campo-desconto').val(item.tipo_desconto).change();
+            }
+
+            if(item.desconto_valor != undefined){
+                tokenFocus.parents('tr').find('.desconto-valor-p').val(item.desconto_valor);
+            }
+            if(item.desconto_porcentagem != undefined){
+                tokenFocus.parents('tr').find('.desconto-porcentagem-p').val(item.desconto_porcentagem);
+            }
+
+            if(item.ProdutosTiposValoresProduto != null){
+                $(item.ProdutosTiposValoresProduto).each(function(i, tipoValor) {
+                    tipoSelecionado = '';
+                    if(tipoValor.tipo_padrao == 1){
+                        tipoSelecionado = ' selected="selected"';
+                        valorVenda = tipoValor.valor_venda;
+                    }
+                    tiposValores[item.id][tipoValor.tipo_id] = tipoValor.valor_venda;
+                    opcoesTipo += '<option value = "'+tipoValor.tipo_id+'"'+tipoSelecionado+'>'+tipoValor.tipo_nome+'</option>';
+                    tokenFocus.parents('tr').find('.tipo').html(opcoesTipo);
+                });
+            }else{
+                tokenFocus.parents('tr').find('.tipo').html('<option value = "'+(item.tipoValorId != undefined ? item.tipoValorId : '')+'">'+item.nomeTipoValor+'</option>');
+                tokenFocus.parents('tr').find('.tipo').removeClass('required');
+            }
+
+            if(item.valor_venda != undefined){
+                valorVenda = item.valor_venda;
+            }
+
+            if(item.tipoValorId != undefined){
+                tokenFocus.parents('tr').find('.tipo').val(item.tipoValorId);
+            }
+            tokenFocus.parents('tr').find('.estoque-variacao ').attr('readonly', false);
+            tokenFocus.parents('tr').find('.estoque-variacao').attr('movimenta-estoque', item.movimenta_estoque);
+            tokenFocus.parents('tr').find('.quantidade').attr('readonly', false).change();
+            tokenFocus.parents('tr').find('.tipo').attr('readonly', false);
+            tokenFocus.parents('tr').find('.nome-tipo-valor').val(tokenFocus.parents('tr').find('.tipo').find('option:selected').text());
+            tokenFocus.parents('tr').find('.valor-venda').val(valorVenda);
+            if(permissaoConcederDesconto){
+                tokenFocus.parents('tr').find('.desconto-valor-p,.desconto-porcentagem-p,.campo-desconto').attr('readonly', false);
+            }
+            if(permissaoAlterarValorVenda){
+                tokenFocus.parents('tr').find('.valor-venda').attr('readonly', false);
+                tokenFocus.parents('tr').find('.valor-total').attr('readonly', false);
+            }
+            tokenFocus.parents('tr').find('input:text, select').removeClass('error');
+
+            variacoesEstoques[item.id] = [];
+            opcoesEstoque = '<option value = "">-----</option>';
+            if(item.ProdutosEstoque != null){
+                if(item.ProdutosEstoque.length > 1){
+                    opcoesEstoque = '<option value = "">Selecione</option>';
+                }else{
+                    opcoesEstoque = '';
+                }
+            }
+            $(item.ProdutosEstoque).each(function(i, estoque) {
+                estoque.quantidade = (estoque.quantidade) ? estoque.quantidade : 0;
+                variacoesEstoques[item.id][estoque.id] = estoque.quantidade;
+                if(item.possui_variacao == 1){
+                    opcoesEstoque += '<option value = "'+estoque.id+'">'+estoque.variacoes+'</option>';
+                }else{
+                    opcoesEstoque = '<option value = "'+estoque.id+'">Único</option>';
+                }
+            });
+
+            validaColunaVariacao();
+
+            tokenFocus.parents('tr').find('.estoque-variacao').html(opcoesEstoque);
+
+            if(item.estoque_id){
+                tokenFocus.parents('tr').find('.estoque-variacao').val(item.estoque_id);
+                tokenFocus.parents('tr').find('.estoque-variacao').change();
+            }
+
+            if(item.possui_variacao == 1){
+                if(item.ProdutosEstoque != null){
+                    tokenFocus.parents('tr').find('.estoque-variacao').addClass('required');
+                    if(item.ProdutosEstoque.length == 1){
+                        tokenFocus.parents('tr').find('.estoque-variacao').change();
+                    }
+                }
+            }else{
+                tokenFocus.parents('tr').find('.estoque-variacao').removeClass('required');
+                tokenFocus.parents('tr').find('.estoque-variacao').change();
+            }
+
+            calculaValorTotal();
+            tokenFocus.tokenInput('clearCache');
+        },
+        onDelete: function(item){
+            tokenFocus.parents('tr').find('.tipo').attr('produto-id', '');
+            tokenFocus.parents('tr').find('.produto-id').val('');
+            tokenFocus.parents('tr').find('.nome-produto').val('');
+            tokenFocus.parents('tr').find('.possui-variacao').val(0);
+            tokenFocus.parents('tr').find('.movimenta-estoque').val(1);
+            tokenFocus.parents('tr').find('.produto-id').attr('possui-variacao', 0);
+            tokenFocus.parents('tr').find('.estoque-variacao ').attr('readonly', true);
+            tokenFocus.parents('tr').find('.estoque-variacao').attr('movimenta-estoque', 1);
+            tokenFocus.parents('tr').find('.quantidade').attr('readonly', true).change();
+            tokenFocus.parents('tr').find('.quantidade').val('');
+            tokenFocus.parents('tr').find('.tipo').attr('readonly', true);
+            tokenFocus.parents('tr').find('.tipo').html('<option value = "">Selecione</option>');
+            tokenFocus.parents('tr').find('.tipo').addClass('required');
+            tokenFocus.parents('tr').find('.nome-tipo-valor').val('');
+            tokenFocus.parents('tr').find('.valor-custo').val('');
+            tokenFocus.parents('tr').find('.valor-venda').attr('readonly', true);
+            tokenFocus.parents('tr').find('.valor-venda').val('');
+            tokenFocus.parents('tr').find('.valor-total').val('').attr('readonly', true);
+            tokenFocus.parents('tr').find('.quantidade').attr('data-original-title', '');
+            tokenFocus.parents('tr').find('.quantidade').tooltip('disable');
+            tokenFocus.parents('tr').find('.quantidade').tooltip('hide');
+            tokenFocus.parents('tr').find('.quantidade').attr('quantidade',0);
+            tokenFocus.parents('tr').find('.estoque-variacao').removeClass('required');
+            tokenFocus.parents('tr').find('.estoque-variacao').html('');
+            tokenFocus.parents('tr').find('input:text, select').removeClass('error');
+            tokenFocus.parents('tr').find('.produto-detalhes input').attr('readonly', true).val('');
+            tokenFocus.parents('tr').find('.desconto-valor-p,.desconto-porcentagem-p,.campo-desconto').attr('readonly', true);
+            calculaValorTotal();
+            validaColunaVariacao();
+            tokenFocus.tokenInput('clearCache');
+        },
+    });
+
+    if(focar == true){
+        $('#produto-'+iProdutos).focus();
+    }
+
+    iProdutos++;
+    quantidadeProduto++;
+    if(quantidadeProduto > 0){
+        $('#PedidoExisteEstoque').val(1);
+        $('#adicionar-produto').html('Adicionar outro produto');
+    }else{
+        $('#PedidoExisteEstoque').val(0);
+        $('#adicionar-produto').html('Adicionar produto');
+    }
+    validaColunaVariacao();
+    calculaValorProdutos();
+}
+
+var quantidadeServico = 0;
+var iProdutos = 0;
+function adicionarServico(focar){
+    produto = '';
+    produto += '<tr>';
+    produto += '<td>';
+    produto += '<input type = "hidden" class = "produto-id">';
+    produto += '<input type = "hidden" name="data[PedidosProduto]['+iProdutos+'][tipo]" value = "S">';
+    produto += '<input type="text" id = "produto-'+iProdutos+'" name="data[PedidosProduto]['+iProdutos+'][produto_id]" class = "required col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off">';
+    produto += '<input type = "hidden" name = "data[PedidosProduto]['+iProdutos+'][nome_produto]" class = "nome-produto">';
+    produto += '</td>';
+    produto += '<td><input type="text" name="data[PedidosProduto]['+iProdutos+'][detalhes]" readonly = "readonly" class = "detalhes col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></td>';
+    produto += '<td><input type="text" name="data[PedidosProduto]['+iProdutos+'][quantidade]" data-toggle = "tooltip" data-placement = "top" title = "" readonly = "readonly" class = "required quantidade mascara-quantidade col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></td>';
+    produto += '<td><input type="text" name="data[PedidosProduto]['+iProdutos+'][valor_venda]" casas = "'+casasDecimaisValor+'" readonly = "readonly" class = "required valor-venda mascara-valor col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></td>';
+    produto += '<td>';
+        produto += '<div class="input-group">';
+            produto += '<input class="desconto-valor-p mascara-valor col-sm-12 col-lg-12 col-md-12 form-control" name="data[PedidosProduto]['+iProdutos+'][desconto_valor]" style = "min-width:90px" autocomplete="off" type="text"  casas = "'+casasDecimaisValor+'" readonly = "readonly">';
+            produto += '<input class="desconto-porcentagem-p hidden mascara-valor col-sm-12 col-lg-12 col-md-12 form-control" name="data[PedidosProduto]['+iProdutos+'][desconto_porcentagem]" style = "min-width:90px" autocomplete="off" type="text"  casas = "'+casasDecimaisValor+'" readonly = "readonly">';
+            produto += '<span class="input-group-btn">';
+                produto += '<select name = "data[PedidosProduto]['+iProdutos+'][tipo_desconto]" class = "campo-desconto col-sm-12 col-lg-12 col-md-12 form-control" readonly = "readonly"><option value = "R$">R$</option><option value = "%">%</option></select>';
+            produto += '</span>';
+        produto += '</div>';
+    produto += '</td>';
+    produto += '<td><input type="text" name="data[PedidosProduto]['+iProdutos+'][valor_total]" readonly = "readonly" class = "required valor-total mascara-valor col-sm-12 col-lg-12 col-md-12 form-control-table" autocomplete = "off"></td>';
+    produto += '</td>';
+    produto += '<td class = "text-center"><a href = "javascript:;" class = "remove-servico btn btn-xs btn-danger"><i class = "glyphicon glyphicon-remove"></i></a></td>';
+    produto += '</tr>';
+    $('#servicos table tr').last().after(produto);
+    $('input[name="data[PedidosProduto]['+iProdutos+'][quantidade]"]').tooltip('disable');
+
+    $('#produto-'+iProdutos).tokenInput(function(){
+        produtos = [];
+        /*$('#servicos table tr .produto-id').each(function() {
+            if($(this).val() != ''){
+                produtos.push($(this).val());
+            }
+        });*/
+        return '/servicos/buscaServicos/?produtos='+produtos+'&loja='+lojaAtual+'&ajaxGet=true';
+    },{
+        modalClass: 'modal-frame-small',
+        inputClass: 'col-sm-12 col-lg-12 col-md-12 form-control-table',
+        required:true,
+        linkNoRegister:true,
+        linkNew:'/servicos/adicionar/?modal=true&referencia=data[PedidosProduto]['+iProdutos+'][produto_id]',
+        permissionLinkNew:permissaoCadastrarServico,
+        hintText: 'Digite no mínimo 3 caracteres',
+        minChars: 0,
+        onAdd: function(item){
+            quantidade = formataQuantidade(1,casasDecimaisQuantidade);
+            if(item.quantidade != undefined){
+                quantidade = item.quantidade;
+            }else{
+                tokenFocus.parents('tr').find('.quantidade').focus();
+            }
+            if(item.detalhes == undefined){
+                item.detalhes = '';
+            }
+            tokenFocus.parents('tr').find('.produto-id').val(item.id);
+            tokenFocus.parents('tr').find('.nome-produto').val(item.nome);
+            tokenFocus.parents('tr').find('.quantidade').val(quantidade).change();
+            tokenFocus.parents('tr').find('.quantidade').attr('readonly', false);
+            tokenFocus.parents('tr').find('.detalhes').attr('readonly', false).val(item.detalhes);
+            if(permissaoConcederDesconto){
+                tokenFocus.parents('tr').find('.desconto-valor-p,.desconto-porcentagem-p,.campo-desconto').attr('readonly', false);
+            }
+            valorVenda = float2moeda(0,casasDecimaisValor);
+            if(item.valor_venda != undefined){
+                valorVenda = item.valor_venda;
+            }
+            if(item.tipo_desconto != undefined){
+                tokenFocus.parents('tr').find('.campo-desconto').val(item.tipo_desconto).change();
+            }
+            if(item.desconto_valor != undefined){
+                tokenFocus.parents('tr').find('.desconto-valor-p').val(item.desconto_valor);
+            }
+            if(item.desconto_porcentagem != undefined){
+                tokenFocus.parents('tr').find('.desconto-porcentagem-p').val(item.desconto_porcentagem);
+            }
+            tokenFocus.parents('tr').find('.valor-venda').val(valorVenda);
+            if(permissaoAlterarValorVenda){
+                tokenFocus.parents('tr').find('.valor-venda').attr('readonly', false);
+                tokenFocus.parents('tr').find('.valor-total').attr('readonly', false);
+            }
+            tokenFocus.parents('tr').find('input:text, select').removeClass('error');
+            calculaValorTotal();
+            tokenFocus.tokenInput('clearCache');
+        },
+        onDelete: function(item){
+            tokenFocus.parents('tr').find('.produto-id').val('');
+            tokenFocus.parents('tr').find('.nome-produto').val('');
+            tokenFocus.parents('tr').find('.quantidade').attr('readonly', true).change();
+            tokenFocus.parents('tr').find('.quantidade').val('');
+            tokenFocus.parents('tr').find('.valor-venda').attr('readonly', true);
+            tokenFocus.parents('tr').find('.valor-venda').val('');
+            tokenFocus.parents('tr').find('.valor-total').val('').attr('readonly', true);
+            tokenFocus.parents('tr').find('input:text, select').removeClass('error');
+            tokenFocus.parents('tr').find('.detalhes').attr('readonly', true);
+            tokenFocus.parents('tr').find('.desconto-valor-p,.desconto-porcentagem-p,.campo-desconto').attr('readonly', true);
+            calculaValorTotal();
+            tokenFocus.tokenInput('clearCache');
+        },
+    });
+
+    if(focar == true){
+        $('#produto-'+iProdutos).focus();
+    }
+
+    iProdutos++;
+    quantidadeServico++;
+    if(quantidadeServico > 0){
+        $('#adicionar-servico').html('<i class="glyphicon glyphicon-plus-sign margin-right-5px"></i>Adicionar outro serviço');
+    }else{
+        $('#adicionar-servico').html('<i class="glyphicon glyphicon-plus-sign margin-right-5px"></i>Adicionar serviço');
+    }
+    calculaValorServicos();
+}
+
+var quantidadeEquipamento = 0;
+var iEquipamentos = 0;
+function adicionarEquipamento(focar){
+    equipamento = '<div class = "box-equipamento muted relative" style = "display:table; margin:0 15px 15px 15px; padding:10px">';
+        equipamento += '<div style = "position:absolute; right: 5px; top: 2px" class = "text-center"><button class="remove-equipamento btn btn-xs btn-danger" type="button"><i class = "glyphicon glyphicon-remove"></i></button></div>';
+        equipamento += '<div class="form-group col-sm-6 col-md-6 col-lg-6 required">';
+            equipamento += '<label>Equipamento</label>';
+            equipamento += '<input ref = "'+iEquipamentos+'" name="data[PedidosEquipamento]['+iEquipamentos+'][equipamento]"  class="campo-equipamento required form-control" autocomplete="off" type="text"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="form-group col-sm-2 col-md-2 col-lg-2">';
+            equipamento += '<label>Marca</label>';
+            equipamento += '<input name="data[PedidosEquipamento]['+iEquipamentos+'][marca]"  class="campo-marca form-control" autocomplete="off" type="text"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="form-group col-sm-2 col-md-2 col-lg-2">';
+            equipamento += '<label>Modelo</label>';
+            equipamento += '<input name="data[PedidosEquipamento]['+iEquipamentos+'][modelo]"  class="campo-modelo form-control" autocomplete="off" type="text"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="form-group col-sm-2 col-md-2 col-lg-2">';
+            equipamento += '<label>Série</label>';
+            equipamento += '<input name="data[PedidosEquipamento]['+iEquipamentos+'][serie]"  class="campo-serie form-control" autocomplete="off" type="text"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="margin-bottom-10px col-sm-6 col-md-6 col-lg-6">';
+            equipamento += '<label>Condições</label>';
+            equipamento += '<textarea name="data[PedidosEquipamento]['+iEquipamentos+'][condicoes]" class="form-control" autocomplete="off" cols="30" rows="6"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="margin-bottom-10px col-sm-6 col-md-6 col-lg-6">';
+            equipamento += '<label>Defeitos</label>';
+            equipamento += '<textarea name="data[PedidosEquipamento]['+iEquipamentos+'][defeitos]" class="form-control" autocomplete="off" cols="30" rows="6"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="margin-bottom-10px col-sm-6 col-md-6 col-lg-6">';
+            equipamento += '<label>Acessórios</label>';
+            equipamento += '<textarea name="data[PedidosEquipamento]['+iEquipamentos+'][acessorios]" class="form-control" autocomplete="off" cols="30" rows="6"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="margin-bottom-10px col-sm-6 col-md-6 col-lg-6">';
+            equipamento += '<label>Solução</label>';
+            equipamento += '<textarea name="data[PedidosEquipamento]['+iEquipamentos+'][solucao]" class="form-control" autocomplete="off" cols="30" rows="6"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="margin-bottom-10px col-sm-6 col-md-6 col-lg-6">';
+            equipamento += '<label>Laudo técnico</label>';
+            equipamento += '<textarea name="data[PedidosEquipamento]['+iEquipamentos+'][laudo]" class="form-control" autocomplete="off" cols="30" rows="6"/>';
+        equipamento += '</div>';
+        equipamento += '<div class="margin-bottom-10px col-sm-6 col-md-6 col-lg-6">';
+            equipamento += '<label>Termos de garantia</label>';
+            equipamento += '<textarea name="data[PedidosEquipamento]['+iEquipamentos+'][termos_garantia]" class="form-control" autocomplete="off" cols="30" rows="6"/>';
+        equipamento += '</div>';
+    equipamento += '</div>';
+    $('#equipamentos').append(equipamento);
+
+    if(condicoesOs != ''){
+        $('[name="data[PedidosEquipamento]['+iEquipamentos+'][condicoes]"]').val(condicoesOs);
+    }
+    if(termosGarantiaOs != ''){
+        $('[name="data[PedidosEquipamento]['+iEquipamentos+'][termos_garantia]"]').val(termosGarantiaOs);
+    }
+
+    $('[name="data[PedidosEquipamento]['+iEquipamentos+'][equipamento]"]').autocomplete({
+    minLength: 0,
+    source: function(request, response) {
+
+        if($('#ClienteId').val() == ''){
+            return false;
+        }
+
+        var term = request.term;
+        if ( term in cacheEquip ) {
+          response(cacheEquip[ term ]);
+          return;
+        }
+        $.ajax({
+            url: '/ordens_servicos/buscaEquipamentos?ajaxGet=true',
+            dataType: 'json',
+            type: 'POST',
+            data: {q: request.term, cliente: $('#ClienteId').val()},
+            success: function(data) {
+                cacheEquip[term] = data;
+                response(data);
+            }
+        });
+    },
+    select: function( event, ui ) {
+            $(this).parents('.box-equipamento').find('.campo-equipamento').val(ui.item.equipamento);
+            $(this).parents('.box-equipamento').find('.campo-marca').val(ui.item.marca);
+            $(this).parents('.box-equipamento').find('.campo-modelo').val(ui.item.modelo);
+            $(this).parents('.box-equipamento').find('.campo-serie').val(ui.item.serie);
+            return false;
+        }
+    })
+    .focus(function () {
+        if ($(this).val() == '') {
+            $(this).autocomplete("search");
+        }
+    })
+    .autocomplete( 'instance' )._renderItem = function( ul, item ) {
+        return $( '<li>' )
+        .append( '<div>' + item.equipamento + (item.marca != '' ? ' - ' + item.marca : '') + (item.modelo != '' ? ' - ' + item.modelo : '') + (item.serie != '' ? ' - ' + item.serie : '') +'</div>' )
+        .appendTo( ul );
+    };
+
+    quantidadeEquipamento++;
+    iEquipamentos++;
+    //if(quantidadeEquipamento == 1){
+        //$('.remove-equipamento').parent().addClass('hidden');
+    //}else{
+        $('.remove-equipamento').parent().removeClass('hidden');
+    //}
+}
+
+function calculaValorUnitarioProdutos(){
+    if(controller == 'ordens_servicos'){
+        $('#PedidoValorProdutos').attr('readonly', false);
+    }
+    setTimeout(function(){
+        valorProdutos = 0;
+        $('#produtos .valor-total').each(function() {
+            quantidade = moeda2float($(this).parents('tr').find('.quantidade').val());
+            quantidade = (quantidade) ? quantidade : 0;
+
+            valorTotal = moeda2float($(this).val());
+            valorTotal = (valorTotal) ? valorTotal : 0;
+
+            valorSubTotal = valorTotal / quantidade;
+            valorSubTotal = parseFloat(valorSubTotal.toFixed(2));
+
+            descontoValorP = moeda2float($(this).parents('tr').find('.desconto-valor-p').val());
+            descontoValorP = (descontoValorP) ? descontoValorP : 0;
+
+            descontoPorcentagemP = moeda2float($(this).parents('tr').find('.desconto-porcentagem-p').val());
+            descontoPorcentagemP = (descontoPorcentagemP) ? descontoPorcentagemP : 0;
+
+            valorSubTotal = (valorSubTotal - descontoValorP) - ((descontoPorcentagemP / 100) * valorSubTotal);
+
+            $(this).parents('tr').find('.valor-venda').val(float2moeda(valorSubTotal,casasDecimaisValor));
+            $('#PedidoValorProdutos').attr('readonly', true);
+            valorProdutos += valorTotal;
+        });
+        $('#PedidoValorProdutos').val(float2moeda(valorProdutos));
+        calculaValorTotal();
+    }, 100);
+}
+
+function calculaValorUnitarioServicos(){
+    if(controller == 'ordens_servicos'){
+        $('#PedidoValorServicos').attr('readonly', false);
+    }
+    setTimeout(function(){
+        valorServicos = 0;
+        $('#servicos .valor-total').each(function() {
+            quantidade = moeda2float($(this).parents('tr').find('.quantidade').val());
+            quantidade = (quantidade) ? quantidade : 0;
+
+            valorTotal = moeda2float($(this).val());
+            valorTotal = (valorTotal) ? valorTotal : 0;
+
+            valorSubTotal = valorTotal / quantidade;
+            valorSubTotal = parseFloat(valorSubTotal.toFixed(2));
+
+            descontoValorP = moeda2float($(this).parents('tr').find('.desconto-valor-p').val());
+            descontoValorP = (descontoValorP) ? descontoValorP : 0;
+
+            descontoPorcentagemP = moeda2float($(this).parents('tr').find('.desconto-porcentagem-p').val());
+            descontoPorcentagemP = (descontoPorcentagemP) ? descontoPorcentagemP : 0;
+
+            valorSubTotal = (valorSubTotal - descontoValorP) - ((descontoPorcentagemP / 100) * valorSubTotal);
+
+            $(this).parents('tr').find('.valor-venda').val(float2moeda(valorSubTotal,casasDecimaisValor));
+            $('#PedidoValorServicos').attr('readonly', true);
+            valorServicos += valorSubTotal;
+        });
+        $('#PedidoValorServicos').val(float2moeda(valorServicos));
+        calculaValorTotal();
+    }, 100);
+}
+
+function calculaValorServicos(){
+    if(controller == 'ordens_servicos'){
+        $('#PedidoValorServicos').attr('readonly', false);
+    }
+    setTimeout(function(){
+        valorServicos = 0;
+        $('#servicos .valor-venda').each(function() {
+            quantidade = moeda2float($(this).parents('tr').find('.quantidade').val());
+            quantidade = (quantidade) ? quantidade : 0;
+
+            valorSubTotal = moeda2float($(this).val());
+            valorSubTotal = (valorSubTotal) ? valorSubTotal : 0;
+            valorSubTotal = valorSubTotal * quantidade;
+            valorSubTotal = parseFloat(valorSubTotal.toFixed(2));
+            if(valorSubTotal != 0){
+                descontoValorP = moeda2float($(this).parents('tr').find('.desconto-valor-p').val());
+                descontoValorP = (descontoValorP) ? descontoValorP : 0;
+
+                descontoPorcentagemP = moeda2float($(this).parents('tr').find('.desconto-porcentagem-p').val());
+                descontoPorcentagemP = (descontoPorcentagemP) ? descontoPorcentagemP : 0;
+
+                valorSubTotal = (valorSubTotal - descontoValorP) - ((descontoPorcentagemP / 100) * valorSubTotal);
+            }
+            $(this).parents('tr').find('.valor-total').val(float2moeda(valorSubTotal));
+            $('#PedidoValorServicos').attr('readonly', true);
+            valorServicos += valorSubTotal;
+        });
+        $('#PedidoValorServicos').val(float2moeda(valorServicos));
+        calculaValorTotal();
+    }, 100);
+}
+
+function calculaValorProdutos(){
+    setTimeout(function(){
+        valorProdutos = 0;
+        if(controller == 'ordens_servicos'){
+            $('#PedidoValorProdutos').attr('readonly', false);
+        }
+        $('#produtos .valor-venda').each(function() {
+            quantidade = moeda2float($(this).parents('tr').find('.quantidade').val());
+            quantidade = (quantidade) ? quantidade : 0;
+
+            valorSubTotal = moeda2float($(this).val());
+            valorSubTotal = (valorSubTotal) ? valorSubTotal : 0;
+
+            valorSubTotal = valorSubTotal * quantidade;
+            valorSubTotal = parseFloat(valorSubTotal.toFixed(2));
+
+            if(valorSubTotal != 0){
+
+                descontoValorP = moeda2float($(this).parents('tr').find('.desconto-valor-p').val());
+                descontoValorP = (descontoValorP) ? descontoValorP : 0;
+
+                descontoPorcentagemP = moeda2float($(this).parents('tr').find('.desconto-porcentagem-p').val());
+                descontoPorcentagemP = (descontoPorcentagemP) ? descontoPorcentagemP : 0;
+
+                valorSubTotal = (valorSubTotal - descontoValorP) - ((descontoPorcentagemP / 100) * valorSubTotal);
+            }
+            //valorOutros = ($('#PedidoValorOutros').val() != '') ? moeda2float($('#PedidoValorOutros').val()) : 0;
+            //valorTotal  = (valorServicos + valorProdutos + valorOutros) - descontoValor;
+            //valorTotal = valorTotal - ( (descontoPorcetagem / 100) * valorTotal);
+
+            $(this).parents('tr').find('.valor-total').val(float2moeda(valorSubTotal));
+            $('#PedidoValorProdutos').attr('readonly', true);
+            valorProdutos += valorSubTotal;
+        });
+        $('#PedidoValorProdutos').val(float2moeda(valorProdutos));
+        calculaValorTotal();
+    }, 100);
+}
+
+
+function calculaValorTotal(){
+    valorTotal = 0;
+    valorCustoTotal = 0;
+    $('#produtos .valor-custo').each(function() {
+        quantidade = moeda2float($(this).parents('tr').find('.quantidade').val());
+        quantidade = (quantidade) ? quantidade : 0;
+        valorCustoTotal += moeda2float($(this).val()) * quantidade;
+    });
+
+    valorServicos = ($('#PedidoValorServicos').val() != '') ? moeda2float($('#PedidoValorServicos').val()) : 0;
+    valorProdutos = ($('#PedidoValorProdutos').val() != '') ? moeda2float($('#PedidoValorProdutos').val()) : 0;
+    valorFrete = ($('#PedidoValorFrete').val() != '') ? moeda2float($('#PedidoValorFrete').val()) : 0;
+    descontoValor = ($('#PedidoDescontoValor').val() != '') ? moeda2float($('#PedidoDescontoValor').val()) : 0;
+    descontoPorcetagem = ($('#PedidoDescontoPorcentagem').val() != '') ? moeda2float($('#PedidoDescontoPorcentagem').val()) : 0;
+    valorOutros = ($('#PedidoValorOutros').val() != '') ? moeda2float($('#PedidoValorOutros').val()) : 0;
+    valorTotal  = (valorServicos + valorProdutos + valorOutros + valorFrete) - descontoValor;
+    valorTotal = valorTotal - ( (descontoPorcetagem / 100) * (valorServicos + valorProdutos + valorOutros + valorFrete) );
+    //valorTotal = valorTotal;
+    $('#PedidoValorTotal').val(float2moeda(valorTotal));
+
+    if(controller == 'ordens_servicos'){
+        if(valorTotal != 0){
+            $('#forma-pagamento').removeClass('hidden').find('label').parent().addClass('required');
+            $('#parcelas').find('input').attr('disabled', false);
+            $('[name="data[Pedido][forma_pagamento]"]').rules('add', {
+              required: true
+            });
+        }else{
+            $('#forma-pagamento').addClass('hidden').find('label').parent().removeClass('required');
+            $('#parcelas').find('input').attr('disabled', true);
+            $('[name="data[Pedido][forma_pagamento]"]').rules('add', {
+              required: false
+            });
+        }
+    }
+
+    if($('#PedidoFormaPagamentoV').is(':checked') || $('#PedidoFormaPagamentoP').is(':checked')){
+        iPar = 0;
+        $('#parcelas').find('.valor-parcela').each(function() {
+            iPar++;
+        });
+        if(iPar == 1){
+            $('#parcelas').find('.valor-parcela').first().val(float2moeda(valorTotal));
+        }
+    }
+
+}
+
+function geraParcelas(){
+
+    if(moeda2float($('#PedidoValorTotal').val()) == 0){
+        bootbox.error('O valor total não pode ser igual a <b>zero</b>.');
+
+        $('#a-prazo').addClass('hidden');
+
+        $('#PedidoFormaPagamentoV').prop('checked', false);
+        $('#PedidoFormaPagamentoP').prop('checked', false);
+
+        $('#PedidoFormaPagamentoV').iCheck({
+            checkboxClass: 'icheckbox_minimal',
+            radioClass: 'iradio_minimal'
+        });
+
+        $('#PedidoFormaPagamentoP').iCheck({
+            checkboxClass: 'icheckbox_minimal',
+            radioClass: 'iradio_minimal'
+        });
+
+        return false;
+    }
+
+    numeroParcelas = 1;
+    pagamento = 'V';
+    if($('#PedidoFormaPagamentoP').is(':checked')){
+        numeroParcelas = ($('#PedidoFormaPagamentoId').val() == '') ? $('#PedidoNumeroParcelasInput').val() : $('#PedidoNumeroParcelasSelect').val();
+
+        if(numeroParcelas.length == 0 || numeroParcelas == 0){
+            bootbox.error('Escolha o número de parcelas.');
+            return false;
+        }
+
+        pagamento = 'P';
+    }
+
+    if(pagamento == 'P' && $('#PedidoPeriodicidade').val() == 'I' && ($('#PedidoIntervaloDias').val() == '' || $('#PedidoIntervaloDias').val() == 0)){
+        bootbox.error('Preencha o intervalo de dias');
+        return false;
+    }
+
+    $('#carregando').show();
+    $.post('/'+controller+'/gera_parcelas',{categoria:categoriaMovimentacaoFinanceira, pagamento:pagamento,formaPagamentoId:$('#PedidoFormaPagamentoId').val(), nomeFormaPagamento: $('#PedidoFormaPagamentoId').find('option:selected').text(), valorTotal:moeda2float($('#PedidoValorTotal').val()), dataPrimeiraParcela: $('#PedidoDataPrimeiraParcela').val(), periodo: $('#PedidoPeriodicidade').val(), intervaloDias:$('#PedidoIntervaloDias').val(), numeroParcelas:numeroParcelas, tipo:'C', permissaoCadastrarFormaPagamento:permissaoCadastrarFormaPagamento, permissaoCadastrarCategoria:permissaoCadastrarCategoria},function(retorno){
+        $('#parcelas').html(retorno);
+        $('#carregando').hide();
+    });
+}
+
+function validaPedido(){
+
+    if(pedidoAgrupado == 1 || (controller == 'orcamentos_produtos' || controller == 'orcamentos_servicos') && !$('#PedidoExibirPagamento').is(':checked')){
+        return true;
+    }
+
+    if(moeda2float($('#PedidoValorTotal').val()) == 0){
+        return true;
+    }
+
+    if(pegaQuantidadeParcelas() <=1){
+        bootbox.error('Você deve gerar '+($('#PedidoNumeroParcelas').val() > 1 ? 'as parcelas' : 'a parcela')+'.');
+        return false;
+    }
+
+    valorParcelas = 0;
+    $('#parcelas .valor-parcela').each(function() {
+        valorParcelas += moeda2float($(this).val());
+    });
+
+    valorTotalPedido = moeda2float($('#PedidoValorTotal').val());
+
+    if(parseFloat(valorParcelas.toFixed(2)) != parseFloat(valorTotalPedido.toFixed(2))){
+
+        if(parseFloat(valorTotalPedido.toFixed(2)) > parseFloat(valorParcelas.toFixed(2))){
+            complemento = 'está faltando <b>R$ ' + float2moeda(valorTotalPedido.toFixed(2)-valorParcelas.toFixed(2))+'</b>';
+        }else{
+            complemento = 'está passando <b>R$ ' + float2moeda(valorParcelas.toFixed(2)-valorTotalPedido.toFixed(2))+'</b>';
+        }
+
+        msg = '<br><div class = "text-left">';
+          msg += 'O valor da venda não pode ser diferente do valor das parcelas, '+complemento+' no valor das parcelas.';
+          msg += '<br>';
+          msg += '<br>';
+          msg += '<i>';
+              msg += 'Você tem algumas opções:';
+              msg += '<br>';
+              msg += '1ª Gerar as parcelas novamente';
+              msg += '<br>';
+              msg += '2ª Alterar os valores das parcelas manualmente';
+              msg += '<br>';
+              if(parseFloat(valorTotalPedido.toFixed(2)) > parseFloat(valorParcelas.toFixed(2))){
+                  msg += '3ª Adicionar uma nova parcela com o valor diferenciado';
+              }
+          msg += '</i>';
+        msg += '</div>';
+        bootbox.error(msg);
+        return false;
+    }else{
+        return true;
+    }
+}
+function validaColunaVariacao(){
+    ok = false;
+    $('#produtos table tr').each(function() {
+        if($(this).find('.produto-id').val() != ''){
+            if($(this).find('.produto-id').attr('possui-variacao') == 1){
+                $(this).find('.produto-detalhes').addClass('hidden').find('input').val('');
+                $(this).find('.produto-variacao').removeClass('hidden');
+                ok = true;
+            }else{
+                $(this).find('.produto-detalhes').removeClass('hidden');
+                $(this).find('.produto-variacao').addClass('hidden');
+            }
+        }
+    });
+
+    if(ok){
+        $('th.coluna-variacao').addClass('required');
+    }else{
+        $('th.coluna-variacao').removeClass('required');
+    }
+}
+
+function validaColunaTipoValor(){
+    if($('#produtos').find('th.coluna-valor').hasClass('hidden')){
+        $('#produtos').find('td.coluna-valor').addClass('hidden');
+    }else{
+        $('#produtos').find('td.coluna-valor').removeClass('hidden');
+    }
+}
+
+function validaDesconto(){
+    descontoProdutosServicos = 0;
+    valorProdutosServicos = 0;
+    $('#produtos .quantidade, #servicos .quantidade').each(function() {
+        valorProdutoServico = moeda2float($(this).val()) * moeda2float($(this).parents('tr').find('.valor-venda').val());
+        valorProdutosServicos += valorProdutoServico;
+        if(moeda2float($(this).parents('tr').find('.desconto-valor-p').val()) > 0){
+            descontoProdutosServicos += moeda2float($(this).parents('tr').find('.desconto-valor-p').val());
+        }
+        if(moeda2float($(this).parents('tr').find('.desconto-porcentagem-p').val()) > 0){
+            descontoProdutosServicos += (moeda2float($(this).parents('tr').find('.desconto-porcentagem-p').val()) / 100) * valorProdutoServico;
+        }
+    });
+
+    valorServicos = ($('#PedidoValorServicos').val() != '') ? moeda2float($('#PedidoValorServicos').val()) : 0;
+    valorProdutos = ($('#PedidoValorProdutos').val() != '') ? moeda2float($('#PedidoValorProdutos').val()) : 0;
+    descontoValor = ($('#PedidoDescontoValor').val() != '') ? moeda2float($('#PedidoDescontoValor').val()) : 0;
+    descontoPorcentagem = ($('#PedidoDescontoPorcentagem').val() != '') ? moeda2float($('#PedidoDescontoPorcentagem').val()) : 0;
+    descontoTotal = (((descontoValor / (valorServicos + valorProdutos)) * 100) + descontoPorcentagem) + ((descontoProdutosServicos / valorProdutosServicos) * 100);
+    if(descontoTotal > descontoMaximo){
+        msg = (descontoMaximo == 0) ? 'Este usuário não tem permissão para conceder descontos.' : 'Desconto de '+float2moeda(descontoTotal)+'% é maior que o permitido para o seu usuário. <br>Desconto máximo permitido: <b>'+float2moeda(descontoMaximo)+'%</b>';
+        bootbox.error(msg);
+        return false;
+    }
+    return true;
+}
+
+function pegaQuantidadeParcelas(){
+    iParcelas = 0;
+    $('#parcelas').find('tr').each(function() {
+        iParcelas++;
+    });
+    return iParcelas;
+}
+
+function validaEstoque(form){
+    if(controller == 'orcamentos_produtos' || controller == 'orcamentos_servicos' || lancadoEstoque == 1){
+        salvaPedido(form);
+    }else{
+        if(permitirVendaEstoqueInsuficiente == 0){
+            produtosEstoques = {};
+            iProd = 0;
+            $('#produtos').find('.quantidade').each(function(index){
+                estoqueId = $(this).parents('tr').find('.estoque-variacao').val();
+                $(this).parents('tr').attr('ref-estoque-id', estoqueId);
+                movimentaEstoque = $(this).attr('movimenta-estoque');
+                quantidadeVenda = ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+                if(movimentaEstoque == 1){
+                    produtosEstoques[iProd] = {};
+                    produtosEstoques[iProd][estoqueId] = quantidadeVenda;
+                    iProd++;
+                }
+            });
+
+            $('#carregando').show();
+            $.post('/pedidos/valida_estoque',{produtos:produtosEstoques},function(retorno){
+                if(retorno != true){
+                    retorno = $.parseJSON(retorno);
+                    iEstoque = 0;
+                    msg = '';
+                    $.each(retorno, function(id, estoque){
+                        if(iEstoque > 0){
+                            msg += '</br>';
+                        }
+                        msg += estoque.nome + ' - Estoque atual: ' + estoque.quantidade;
+                        if(!estoque.composicao){
+                            tr = $('#produtos').find('tr[ref-estoque-id="'+id+'"]');
+                            quantidadeVenda = (tr.find('.quantidade').val() != '') ? moeda2float(tr.find('.quantidade').val()) : 0;
+                            produtoId = tr.find('.produto-id').val();
+                            variacoesEstoques[produtoId][id] = estoque.quantidade;
+                            tr.find('.estoque-variacao').change();
+                            tr.find('.quantidade').val('').valid();
+                        }
+                        iEstoque++;
+                    });
+                    bootbox.error((iEstoque == 1 ? 'Existe <b>1</b> produto' : 'Existem <b>'+iEstoque+'</b> produtos') + ' com a quantidade de estoque insuficiente.<br>' + msg);
+                    $('html, body').animate({scrollTop: $('#produtos').offset().top}, 500);
+                    calculaValorTotal();
+                    $('#carregando').hide();
+                }else{
+                    salvaPedido(form);
+                }
+            });
+        }else{
+            salvaPedido(form);
+        }
+    }
+}
+
+function salvaPedido(form){
+    $('#carregando').show();
+    form.submit();
+}

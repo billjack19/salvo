@@ -1,0 +1,133 @@
+var tour,endTour;
+$(document).ready(function() {
+    tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'bottom',
+        element: '#botao-periodo',
+        title: 'Período',
+        content: 'Aqui você pode selecionar o período das movimentações. <br><b>Obs.:</b> Por padrão o sistema busca somente o mês atual podendo ser alterado pelo usuário.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.botao-busca-avancada',
+        title: 'Busca avançada',
+        content: 'Aqui você encontra funções mais avançadas para buscar os recebimentos como, entidade, descrição, plano de contas, período, valor, situação, conta bancária e forma de recebimento.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'right',
+        element: '#botao-adicionar',
+        title: 'Adicionar recebimento',
+        content: 'Neste botão poderá cadastrar um novo recebimento. <br><b>Obs.:</b> Os recebimentos podem ser cadastrados manualmente através deste botão ou automáticamente através de uma venda quando aprovada pelo usuário.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-acoes-massa',
+        title: 'Mais ações',
+        content: 'Neste botão poderá realizar ações como confirmar ou cancelar vários recebimentos, realizar transferências entre contas, importar arquivos de retorno e exportar cadastros em formato excel.',
+        backdrop: true,
+        onNext: function() {
+            if(!$('.index .btn-info:first').length){
+                assistirVideoTutorial();
+            }
+        },
+      },
+      {
+        placement: 'top',
+        element: '.index tbody tr:first',
+        title: 'Resumo do recebimento',
+        content: 'Aqui você visualiza um resumo do recebimento.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '.index tbody span.label:first',
+        title: 'Situação',
+        content: 'Aqui você pode alterar a situação do recebimento.',
+        backdrop: true,
+      },
+
+      {
+        placement: 'left',
+        element: '.index .btn-info:first',
+        title: 'Visualizar recebimento',
+        content: 'Neste botão poderá visualizar os detalhes do recebimento.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-warning:first',
+        title: 'Editar recebimento',
+        content: 'Neste botão poderá atualizar os dados do recebimento.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-danger:first',
+        title: 'Deletar recebimento',
+        content: 'Neste botão poderá excluir o recebimento.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-success:first',
+        title: 'Mais ações',
+        content: 'Neste botão poderá realizar mais ações como Imprimir boleto, Enviar boleto por e-mail, Confirmar recebimento, Cancelar confirmação e imprimir recibo.',
+        backdrop: true,
+        onNext: function() {
+            if($('.index .btn-info:first').length){
+                if(exibirVideo){
+                    assistirVideoTutorial();
+                }else{
+                    tour.end();
+                    endTour.restart();
+                    exibirVideo = true;
+                }
+            }
+        },
+      },
+      {
+
+      }
+    ]});
+
+    endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        tour.restart();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

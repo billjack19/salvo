@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://gestaoclick.com/vendas_balcao/vender -->
+<html style="min-height: 624px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>GestãoClick</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="theme-color" content="#0C1B25">
+	<meta name="msapplication-navbutton-color" content="#0C1B25">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#0C1B25">
+	<link href="https://gestaoclick.com/icons/favicon.gestaoclick.com.ico" type="image/x-icon" rel="icon">
+	<link href="https://gestaoclick.com/icons/favicon.gestaoclick.com.ico" type="image/x-icon" rel="shortcut icon">
+	<style>
+		.file-input-wrapper {
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+		z-index: 1;
+		}
+		.file-input-wrapper input[type=file], 
+		.file-input-wrapper input[type=file]:focus, 
+		.file-input-wrapper input[type=file]:hover {
+		position: absolute;
+		top: 0;
+		left: 0;
+		cursor: pointer;
+		opacity: 0;
+		filter: alpha(opacity=0);
+		z-index: 99;
+		outline: 0;
+		}
+		.file-input-name {
+		margin-left: 8px; 
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/iconFont.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/whhg.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/datepicker.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/AdminLTE.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/dataTables.bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/bootstrap-timepicker.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/token-input.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/all.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/jquery.simplecolorpicker.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/tabdrop.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/bootstrap-tour.css">
+	<link rel="stylesheet" type="text/css" href="./GestãoClick_files/bootstrap-select.css">
+	<script type="text/javascript" src="./GestãoClick_files/jquery-1.7.1.min.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/jquery-ui-1.10.3.min.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap.min.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootbox.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap.file-input.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap-tabdrop.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/jquery.validate.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/jquery.simplecolorpicker.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/mascaras.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/cep.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/receitaws.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/token-input.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap-datepicker.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap-datepicker.pt-BR.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap-timepicker.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/app.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/urlify.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap-tour.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/jquery.scrollTo.min.js.download"></script>
+	<script type="text/javascript" src="./GestãoClick_files/bootstrap-select.js.download"></script>
+	<style>
+	#carregando div,#carregando-nfc div {
+		border-color: #f3f3f3;
+		border-top-color: #0C1B25;
+		border-bottom-color: #0C1B25;
+	}
+
+	#bem-vindo .modal-header, #curtir-facebook .modal-header{
+		background: #0C1B25;
+		color: #FFFFFF;
+	}
+
+	.pace .pace-progress {
+		background: #1F4968;
+	}
+
+	a {
+		color: #0C1B25;
+	}
+
+	a:hover,
+	a:active,
+	a:focus {
+		color: #1F4968
+	}
+
+	.text-primary{
+		color: #0C1B25;
+	}
+
+	.text-primary:hover{
+		color: #1F4968
+	}
+
+	.cor-padrao{
+		color: #0C1B25
+	}
+
+	.flash-tab{
+		background: #0C1B25;
+	}
+
+	.dropdown-menu > li > a:hover {
+		background-color: #0C1B25;
+	}
+
+	.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+		background: #0C1B25;
+	}
+
+	.box.box-primary {
+		border-top-color: #0C1B25;
+	}
+
+	.box.box-solid.box-primary > .box-header {
+		background: #0C1B25;
+		background-color: #0C1B25;
+	}
+
+	.box .todo-list > li.primary {
+		border-left-color: #0C1B25;
+	}
+
+	.bg-light-blue {
+		background-color: #0C1B25 !important;
+	}
+
+	.bg-olive {
+		background-color: #0C1B25 !important;
+	}
+
+	.text-light-blue {
+		color: #0C1B25 !important;
+	}
+
+	.text-olive {
+		color: #0C1B25 !important;
+	}
+
+	.btn.btn-primary {
+		background-color: #0C1B25;
+		border-color: #1F4968;
+	}
+
+	.btn-primary:hover,
+	.btn-primary:focus,
+	.btn-primary:active,
+	.btn-primary.active,
+	.open .dropdown-toggle.btn-primary {
+		background-color: #1F4968;
+		border-color: #0C1B25;
+	}
+
+	.nav.nav-pills > li.active > a,
+	.nav.nav-pills > li.active > a:hover {
+		border-top-color: #0C1B25;
+		color: #444;
+	}
+
+	.nav.nav-pills.nav-stacked > li.active > a,
+	.nav.nav-pills.nav-stacked > li.active > a:hover {
+		border-left-color: #0C1B25;
+	}
+
+	.nav-tabs-custom > .nav-tabs > li.active {
+		border-top-color: #0C1B25;
+	}
+
+	.form-box .header {
+		background: #0C1B25;
+	}
+
+	.skin-blue .navbar {
+		background-color: #0C1B25;
+	}
+
+	.form-control:hover,.form-control:focus,.form-control-table:hover,.form-control-table:focus{
+		border-color: #0C1B25 !important;
+	}
+
+	.progress-bar-light-blue,
+	.progress-bar-primary {
+		background-color: #0C1B25;
+	}
+
+	fieldset legend {
+		color: #0C1B25;
+	}
+
+	table.calendario tr td .compromissos{
+		background: #0C1B25;
+	}
+
+	.btn.btn-primary {
+		border-color: #0C1B25;
+	}
+
+	.btn.btn-primary:hover,
+	.btn.btn-primary:active,
+	.btn.btn-primary.hover {
+		background-color: #0C1B25;
+	}
+
+	.skin-blue .logo {
+		background-color: #0C1B25;
+	}
+
+
+	div.token-input-dropdown ul li.token-input-selected-dropdown-item {
+		background: #0C1B25 !important;
+	}
+
+	.text-info {
+		color:#0C1B25;
+	}
+	.text-info:hover {
+		color:#1F4968;
+	}
+
+	.pagination > .active > a,
+	.pagination > .active > span,
+	.pagination > .active > a:hover,
+	.pagination > .active > span:hover,
+	.pagination > .active > a:focus,
+	.pagination > .active > span:focus {
+		background-color: #0C1B25;
+	}
+
+	.wizard li.active span.round-tab {
+		border: 2px solid #0C1B25;
+	}
+
+	.wizard li.active span.round-tab i{
+		color: #0C1B25;
+	}
+
+	.wizard li:after{
+		border-bottom-color: #0C1B25;
+	}
+
+	.wizard li.active:after {
+		border-bottom-color: #0C1B25;
+	}
+
+	.ui-button.ui-state-active:hover {
+		background: #0C1B25 !important;
+	}
+</style> 
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+	<![endif]-->
+
+	<script>
+		var casasDecimaisQuantidade = 2;
+		var casasDecimaisValor = 2;
+		var nomeApp = 'GestãoClick';
+		var urlApp = 'https://gestaoclick.com';
+		var iconeApp = 'favicon.gestaoclick.com.ico';
+	</script>
+
+<script>
+
+function ativaChat(){
+
+	$('#carregando').show();
+	$('#chat-suporte').remove();
+
+	window.$zopim||(function(d,s){
+	var z=$zopim=function(c){z._.push(c)},$=z.s=d.createElement(s),
+	e=d.getElementsByTagName(s)[0];
+	z.set=function(o){
+		z.set._.push(o)
+	};
+	z._=[];
+	z.set._=[];
+	$.async=!0;
+	$.setAttribute("charset","utf-8");
+	$.src="https://v2.zopim.com/?4gv1nh79kdrPyr6KitFb51B6Dxu6Q5hd";
+	z.t=+new Date;
+	$.type="text/javascript";
+	e.parentNode.insertBefore($,e)
+	})(document,"script");
+
+
+	$.post('/configuracoes/ativaChat', function(retorno){
+		$zopim.livechat.setName('Jack BIller');
+		$zopim.livechat.setEmail('jackbiller19@gmail.com');
+		$zopim.livechat.addTags('Empresa: CDI Informatica', 'Sistema: GestãoClick');
+		$zopim.livechat.window.show();
+
+		$('#carregando').hide();
+	});
+	$('#carregando').hide();
+}
+
+	$(document).ready(function(){
+		chat = '<div id = "chat-suporte" onClick = "ativaChat();"><i class = "fa fa-comment margin-right-5px"></i> Suporte ao sistema</div>';
+		$('body').append(chat);
+		$('#chat-suporte')
+		.css('background', '#000000')
+		.css('padding', '3px 3px 5px 10px')
+		.css('color', '#FFFFFF')
+		.css('position', 'fixed')
+		.css('bottom', '0')
+		.css('right', '10px')
+		.css('min-width', '190px')
+		.css('font-weight', 'bold')
+		.css('border-top-left-radius', '4px')
+		.css('border-top-right-radius', '4px')
+		.css('font-size', '15px')
+		.css('z-index', '9999999999999')
+		.css('cursor', 'pointer');
+	});
+</script>
+<style type="text/css">
+.backpack.dropzone {
+	font-family: 'SF UI Display', 'Segoe UI';
+	font-size: 15px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 250px;
+	height: 150px;
+	font-weight: lighter;
+	color: white;
+	will-change: right;
+	z-index: 2147483647;
+	bottom: 20%;
+	background: #333;
+	position: fixed;
+	user-select: none;
+	transition: left .5s, right .5s;
+	right: 0px; 
+}
+.backpack.dropzone .animation {
+	height: 80px;
+	width: 250px;
+	background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/hoverstate.png") left center; 
+}
+.backpack.dropzone .title::before {
+	content: 'Save to'; 
+}
+.backpack.dropzone.closed {
+	right: -250px; 
+}
+.backpack.dropzone.hover .animation {
+	animation: sxt-play-anim-hover 0.91s steps(21);
+	animation-fill-mode: forwards;
+	background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/hoverstate.png") left center; 
+}
+
+@keyframes sxt-play-anim-hover {
+	from {
+		background-position: 0px; 
+	}
+	to {
+		background-position: -5250px; 
+	} 
+}
+
+.backpack.dropzone.saving .title::before {
+	content: 'Saving to'; 
+}
+.backpack.dropzone.saving .animation {
+	background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/saving_loop.png") left center;
+	animation: sxt-play-anim-saving steps(59) 2.46s infinite; 
+}
+
+@keyframes sxt-play-anim-saving {
+	100% {
+	background-position: -14750px; 
+	} 
+}
+
+.backpack.dropzone.saved .title::before {
+	content: 'Saved to'; 
+}
+.backpack.dropzone.saved .animation {
+	background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/saved.png") left center;
+	animation: sxt-play-anim-saved steps(20) 0.83s forwards; 
+}
+
+@keyframes sxt-play-anim-saved {
+	100% {
+	background-position: -5000px; 
+	} 
+}
+</style>
+
+</head>             
+<body class="skin-blue    pace-done" style="min-height: 624px;">
+	<div class="pace    pace-inactive">
+	<div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+		<div class="pace-progress-inner"></div>
+	</div>
+	<div class="pace-activity"></div>
+	</div>
+	<div id="carregando" style="display: none;">
+	<div></div>
+	</div>
+	<header class="header">
+	<a href="https://gestaoclick.com/vendas_balcao" class="logo">
+		<img src="./GestãoClick_files/e63dbfdb9aaedb8a9174d887ebb8854d.png" border="0" width="95%">
+	</a>
+	<!-- Header Navbar: style can be found in header.less -->
+	<nav class="navbar navbar-static-top" role="navigation">
+		<div class="navbar-right">
+		<ul class="nav navbar-nav">
+			<li class="notifications-menu">
+				<a href="https://gestaoclick.com/vendas_balcao">
+					<i class="fa fa-sign-out"></i>
+				</a>
+			</li>
+			<li class="dropdown user user-menu">
+			<a href="https://gestaoclick.com/vendas_balcao/vender#" class="dropdown-toggle" data-toggle="dropdown">
+				<div class="hidden-xs">
+				<i class="glyphicon glyphicon-user"></i>
+				<span>Jack BIller <i class="caret"></i></span>
+				</div>
+				<div class="visible-xs">
+				<i class="glyphicon glyphicon-user"></i>
+				<span>Jack... <i class="caret"></i></span>
+				</div>
+			</a>
+			<ul class="dropdown-menu">
+				<!-- User image -->
+				<li class="user-header bg-light-blue">
+				<img src="./GestãoClick_files/sem-foto.png" width="200" alt="">
+				<p>Jack BIller <small>Membro desde 26/05/2018 10:00:28</small></p>
+				</li>
+				<!-- Menu Footer-->
+				<li class="user-footer">
+				<div class="pull-left">
+					<a href="https://gestaoclick.com/usuarios/meus_dados" class="btn btn-default btn-flat">
+					Meus Dados
+					</a>
+				</div>
+				<div class="pull-right">
+					<a href="https://gestaoclick.com/pdv" class="btn btn-default btn-flat">Ir para ERP</a>
+				</div>
+				</li>
+			</ul>
+			</li>
+		</ul>
+		</div>
+	</nav>
+	</header>
+	<div class="wrapper row-offcanvas row-offcanvas-left" style="min-height: 578px;">
+	<aside id="flash-message">
+
+
+<link rel="stylesheet" type="text/css" href="./GestãoClick_files/pdv.css">
+<script type="text/javascript" src="./GestãoClick_files/nfe.js.download"></script>
+<script>
+	modeloCertificado = 1;
+	versaoNf = '400';
+	urlEnvio = (modeloCertificado == 1 ? '/fiscal/nfe'+versaoNf : 'http://127.0.0.1:8732');
+	nfcBalcao    = true;
+	situacaoNfc = '0';
+	permissaoCadastrarCliente = true;
+
+
+	/* Programa os atalhos no teclado */
+	$(document).bind('keydown', function(event) {
+	//alert(event.which);
+	if (event.ctrlKey && event.keyCode == 74){
+		return false;
+	}
+
+	if(event.which == 112){
+		$('#painel-teclas-atalho').modal('show');
+		return false;
+	}
+
+	if(event.which === 83 && event.shiftKey) {
+		if(!$('input').is(':focus')){
+		sangria();
+		return false;
+		}
+	}
+
+	if(event.which === 82 && event.shiftKey) {
+		if(!$('input').is(':focus')){
+		reforco();
+		return false;
+		}
+	}
+
+	if(event.which === 68 && event.shiftKey) {
+		if(!$('input').is(':focus')){
+		devolucao();
+		return false;
+		}
+	}
+
+	if(event.which === 70 && event.shiftKey) {
+		if(!$('input').is(':focus')){
+		fechar();
+		return false;
+		}
+	}
+
+	if($('#tela-inicial').css('display') == 'block'){
+		if(event.which == 113){
+		$('#token-input-BuscaProduto').val('').focus().select();
+		$('#BuscaProduto').tokenInput('clearCache');
+		return false;
+		}
+
+		if(event.which == 114){
+		$('#PedidoQuantidade').focus().select();
+		return false;
+		}
+
+		if(event.which == 115){
+		$('#adicionar-produto').find('#salva-produto').click();
+		$('#token-input-BuscaProduto').val('').focus().select();
+		$('#BuscaProduto').tokenInput('clearCache');
+		return false;
+		}
+
+		if(event.which == 117){
+		$('#botao-pagar').click();
+		return false;
+		}
+
+		if(event.which == 118){
+		$('#aguardar').click();
+		return false;
+		}
+
+		if(event.which == 119){
+		$('#cancelar').click();
+		return false;
+		}
+
+		if(event.which === 67 && event.shiftKey) {
+		if(!$('input').is(':focus')){
+			$('#botao-indicar-cliente').click();
+			$('#ClientePfCpf').focus().select();
+			if($('#ClienteTipoPessoaPJ').is(':checked')){
+			$('#ClientePjCnpj').focus().select();
+			}
+			return false;
+		}
+		}
+
+		if(event.which === 86 && event.shiftKey) {
+		if(!$('input').is(':focus')){
+			$('#botao-indicar-vendedor').click();
+			$('#PedidoVendedorId').focus().select();
+			return false;
+		}
+		}
+	}
+
+	if($('#tela-pagamento').css('display') == 'block'){
+
+		if(event.which == 113){
+			$('#PedidoFormaPagamentoId').focus().select().val($('#PedidoFormaPagamentoId > option:selected').next().val()).change();
+			return false;
+		}
+
+		if(event.which == 114){
+			$('#PedidoFormaPagamentoId').change();
+			$('#PedidoValorPago').change().focus();
+			$('#botao-confirma-pagamento').click();
+			$('#PedidoFormaPagamentoId').focus().select();
+			return false;
+		}
+
+		if(event.which == 115){
+			$('#PedidoDescontoValor').focus().select();
+			return false;
+		}
+
+		if(event.which == 117){
+			$('#botao-finalizar').click();
+			return false;
+		}
+
+		if(event.which == 119){
+			cancelarPagamento();
+			return false;
+		}
+
+	}
+
+	if($('#tela-impressao').css('display') == 'block'){
+
+		if(event.which == 113){
+			$('#imprimir-cupom').click();
+			return false;
+		}
+
+		if(event.which == 114){
+			$('#emitir-nfc').click();
+			return false;
+		}
+
+		if(event.which == 115){
+			$('#nova-venda').click();
+			return false;
+		}
+	}
+
+	if($('#tela-sangria').length){
+		if(event.which == 113){
+		$('#CaixaValor').focus().select();
+		return false;
+		}
+
+		if(event.which == 27){
+		$('.botao-tela-voltar').click();
+		}
+	}
+
+	if($('#tela-reforco').length){
+		if(event.which == 113){
+		$('#CaixaValor').focus().select();
+		return false;
+		}
+
+		if(event.which == 27){
+		$('.botao-tela-voltar').click();
+		}
+	}
+
+	if($('#tela-devolucao').length){
+		if(event.which == 113){
+		$('#DevolucaoCodigo').focus().select();
+		return false;
+		}
+
+		if(event.which == 27){
+		$('.botao-tela-voltar').click();
+		}
+	}
+
+	if($('#tela-seleciona-devolucao').length){
+		if(event.which == 113){
+		/*if($('.quantidade-devolucao:first').is(':focus')){
+			$('.quantidade-devolucao').not('.selecionado').prev('.quantidade-devolucao').addClass('selecionado').focus().select();
+			$('.quantidade-devolucao').removeClass('selecionado');
+			$(':focus').addClass('selecionado');
+		}else{
+			$('.quantidade-devolucao').removeClass('selecionado');
+			$('.quantidade-devolucao:first').addClass('selecionado').focus().select();
+		}*/
+		$('.quantidade-devolucao:first').addClass('selecionado').focus().select();
+		return false;
+		}
+
+		if(event.which == 27){
+		$('.botao-tela-voltar').click();
+		}
+	}
+
+	});
+
+$(document).ready(function(){
+
+	iniciaPdv(true);
+
+	$('#botao-operacoes').live('click',function(){
+	$('#janela-operacoes').modal('show');
+	});
+
+	//tela de pagamento
+
+	$('.remove-pagamento').live('click',function(){
+	$(this).parents('tr').remove();
+	atualizaFrame();
+	qPagamento--;
+	calculaValorRecebido();
+	calculaValorReceber();
+	calculaTroco();
+	if(qPagamento == 0){
+		$('#box-pagamentos').addClass('hidden');
+		$('#PedidoDescontoValor').attr('readonly', false);
+		$('#PedidoDescontoPorcentagem').attr('readonly', false);
+	}
+	$('#PedidoFormaPagamentoId').val('').focus();
+	});
+
+	$('.remove-pagamento-devolucao').live('click',function(){
+	$(this).parents('tr').remove();
+	qPagamento--;
+	if(qPagamento == 0){
+		$('#tela-devolucao').find('#box-pagamentos').addClass('hidden');
+	}
+	$('#tela-devolucao').find('#DevolucaoFormaPagamentoId').val('').focus();
+	calculaValorRestanteDevolucao();
+	});
+});
+
+function iniciaPdv(indicar){
+	$('.etapa').hide();
+	$('#carregando').show();
+	$.post('/vendas_balcao/tela_inicial/?indicar='+(indicar == true ? 1 : 0),function(retorno){
+		$('#tela-inicial').html(retorno);
+		$('#tela-inicial').show();
+		$('#token-input-BuscaProduto').focus();
+		$('#carregando').hide();
+	});
+}
+
+function liberaNovoProduto(){
+	$('#PedidoNumeroVenda').val('');
+	$('#adicionar-produto').find('.produto-id').val('');
+	$('#adicionar-produto').find('input:text,select').val('').attr('readonly',true);
+	$('#adicionar-produto').find('.coluna-variacao').addClass('hidden');
+	$('#adicionar-produto').find('.tipo').html('');
+	$('#mostra-produto').find('.quantidade').tooltip('disable').tooltip('hide');
+	$('#produtos-selecionados').find('#lista').scrollTop($('#produtos-selecionados').find('#lista')[0].scrollHeight);
+	$('#token-input-BuscaProduto').val('').focus().select();
+	$('#BuscaProduto').tokenInput('clearCache');
+	$('#adicionar-produto').find('.coluna-envia').removeClass('hidden');
+	$('#adicionar-produto').find('.coluna-edita').addClass('hidden');
+	carregaFotos();
+}
+
+function validaEstoque(){
+	ok = true;
+	return ok;
+}
+
+function carregaFotos(id){
+	if(id == undefined){
+		id = '';
+	}
+	$.post('/vendas_balcao/carrega_fotos/'+id,function(retorno){
+		$('#fotos').html(retorno);
+	});
+}
+
+function carregaPedidos(){
+	$('#carregando').show();
+	$.post('/vendas_balcao/carrega_pedidos',function(retorno){
+		$('#produtos-selecionados').html(retorno);
+		$('#carregando').hide();
+		$('#produtos-selecionados').find('#lista').scrollTop($('#produtos-selecionados').find('#lista')[0].scrollHeight);
+		$('#carregando').hide();
+	});
+}
+
+
+function calculaValorTotal(){
+	setTimeout(function(){
+		quantidade = moeda2float($('#mostra-produto .quantidade').val());
+		quantidade = (quantidade) ? quantidade : 0;
+
+		valorVenda = moeda2float($('#mostra-produto .valor-venda').val());
+		valorVenda = (valorVenda) ? valorVenda : 0;
+
+		descontoValor = moeda2float($('#mostra-produto .desconto-valor').val());
+		descontoValor = (descontoValor) ? descontoValor : 0;
+
+		descontoPorcentagem = moeda2float($('#mostra-produto .desconto-porcentagem').val());
+		descontoPorcentagem = (descontoPorcentagem) ? descontoPorcentagem : 0;
+
+		valorSubTotal = valorVenda * quantidade;
+		valorSubTotal = parseFloat(valorSubTotal.toFixed(casasDecimaisValor));
+
+		valorSubTotal = (valorSubTotal - descontoValor) - ((descontoPorcentagem / 100) * valorSubTotal);
+
+		$('#PedidoValorTotal').val(float2moeda(valorSubTotal));
+
+	 }, 100);
+}
+
+function cancelarCliente(){
+	$('#carregando').show();
+	$.post('/vendas_balcao/salvaOperacoes/?cancelarCliente=true', function(retorno){
+		$('#botao-indicar-cliente').html('AO CONSUMIDOR');
+		$('#janela-indicar-cliente').modal('hide').find('input').val('').attr('readonly', false);
+		$('#botao-buscar-cliente').parent('div').removeClass('hidden');
+		$('#div-tipo-cliente').removeClass('hidden');
+		$('#div-buscar-cliente').addClass('hidden');
+		$('#carregando').hide();
+	});
+}
+
+function editarProduto(numeroVenda,chave){
+	$('#carregando').show();
+	$.post('/vendas_balcao/editar_produto',{numeroVenda:numeroVenda,chave:chave}, function(retorno){
+		if(retorno){
+			retorno = $.parseJSON(retorno);
+			$('#BuscaProduto').tokenInput('add', retorno);
+			$('#adicionar-produto').find('.coluna-envia').addClass('hidden');
+			$('#adicionar-produto').find('.coluna-edita').removeClass('hidden');
+		}else{
+			bootbox.error('Ocorreu um erro. Por favor, tente novamente.');
+		}
+		$('#carregando').hide();
+	});
+}
+
+function deleteProduto(){
+	$('#carregando').show();
+	$.post('/vendas_balcao/carrega_pedidos',{deleteProduto:$('#PedidoChaveItem').val(),numeroVenda:$('#PedidoNumeroVenda').val()},function(retorno){
+		$('#produtos-selecionados').html(retorno);
+		liberaNovoProduto();
+		$('#carregando').hide();
+	});
+}
+
+
+function restaurar(pedido){
+	$('#carregando').show();
+	$.post('/vendas_balcao/carrega_pedidos',{restaurar:pedido},function(retorno){
+		iniciaPdv(false);
+	});
+}
+
+function aguardar(){
+	$('#carregando').show();
+	$.post('/vendas_balcao/carrega_pedidos',{aguardar:pedidoAtual,adicionaPedido:adicionaPedido},function(retorno){
+		iniciaPdv(false);
+	});
+}
+
+function cancelarPedido(){
+	bootbox.dialog({
+		message: '<div class = "text-center margin-top-20px"><span class = "text-danger glyphicon glyphicon-remove" style = "font-size: 60px"></span><div style = "font-size: 18px">Deseja cancelar este pedido?</div></div>',
+		title: '',
+		buttons: {
+			b: {
+				label: 'Não',
+				className: 'btn-default',
+			},
+			a: {
+				label: 'Sim',
+				className: 'btn-primary',
+			callback: function() {
+				$('#carregando').show();
+				$.post('/vendas_balcao/carrega_pedidos',{cancelar:pedidoAtual,adicionaPedido:adicionaPedido},function(retorno){
+				iniciaPdv(false);
+				});
+			}
+			},
+		}
+	});
+}
+
+function pagar(){
+	if($('#produtos-selecionados').find('.produto-pedido').length == 0){
+	bootbox.error('Não existe produto selecionado!');
+	return false;
+	}
+	$('.etapa').hide(300);
+	$.post('/vendas_balcao/tela_pagamento',function(retorno){
+		$('#tela-pagamento').html(retorno);
+		$('#tela-pagamento').css('display','block');
+		$('#PedidoFormaPagamentoId').focus();
+	});
+}
+
+function cancelar(){
+	$('.etapa').hide(300);
+	$('.etapa').not('#tela-inicial').html('');
+	$('#tela-inicial').show(300);
+}
+
+function calculaValorTotalVenda(){
+	$('#ValorTotalVenda').val(float2moeda(valorTotal));
+}
+
+function calculaValorRecebido(){
+	setTimeout(function(){
+		valorRecebido = 0;
+		$('#box-pagamentos').find('input:hidden').each(function() {
+			valorRecebido += moeda2float($(this).val());
+		});
+		$('#pagamentos').html(float2moeda(valorRecebido));
+		$('#PedidoValorRecebido').val(float2moeda(valorRecebido));
+		calculaValorTotalVenda();
+	}, 100);
+}
+
+function calculaValorReceber(){
+	setTimeout(function(){
+		descontoValor = (moeda2float($('#PedidoDescontoValor').val())) ? moeda2float($('#PedidoDescontoValor').val()) : 0;
+		descontoPorcetagem = (moeda2float($('#PedidoDescontoPorcentagem').val())) ? moeda2float($('#PedidoDescontoPorcentagem').val()) : 0;
+		valorReceber    = (valorSubTotal - descontoValor).toFixed(2);
+		valorReceber = valorReceber - ( (descontoPorcetagem / 100) * valorReceber );
+		valorReceber =    (valorReceber - valorRecebido).toFixed(2);
+		if(valorReceber <= 0){
+			$('#valor-receber').html(float2moeda(0));
+			$('#PedidoValorPago').val(float2moeda(0));
+			$('#botao-finalizar').attr('disabled', false);
+		} else {
+			$('#valor-receber').html(float2moeda(valorReceber));
+			$('#PedidoValorPago').val(float2moeda(valorReceber));
+			$('#botao-finalizar').attr('disabled', true);
+		}
+		calculaValorTotalVenda();
+	}, 100);
+}
+
+function calculaTroco(){
+	setTimeout(function(){
+		if(valorRecebido <= valorTotal){
+			troco = float2moeda(0);
+		}else{
+			troco = (valorRecebido - valorTotal);
+		}
+		$('#troco').html(float2moeda(troco));
+		$('#PedidoValorTroco').val(float2moeda(troco));
+		calculaValorTotalVenda();
+	}, 100);
+}
+
+function calculaDesconto(){
+	setTimeout(function(){
+		desconto = 0;
+		if($('#PedidoDescontoValor').val() != '' && moeda2float($('#PedidoDescontoValor').val()) != 0){
+			desconto = moeda2float($('#PedidoDescontoValor').val());
+		}
+		if($('#PedidoDescontoPorcentagem').val() != '' && moeda2float($('#PedidoDescontoPorcentagem').val()) != 0){
+			desconto = (moeda2float($('#PedidoDescontoPorcentagem').val()) / 100) * valorSubTotal;
+		}
+
+		valorTotal = valorSubTotal - desconto;
+
+		$('#PedidoValorTotal').val(float2moeda(valorTotal));
+		desconto = moeda2float($('#PedidoDescontoProdutos').val()) + desconto;
+
+		$('#descontos').html(float2moeda(desconto));
+		calculaValorTotalVenda();
+	}, 100);
+}
+
+function validaDesconto(){
+
+	descontoProdutosServicos = 0;
+	valorProdutosServicos = 0;
+	$('#PedidoTelaPagamentoForm').find('.quantidade').each(function() {
+		valorProdutoServico = moeda2float($(this).val()) * moeda2float($(this).parent().find('.valor-venda').val());
+		valorProdutosServicos += valorProdutoServico;
+		if(moeda2float($(this).parent().find('.desconto-valor').val()) > 0){
+			descontoProdutosServicos += moeda2float($(this).parent().find('.desconto-valor').val());
+		}
+		if(moeda2float($(this).parent().find('.desconto-porcentagem').val()) > 0){
+			descontoProdutosServicos += (moeda2float($(this).parent().find('.desconto-porcentagem').val()) / 100) * valorProdutoServico;
+		}
+	});
+
+	descontoMaximo = moeda2float('100,00');
+	descontoValor = ($('#PedidoDescontoValor').val() != '') ? moeda2float($('#PedidoDescontoValor').val()) : 0;
+	descontoPorcentagem = ($('#PedidoDescontoPorcentagem').val() != '') ? moeda2float($('#PedidoDescontoPorcentagem').val()) : 0;
+	descontoTotal = (((descontoValor / valorSubTotal) * 100) + descontoPorcentagem) + ((descontoProdutosServicos / valorProdutosServicos) * 100);
+	if(descontoTotal > descontoMaximo){
+		msg = (descontoMaximo == 0) ? 'Este usuário não tem permissão para conceder descontos.' : 'Desconto de '+float2moeda(descontoTotal)+'% é maior que o permitido. <br>Desconto máximo: <b>'+float2moeda(descontoMaximo)+'%</b>';
+		parent.bootbox.error(msg);
+		return false;
+	}
+	return true;
+}
+
+function imprimirCupom(venda){
+	//if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
+	window.open('/vendas_balcao/imprimir_cupom/'+venda);
+	//}else{
+		//$('body').find('#cupom-fiscal').remove();
+		//$('body').append('<iframe id = "cupom-fiscal" src="/vendas_balcao/imprimir_cupom/'+venda+'" height="0" width="0" frameBorder="0"></iframe>');
+	//}
+}
+
+var vendaId = null;
+function emitirNfc(venda){
+	vendaId = venda;
+			$('#carregando').show();
+		$.ajax({
+			type: 'GET',
+			url: '/vendas_balcao/emitir_nfc/'+venda,
+			success: function(retorno){
+				retorno = $.parseJSON(retorno);
+				if(retorno.situacao == 1){
+					envia(retorno.id);
+				}else{
+					pegaRetornoNfc(retorno);
+				}
+			},
+			error: function() {
+				bootbox.error('Ocorreu um erro!');
+				 $('#carregando').hide();
+			}
+		});
+	}
+
+function pegaRetornoNfc(retorno){
+	$('#carregando').hide();
+	if(retorno.situacao == 1){
+		msg = '';
+		msg += '<div class="text-center margin-top-20px">';
+			msg += '<span class="text-success glyphicon glyphicon-ok" style="font-size: 60px"></span>';
+			msg += '<div style="font-size: 18px">';
+				msg += retorno.mensagem;
+			msg += '</div>';
+		msg += '</div>';
+		parent.bootbox.dialog({
+			message: msg,
+			title: '',
+			buttons: {
+				a: {
+					label: 'Imprimir',
+					className: 'btn-success',
+					callback: function() {
+						imprimirNfc(retorno.id);
+					}
+				},
+				b: {
+					label: 'Enviar por e-mail',
+					className: 'btn-primary',
+					callback: function() {
+						enviarNfcEmail(retorno.id);
+					}
+				},
+			}
+		});
+	}
+	if(retorno.situacao == 0){
+		msg = '';
+		msg += '<div class="text-center margin-top-20px">';
+			msg += '<span class="text-danger glyphicon glyphicon-warning-sign" style="font-size: 60px"></span>';
+			msg += '<div style="font-size: 18px">';
+				msg += retorno.mensagem;
+			msg += '</div>';
+		msg += '</div>';
+		bootbox.dialog({
+			message: msg,
+			title: '',
+			buttons: {
+				a: {
+					label: 'Cancelar',
+					className: 'btn-default',
+				},
+				b: {
+					label: 'Tentar novamente',
+					className: 'btn-primary',
+					callback: function() {
+						emitirNfc(vendaId);
+					}
+				},
+			}
+		});
+	}
+}
+
+function imprimirNfc(id){
+	//if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
+		window.open('/vendas_balcao/imprimir_nfc/'+id);
+	//}else{
+		//$('body').find('#cupom-fiscal').remove();
+		//$('body').append('<iframe id = "cupom-fiscal" src="/vendas_balcao/imprimir_nfc/'+id+'" height="0" width="0"></iframe>');
+	//}
+	iniciaPdv(true);
+}
+
+function enviarNfcEmail(id){
+	bootbox.iframe({
+		title: true,
+		link: '/vendas_balcao/enviar_nfc_email/'+id,
+		size: 'large',
+	});
+}
+
+function sangria(){
+	$('#janela-operacoes').modal('hide');
+	$('.etapa').hide(300);
+	$.post('/vendas_balcao/tela_sangria',function(retorno){
+		$('#operacoes').html(retorno);
+		$('#operacoes').show(300);
+	});
+}
+
+function reforco(){
+	$('#janela-operacoes').modal('hide');
+	$('.etapa').hide(300);
+	$.post('/vendas_balcao/tela_reforco',function(retorno){
+		$('#operacoes').html(retorno);
+		$('#operacoes').show(300);
+	});
+}
+
+function devolucao(){
+	$('#janela-operacoes').modal('hide');
+	$('.etapa').hide(300);
+	$.post('/vendas_balcao/tela_devolucao',function(retorno){
+		$('#operacoes').html(retorno);
+		$('#operacoes').show(300);
+	});
+}
+
+function fechar(){
+	$('#janela-operacoes').modal('hide');
+	$('.etapa').hide(300);
+	$('#carregando').show();
+	$.post('/vendas_balcao/tela_fechamento/?confirmacao=true',function(retorno){
+		$('#operacoes').html(retorno);
+		$('#operacoes').show(300);
+		$('#carregando').hide();
+	});
+}
+
+function calculaValorRestanteDevolucao(){
+	valoresPago = 0;
+	$('#tela-devolucao').find('#box-pagamentos').find('input:hidden').each(function() {
+		valoresPago += moeda2float($(this).val());
+	});
+
+	valorRestante = valorTotalDevolucao - valoresPago;
+	$('#tela-devolucao').find('#DevolucaoValorPago').val(float2moeda(valorRestante));
+
+	if(valorRestante == 0) {
+		$('#tela-devolucao').find('#botao-finalizar').attr('disabled', false);
+	} else {
+		$('#tela-devolucao').find('#botao-finalizar').attr('disabled', true);
+	}
+}
+
+</script>
+<div id="carregando-nfc">
+	<div>
+		<img src="./GestãoClick_files/loading.gif" alt="">        </div>
+</div>
+<div id="pdv" class="row">
+	<div id="botao-operacoes">
+		<i class="fa fa-cogs"></i>
+	</div>
+	<div id="tela-inicial" class="etapa" style="display: block;">        
+	<style>
+		li.token-input-token p,li.token-input-token span{
+			padding-top: 12px
+		}
+	</style>
+	<div class="col-sm-8 col-md-8 col-lg-8">
+		<label>
+			<h3 class="margin-top-0">LOCALIZE UM PRODUTO/SERVIÇO ABAIXO</h3>
+		</label>
+		<ul id="ul-BuscaProduto" class="token-input-list">
+			<li class="token-input-input-token token-input-highlighted-token">
+				<input type="text" class="col-sm-12 col-lg-12 col-md-12 form-control-table" placeholder="Digite o código ou o nome" autocomplete="off" id="token-input-BuscaProduto" style="outline: none;">
+				<tester style="position: absolute; top: -9999px; left: -9999px; width: auto; font-size: 20px; font-family: &quot;Source Sans Pro&quot;, sans-serif; font-weight: 400; letter-spacing: normal; white-space: nowrap;"></tester>
+			</li>
+		</ul>
+		<input type="text" id="BuscaProduto" class="form-control" style="display: none;">
+		<div id="mostra-produto" class="margin-top-20px row">
+			<div id="fotos" class="col-sm-3 col-md-3 col-lg-3">
+				<div class="hidden-xs">
+					<img src="./GestãoClick_files/produto-sem-foto.png" width="100%">
+				</div>
+			</div>
+			<div class="col-sm-9 col-md-9 col-lg-9">
+				<form action="https://gestaoclick.com/vendas_balcao/tela_inicial/?indicar=0" id="adicionar-produto" role="form" method="post" accept-charset="utf-8" novalidate="novalidate">
+					<div style="display:none;">
+						<input type="hidden" name="_method" value="POST">
+					</div>
+					<input type="hidden" name="data[Pedido][tipo]" class="tipo-comercializacao" autocomplete="off" id="PedidoTipo">
+					<input type="hidden" name="data[Pedido][numero_venda]" class="numero-venda" autocomplete="off" id="PedidoNumeroVenda">
+					<input type="hidden" name="data[Pedido][chave_item]" class="chave-item" autocomplete="off" id="PedidoChaveItem">
+					<input type="hidden" name="data[Pedido][possui_variacao]" class="possui-variacao" autocomplete="off" id="PedidoPossuiVariacao">
+					<input type="hidden" name="data[Pedido][movimenta_estoque]" class="movimenta-estoque" autocomplete="off" id="PedidoMovimentaEstoque">
+					<input type="hidden" name="data[Pedido][situacao]" value="1" autocomplete="off" id="PedidoSituacao">
+					<input type="hidden" name="data[Pedido][nome_produto]" class="nome-produto" autocomplete="off" id="PedidoNomeProduto">
+					<input type="hidden" name="data[Pedido][produto_id]" class="produto-id" autocomplete="off" id="PedidoProdutoId">
+					<table cellpadding="0" cellspacing="0" width="100%" border="0">
+						<tbody>
+							<tr>
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">CÓDIGO</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">CÓDIGO</label>
+									<input name="data[Pedido][codigo]" class="codigo col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" type="text" id="PedidoCodigo" required="required">
+								</td>
+							</tr>
+							<tr class="coluna-variacao hidden">
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">VARIAÇÃO</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">VARIAÇÃO</label>
+									<input type="hidden" name="data[Pedido][nome_variacao]" class="nome-variacao" autocomplete="off" id="PedidoNomeVariacao">
+									<select name="data[Pedido][estoque_id]" class="estoque-variacao col-sm-12 col-md-12 col-lg-12 form-control-table" movimenta-estoque="1" autocomplete="off" id="PedidoEstoqueId">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">QUANTIDADE</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">QUANTIDADE</label>
+									<input name="data[Pedido][quantidade]" quantidade="0" casas="2" class="quantidade required mascara-quantidade col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" type="text" id="PedidoQuantidade">
+								</td>
+							</tr>
+							<tr class="coluna-tipo hidden">
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">TIPO</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">TIPO</label>
+									<input type="hidden" name="data[Pedido][nome_tipo_valor]" class="nome-tipo" autocomplete="off" id="PedidoNomeTipoValor">
+									<select name="data[Pedido][tipo_valor_id]" class="tipo col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" id="PedidoTipoValorId">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">VALOR UNITÁRIO</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">VALOR UNITÁRIO</label>
+									<input type="hidden" name="data[Pedido][valor_custo]" class="valor-custo" autocomplete="off" id="PedidoValorCusto">
+									<input name="data[Pedido][valor_venda]" casas="2" class="valor-venda mascara-valor col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" type="text" id="PedidoValorVenda">
+								</td>
+							</tr>
+							<tr>
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">DESCONTO</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">DESCONTO</label>
+									<div class="input-group">
+										<input name="data[Pedido][desconto_valor]" casas="2" class="desconto-valor mascara-valor col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" type="text">
+										<input name="data[Pedido][desconto_porcentagem]" casas="2" class="hidden desconto-porcentagem mascara-valor col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" type="text">
+										<span class="input-group-btn">
+											<select name="data[Pedido][tipo_desconto]" class="campo-desconto form-control-table" readonly="readonly" autocomplete="off" id="PedidoTipoDesconto">
+												<option value="R$">R$</option>
+												<option value="%">%</option>
+											</select>
+										</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th class="hidden-xs nowrap">
+									<h4 class="margin-right-10px">VALOR TOTAL</h4>
+								</th>
+								<td class="padding-top-10px">
+									<label class="visible-xs">VALOR TOTAL</label>
+									<input name="data[Pedido][valor_total]" class="valor-total mascara-valor col-sm-12 col-md-12 col-lg-12 form-control-table" readonly="readonly" autocomplete="off" type="text" id="PedidoValorTotal">
+								</td>
+							</tr>
+							<tr class="coluna-envia">
+								<td class="hidden-xs"></td>
+								<td class="padding-top-10px">
+									<button id="salva-produto" type="submit" class="btn btn-primary btn-lg" style="width:100%">ADICIONAR PRODUTO</button>
+								</td>
+							</tr>
+							<tr class="hidden coluna-edita">
+								<td class="hidden-xs"></td>
+								<td class="padding-top-10px">
+									<div class="row">
+										<div class="col-sm-6 col-md-6 col-lg-6">
+											<button id="atualiza-produto" type="submit" class="btn btn-warning btn-lg" style="width:100%">
+												ATUALIZAR ITEM
+											</button>
+										</div>
+										<div class="col-sm-6 col-md-6 col-lg-6 text-right">
+											<button type="button" class="btn btn-danger btn-lg" onclick="deleteProduto()" style="width:100%">
+												EXCLUIR ITEM
+											</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="margin-top-10px-xs col-sm-4 col-md-4 col-lg-4">
+		<div class="box-cliente small-box bg-green">
+			<div class="inner">
+				<div>CLIENTE: <a href="javascript:;" id="botao-indicar-cliente">AO CONSUMIDOR</a></div>
+				<div>VENDEDOR: <a href="javascript:;" id="botao-indicar-vendedor">JACK BILLER</a></div>
+			</div>
+			<div class="icone">
+				<i class="fa icon-groups-friends"></i>
+			</div>
+		</div>
+		<div id="produtos-selecionados">
+			<div id="lista" class="table-responsive">
+				<table cellpadding="0" cellspacing="0" class="table table-striped">
+					<tbody>
+						<tr>
+							<th width="10%"><h4 class="margin-top-0 margin-bottom-0">Qtd.</h4></th>
+							<th><h4 class="margin-top-0 margin-bottom-0">Produto</h4></th>
+							<th width="10%"><h4 class="margin-top-0 margin-bottom-0">Desc.</h4></th>
+							<th width="10%"><h4 class="margin-top-0 margin-bottom-0">Preço</h4></th>
+							<th width="10%"></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<h4>TOTAL DO PEDIDO</h4>
+			<div class="total-pedido">
+				R$ 0,00
+			</div>
+		</div>
+		<div class="row">
+			<div class="margin-top-10px-xs col-sm-6 col-md-6 col-lg-6">
+				<button id="aguardar" type="button" class="btn btn-warning btn-lg" onclick="aguardar();" style="width:100%">
+					AGUARDAR
+				</button>
+			</div>
+			<div class="margin-top-10px-xs col-sm-6 col-md-6 col-lg-6">
+				<button id="cancelar" type="button" class="btn btn-danger btn-lg" onclick="cancelarPedido();" style="width:100%">
+					CANCELAR
+				</button>
+			</div>
+			<div class="margin-top-10px col-sm-12 col-md-12 col-lg-12">
+				<button id="botao-pagar" type="button" class="btn btn-success btn-lg" onclick="pagar();" style="width:100%">
+					FINALIZAR VENDA
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="janela-indicar-cliente" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="https://gestaoclick.com/vendas_balcao/tela_inicial/?indicar=0" id="form-indicar-cliente" role="form" method="post" accept-charset="utf-8" novalidate="novalidate">
+						<div style="display:none;">
+							<input type="hidden" name="_method" value="POST">
+						</div>
+						<div class="padding-left-15px padding-right-15px">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						<h2 class="margin-top-10px"><i class="fa icon-groups-friends"></i> INDICAR CLIENTE</h2>
+						<div class="row">
+							<input type="hidden" name="data[Cliente][id]" id="IdCliente" autocomplete="off">
+							<div class="relative hidden col-sm-12 col-md-12 col-lg-12" id="div-buscar-cliente">
+								<label for="ClienteId">
+									BUSCAR CLIENTE
+								</label>
+								<ul id="ul-ClienteId" class="token-input-list">
+									<li class="token-input-input-token">
+										<input type="text" class="form-control" placeholder="Digite para buscar" autocomplete="off" id="token-input-ClienteId" style="outline: none;">
+										<tester style="position: absolute; top: -9999px; left: -9999px; width: auto; font-size: 20px; font-family: &quot;Source Sans Pro&quot;, sans-serif; font-weight: 400; letter-spacing: normal; white-space: nowrap;"></tester>
+									</li>
+								</ul>
+								<input name="data[Cliente][cliente_id]" id="ClienteId" class="form-control" autocomplete="off" type="text" style="display: none;">
+							</div>
+							<div class="col-sm-9 col-md-9 col-lg-9" id="div-tipo-cliente">
+								<fieldset>
+									<legend>
+										<h4 class="margin-top-0 margin-bottom-0">TIPO DE PESSOA</h4>
+									</legend>
+									<div class="iradio_minimal checked" aria-checked="false" aria-disabled="false" style="position: relative;">
+										<input type="radio" name="data[Cliente][tipo_pessoa]" id="ClienteTipoPessoaPF" value="PF" class="form-control" autocomplete="off" checked="checked" style="position: absolute; opacity: 0;">
+										<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+									</div>
+									<label for="ClienteTipoPessoaPF">
+										<span class="margin-right-10px">Consumidor</span>
+									</label>
+									<div class="iradio_minimal" aria-checked="false" aria-disabled="false" style="position: relative;">
+										<input type="radio" name="data[Cliente][tipo_pessoa]" id="ClienteTipoPessoaPJ" value="PJ" class="form-control" autocomplete="off" style="position: absolute; opacity: 0;">
+										<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+									</div>
+									<label for="ClienteTipoPessoaPJ">Empresa</label>
+								</fieldset>
+							</div>
+							<div class="padding-top-15px    col-sm-3 col-md-3 col-lg-3 text-right">
+								<button id="botao-buscar-cliente" type="button" class="btn btn-primary btn-lg">
+									<span class="glyphicon glyphicon-search margin-right-5px"></span>BUSCAR
+								</button>
+							</div>
+							<div class="dados-cliente">
+								<div class="col-sm-12 col-lg-12 col-md-12">
+									<label for="ClienteNome">NOME</label>
+									<input name="data[Cliente][nome]" class="form-control" autocomplete="off" type="text" id="ClienteNome">
+								</div>
+								<div class="col-sm-12 col-lg-12 col-md-12">
+									<label for="ClientePfCpf">CPF</label>
+									<input name="data[Cliente][pf_cpf]" class="mascara-cpf form-control" autocomplete="off" type="text" id="ClientePfCpf">
+								</div>
+								<div class="hidden col-sm-12 col-lg-12 col-md-12">
+									<label for="ClientePjCnpj">CNPJ</label>
+									<input name="data[Cliente][pj_cnpj]" disabled="disabled" class="mascara-cnpj form-control" autocomplete="off" type="text" id="ClientePjCnpj">
+								</div>
+								<div class="col-sm-12 col-lg-12 col-md-12">
+									<label for="ClienteEmail">E-MAIL</label>
+									<input name="data[Cliente][email]" class="email form-control" autocomplete="off" type="text" id="ClienteEmail">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="padding-left-15px padding-right-15px modal-footer">
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-lg-6 text-left">
+								<button type="submit" class="btn btn-success btn-lg">
+									<i class="glyphicon glyphicon-ok"></i> SALVAR
+								</button>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6 text-right">
+								<button type="button" class="btn btn-danger btn-lg" onclick="cancelarCliente();">
+									<i class="glyphicon glyphicon-remove"></i> CANCELAR
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="janela-indicar-vendedor" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="https://gestaoclick.com/vendas_balcao/tela_inicial/?indicar=0" id="form-indicar-vendedor" role="form" method="post" accept-charset="utf-8" novalidate="novalidate">
+					<div style="display:none;">
+						<input type="hidden" name="_method" value="POST">
+					</div>
+					<div class="modal-header">
+						<button type="button" class="cancelar-vendedor close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h2 class="margin-top-10px"><i class="fa icon-groups-friends"></i> INDICAR VENDEDOR</h2>
+					</div>
+					<div class="modal-body margin-top-10px">
+						<div class="required col-sm-12 col-lg-12 col-md-12">
+							<select name="data[Vendedor][id]" class="required form-control" autocomplete="off" id="VendedorId">
+								<option value="60902" selected="selected">Jack BIller</option>
+								<option value="61081">Teste</option>
+							</select>
+						</div>
+						<input type="hidden" name="data[Vendedor][nome]" value="JACK BILLER" autocomplete="off" id="VendedorNome">
+					</div>
+					<div class="modal-footer">
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-lg-6 text-left">
+								<button type="submit" class="btn btn-success btn-lg">
+									<i class="glyphicon glyphicon-ok"></i> Salvar
+								</button>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6 text-right">
+								<button type="button" class="cancelar-vendedor btn btn-danger btn-lg" data-dismiss="modal" aria-label="Close">
+									<i class="glyphicon glyphicon-remove"></i> Cancelar
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="hidden-xs teclas">
+		<b>F1</b> = Ver Atalhos <b>|</b> <b>F2</b> = Nova Busca <b>|</b> <b>F3</b> = Mudar Quantidade <b>|</b> <b>F4</b> = Adicionar Produto <b>|</b> <b>F6</b> = Finalizar Venda <b>|</b> <b>Shift + C</b> = Indicar Cliente <b>|</b> <b>Shift + V</b> = Indicar Vendedor
+	</div>
+</div>
+
+<div id="tela-pagamento" class="etapa none" style="display: none;"></div>
+<div id="tela-impressao" class="etapa none" style="display: none;"></div>
+<div id="operacoes" class="etapa none" style="display: none;"></div>
+
+<div class="modal" id="janela-operacoes" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" style="opacity:0.8;margin-top: 10px" data-dismiss="modal" aria-label="Close">
+					<span class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></span>
+				</button>
+				<h2 class="margin-top-10px"><i class="fa fa-cogs"></i> OPERAÇÕES DO PDV</h2>
+			</div>
+			<div class="modal-body margin-top-10px">
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="small-box bg-red pointer" onclick="sangria()">
+						<div class="inner">
+							<h4>SANGRIA</h4>
+							<p>A sangria caracteriza-se pela retirada de valor do caixa, ou seja, você retira um determinado valor da gaveta do operador para guardar em outro local mais seguro.</p>
+						</div>
+						<div class="icon">
+							<i class="fa icon-stairsup"></i>
+						</div>
+						<span class="small-box-footer">
+							Clique aqui <i class="fa fa-arrow-circle-right"></i>
+						</span>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="small-box bg-green pointer" onclick="reforco()">
+						<div class="inner">
+							<h4>REFORÇO</h4>
+							<p>O reforço consiste em incluir valor no seu caixa, sempre que necessário. Esta transação ocorre normalmente quando é adicionado troco na gaveta do operador.</p>
+						</div>
+						<div class="icon">
+							<i class="fa icon-stairsdown"></i>
+						</div>
+						<span class="small-box-footer">
+							Clique aqui <i class="fa fa-arrow-circle-right"></i>
+						</span>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="small-box bg-yellow pointer" onclick="devolucao()">
+						<div class="inner">
+							<h4>DEVOLUÇÃO</h4>
+							<p>A devolução ocorre quando o cliente desistir de uma compra. Nestes casos, o valor será gerado um pagamento no caixa bem como os produtos adquiridos voltaram ao estoque.</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-mail-reply-all"></i>
+						</div>
+						<span class="small-box-footer">
+							Clique aqui <i class="fa fa-arrow-circle-right"></i>
+						</span>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="small-box bg-aqua pointer" onclick="fechar()">
+						<div class="inner">
+							<h4>FECHAMENTO</h4>
+							<p>O fechamento de caixa envolve um trabalho cuidadoso de conferência e checagem dos valores que estão no caixa com o saldo dos registros de entradas e saídas. </p>
+						</div>
+						<div class="icon">
+							<i class="fa icon-moneybag"></i>
+						</div>
+						<span class="small-box-footer">
+							Clique aqui <i class="fa fa-arrow-circle-right"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="painel-teclas-atalho" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" style="opacity:0.8;margin-top: 10px" data-dismiss="modal" aria-label="Close">
+					<span class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></span>
+				</button>
+				<h2 class="margin-top-10px"><i class="fa fa-keyboard-o"></i> TECLAS DE ATALHO</h2>
+				<p>CONHEÇA OS ATALHOS DE TECLADO QUE PODEM AGILIZAR SUAS OPERAÇÕES DENTRO DO PDV</p>
+			</div>
+			<div class="modal-body margin-top-10px">
+				<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+					<div class="row">
+						<div class="col-sm-4 col-md-4 col-lg-4">
+							<div class="tecla">F1</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							TECLAS DE ATALHO
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+					<div class="row">
+						<div class="col-sm-4 col-md-4 col-lg-4">
+							<div class="tecla">F2</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							BUSCAR PRODUTO
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">F3</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								MUDAR QUANTIDADE
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">F4</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								ADICIONAR PRODUTO
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">F6</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								FINALIZAR VENDA
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">F7</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								AGUARDAR VENDA
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">F8</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								CANCELAR VENDA
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">SHIFT+C</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								INDICAR CLIENTE
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">SHIFT+V</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								INDICAR VENDEDOR
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">SHIFT+S</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								REALIZAR SANGRIA
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">SHIFT+R</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								REALIZAR REFORÇO
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">SHIFT+D</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								REALIZAR DEVOLUÇÃO
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-3 margin-bottom-20px">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<div class="tecla">SHIFT+F</div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								FECHAR CAIXA
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+		</div>
+	</div>
+</div>
+			</aside>
+		</div>
+	
+
+<div id="chat-suporte" onclick="ativaChat();" style="background: rgb(0, 0, 0); padding: 3px 3px 5px 10px; color: rgb(255, 255, 255); position: fixed; bottom: 0px; right: 10px; min-width: 190px; font-weight: bold; border-top-left-radius: 4px; border-top-right-radius: 4px; font-size: 15px; z-index: 2147483647; cursor: pointer;">
+	<i class="fa fa-comment margin-right-5px"></i> Suporte ao sistema
+</div>
+<div class="token-input-dropdown" style="display: none;"></div>
+<div class="token-input-dropdown" style="display: none;"></div>
+<div class="token-input-dropdown" style="position: absolute; top: 179.484px; left: 95.9375px; display: block;">
+	<p>Buscando...</p>
+</div>
+<div class="token-input-dropdown" style="display: none;"></div>
+</body>
+</html>

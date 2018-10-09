@@ -1,0 +1,28 @@
+
+
+var caminhoRequisicao = "http://cdiinfo.com.br/aplicacoes_web/";
+Localizada a variavel a cima: 
+	- menu.js
+	- login.html
+
+
+
+iconAvatar.png  // Imagem generica para usuario logado
+
+span: id = usuarioLogado
+	- Setar nome do usuario
+
+p: id = usuarioLogado2
+	- Setar nome do usuario
+
+
+p: id = especificaoesUsuario
+	- Colocar especificações 
+		- Empresa
+		- Função
+		- Filial
+
+
+
+h1: id = tituloPagina
+	- Setar o titulo da pagina

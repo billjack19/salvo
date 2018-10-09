@@ -1,0 +1,195 @@
+
+
+<div class="col-xs-5 text-center" id="talaPedidosItens" style="border-left-style: solid;padding: 0px; height: 85%; display: none;">
+	<div class="col-xs-12" style="padding: 0;">
+		<span style="background-color: #337ab7;">
+			<h1 style="margin: 0px;margin-bottom: 30px;background-color: #337ab7;color: white;">
+				Pedido / Itens
+			</h1>
+		</span>
+	</div>
+
+
+	<div class="col-xs-11" id="conteudo_adicionar_pedido" style="display: none;">
+		<h2>Nenhum Pedido selecionado deseja adicionar um pedido</h2><br>
+		<button class="btn btn-success btn-block" onclick="adicionaPedido('normal')">
+			<i class="fa fa-plus"></i><br>
+			Adicionar Pedido
+		</button>
+	</div>
+
+
+	<div id="conteudo_item_pedido_geral">
+		<div class="text-left col-xs-11" style="margin-top: -25px;padding-right: 0px;padding-left: 25px;">
+			<table class="table">
+				<tr>
+					<td width="50%">
+						<b>Pedido</b>
+					<!-- </td><td align="center"> -->
+						<input type="text" id="numPedidoItens_numero" value="" class="text-right form-control" disabled>
+					</td>
+					<td>
+						<button class="btn btn-primary btn-block" style="padding: 0" onclick="modalFinalizaPedido();">
+							<!-- onclick="imprimirTodos();" -->
+							<i class="fa fa-check"></i><br> Finalizar
+						</button>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%">
+						<b>Total</b>
+					<!-- </td><td align="center"> -->
+						<input type="text" id="numPedidoItens_totalPedido" class="text-right form-control" value="R$ 0,00" disabled>
+						<input type="hidden" id="totalPedido" value="R$0,00">
+					</td>
+					<td>
+						<script type="text/javascript">
+							function excluirPedidoUnico(){
+								if ($("#documentoGeral").val() != "0") desocuparMesa( $("#documentoGeral").val() );
+								else toastGeral("error", "Nenhum pedido selecionado!");
+							}
+						</script>
+						<button class="btn btn-danger btn-block" style="padding: 0" id="btn_excluir_todos" onclick="/*excluirPedidoUnico();*/cancelarPedido()">
+							<i class="fa fa-times"></i><br> Excluir
+						</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<b>Cliente</b>
+					<!-- </td><td align="center"> -->
+						<div id="clienteDivListTesteUnico">
+							<input type="text" value="Carregando..." class="form-control" disabled>
+						</div>
+						<!-- <input type="text" id="numPedidoItens_nomeCliente" class="form-control" value="Consumidor" disabled> -->
+					</td>
+					<!-- <td style="padding-left: 25px;padding-right: 45px;">
+						<button class="btn btn-block btn-warning">
+							<i class="fa fa-pencil"></i><br>Editar
+						</button>
+					</td> -->
+				</tr>
+				<!-- <tr>
+					
+				</tr> -->
+			</table>
+		<!-- </div> -->
+		<!-- <div class="col-xs-11" style="margin-top: -45px;"> -->
+			<!-- <h3>Itens</h3> -->
+		<!-- </div> -->
+		<!-- <div class="col-xs-11"> -->
+		</div>
+		<!-- <div class="col-xs-5" style="margin-top: -15px;padding-left: 50px;padding-right: 0px;">
+			
+		</div>
+		<div class="col-xs-1"></div>
+		<div class="col-xs-4" style="margin-top: -15px;padding-left: 0px;">
+			
+		</div> -->
+		<br><br><br><br><br><br><br><br><br>
+		<div class="col-xs-12" id="cabecarioItensDiv" style="margin-left: 0px;padding-right: 40px;padding-left: 0px;">
+			<table class="table">
+				<tr>
+					<!-- <td align='left' style="width: 5%;"></td> -->
+					<td align='left' style="width: 29;">Item</td>
+					<td align='left' style="width: 12%;">Qtd</td>
+					<td align='left' style="width: 12%;">Valor</td>
+					<td align='left' style="width: 12%;">Total</td>
+					<td style="width: 15%;"></td>
+					<td style="width: 15%;"></td>
+					<!-- 
+					<td style="width: 70%;"><b>Itens</b></td>
+					<td style="width: 15%;"><b>Imprimir</b></td>
+					<td style="width: 15%;"><b>Excluir</b></td>
+					-->
+				</tr>
+			</table>
+		</div>
+		
+		<div class="col-xs-12 blocoItensPedido" id="conteudo_itens_pedido_tabela" style="margin-left: 0%;padding-right: 40px;padding-left: 0px;">
+			<!-- <table class="table">
+				<tr>
+					<td style="width: 70%;">Lanche Grande com Carne</td>
+					<td style="width: 15%;">
+						<button class="btn" style="color: blue">
+							<i class="fa fa-print"></i>
+						</button>
+					</td>
+					<td style="width: 15%;">
+						<button class="btn" style="color: red;">
+							<i class="fa fa-times"></i>
+						</button>
+					</td>
+				</tr>
+			</table> -->
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- O modal de pesquiasr esta em modal_pseudo_finalizar_pedido -->
+
+
+
+<style type="text/css">
+	.blocoItensPedido{
+		bottom: 0px;
+		height: 225px;
+		/*width: 100%;*/
+		margin-top: -10px;
+		/*margin-left: 5px;*/
+		overflow: auto;
+		/*border-style: solid;*/
+	}
+</style>
+
+<script type="text/javascript">
+	function abrirModalCadastroCliente(){
+		$("#modalCadastroCliente").modal("show");
+		$("#modalFinalizarNomeTelefone").modal("hide");
+		$("#modalpesquisaCliente").modal("hide");
+	}
+
+	function novoPedido(){
+		$("#documentoGeral").val("0");
+
+		$("#numPedidoItens_numero").val("");
+		$("#numPedidoItens_totalPedido").val("R$0,00");
+
+		/* $("#numPedidoItens_nomeCliente").val("CONSUMIDOR"); */
+		if (carregarComboCliente) {
+			montarListaClienteFlexdataList();
+			carregarComboCliente = false;
+		} else {
+			document.getElementById("clienteInputList-flexdatalist").value = "CONSUMIDOR";
+			document.getElementById("clienteInputList").value = "10003";
+		}
+
+		abrirTelaPedido('talaPedidosItens');
+		$("#cabecarioItensDiv").html("<h3>Selecione um item para gerar um pedido</h3>");
+		$("#conteudo_itens_pedido_tabela").html("");
+		/* document.getElementById("btn_excluir_todos").disabled = true; */
+	}
+
+	function modalFinalizaPedido(){
+		var valorTotal = $("#numPedidoItens_totalPedido").val();
+		if (formataValorParaCalcular2(valorTotal) > 0) {
+			$("#valorTotal_ModalFinalizaPedido").val(valorTotal);
+			document.getElementById('modalFinalizarPedido').style.display='block';
+			concluirCodigoItem();
+			calcularValorTotalModalFinalizarPedido();
+			/* montarListaClienteFlexdataList(); */
+		} else {
+			toastGeral("error", "Não pode finalizar com valor zerado!");
+		}
+	}
+</script>

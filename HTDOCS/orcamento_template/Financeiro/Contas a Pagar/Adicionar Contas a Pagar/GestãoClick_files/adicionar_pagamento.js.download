@@ -1,0 +1,197 @@
+$(document).ready(function() {
+    var tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'bottom',
+        element: '#MovimentacoesFinanceiraNome',
+        title: 'Descrição',
+        content: 'Utilize este campo para indicar a descrição do pagamento.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#ul-CategoriaId',
+        title: 'Plano de contas',
+        content: 'Utilize este campo para indicar o plano de contas. <br> <b>Obs.:</b> Os planos de contas podem ser administrados através do menu principal Financeiro > Opções financeiras > Planos de contas.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#MovimentacoesFinanceiraOcorrencia',
+        title: 'Ocorrência',
+        content: 'Utilize este campo para indicar se é um pagamento único, parcelado ou recorrente.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#MovimentacoesFinanceiraDataVencimento',
+        title: 'Data de vencimento',
+        content: 'Utilize este campo para indicar a data de vencimento do pagamento.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ul-FormaPagamentoId',
+        title: 'Forma de pagamento',
+        content: 'Utilize este campo para indicar a forma de pagamento. <br> <b>Obs.:</b> As formas de pagamentos podem ser administradas através do menu principal Financeiro > Opções financeiras > Formas de pagamentos.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ul-ContaBancariaId',
+        title: 'Conta bancária',
+        content: 'Utilize este campo para indicar a conta bancária. <br> <b>Obs.:</b> As contas bancárias podem ser administradas através do menu principal Financeiro > Opções financeiras > Contas bancárias.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#MovimentacoesFinanceiraValor',
+        title: 'Valor bruto',
+        content: 'Utilize este campo para indicar o valor bruto.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+          $('[href="#outras-informacoes"]').click();
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#outras-informacoes"]',
+        title: 'Outras informações',
+        content: 'Nesta Aba é possível informar dados como entidade, centro de custo, visibilidade no webdesk e observações.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#MovimentacoesFinanceiraEntidade',
+        title: 'Entidade',
+        content: 'Utilize este campo para indicar o tipo de entidade <i>(ex.: Fornecedor)</i>.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ul-FornecedorId',
+        title: 'Entidade',
+        content: 'Utilize este campo para indicar uma entidade já cadastrada no sistema.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+          $('[href="#anexo"]').click();
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#anexo"]',
+        title: 'Anexo',
+        content: 'Nesta Aba é possível anexar comprovantes e documentos.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+          $('[href="#dados-gerais"]').click();
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#salvar',
+        title: 'Cadastrar',
+        content: 'Parabéns, agora você já sabe como adicionar um pagamento. Para finalizar o cadastro basta clicar no botão <b>Cadastrar</b>.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+          tour.end();
+          endTour.restart();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    var endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+          $('[href="#dados-gerais"]').click();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        $('[href="#dados-gerais"]').click();
+        setTimeout(function(){
+            tour.restart();
+        },500);
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

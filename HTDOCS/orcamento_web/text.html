@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table style="width: 100%">
+		<tr>
+			
+			<td>Range: </td>
+			<td>
+				<button onclick="mudarValor('-')">-</button>
+				<input type="range" id="range" onchange="mostraValor()" min="0" max="255">
+				<button onclick="mudarValor('+')">+</button>
+			</td>
+
+		</tr>
+	</table>
+	<button onclick="mostraValor()">
+		Mostrar Valor
+	</button>
+	<div id="resultado"></div>
+</body>
+
+<script type="text/javascript">
+	function mudarValor(op){
+		if (op == "+") 	document.getElementById("range").value ++;
+		else 			document.getElementById("range").value --;
+		mostraValor();
+	}
+
+	function mostraValor(){
+		var resultado = "";
+		var range = document.getElementById("range").value;
+		// var byte_range = parseInt(converterEscala(range, 100, 255));
+		/* var hex_range = converterBase(byte_range, 15); */
+		var hex_range = converterBase(range, 16);
+
+		resultado += "range: " + range + /* " // byte_range: " + byte_range + */ " // hex_range: " + hex_range;
+		document.getElementById("resultado").innerHTML = resultado;
+	}
+
+	/* function converterEscala(valor, maxAtual, maxConvert){
+		return (parseInt(valor) * maxConvert) / maxAtual;
+	} */
+
+	function converterBase(valor, baseConvert){
+		var arrayValor = [];
+		var inteiro = 0;
+		while (valor >= baseConvert){
+			valor /= baseConvert;
+			inteiro = parseInt(valor);
+			arrayValor.push(encriptarValor(  (valor - inteiro) * baseConvert  ));
+			valor = inteiro;
+		}
+		arrayValor.push(encriptarValor(valor));
+		valor = "";
+		for (var i = arrayValor.length -1; i >= 0; i--) {
+			valor += arrayValor[i];
+		}
+		return valor;
+	}
+
+	function converterBase2(valor, baseConvert){
+		var arrayValor = [];
+		while (valor >= baseConvert){
+			valor /= baseConvert;
+			arrayValor.push(encriptarValor(  (valor - parseInt(valor)) * baseConvert  ));
+			valor = parseInt(valor);
+		}
+		arrayValor.push(encriptarValor(valor));
+		return for (var i = arrayValor.length -1; i >= 0; i--) valor = i == arrayValor.length -1 ? arrayValor[i] : valor + arrayValor[i];
+	}
+
+
+	function encriptarValor(valor){
+		valor = parseInt(valor);
+		switch(valor){
+			case 10: valor = "A"; break;
+			case 11: valor = "B"; break;
+			case 12: valor = "C"; break;
+			case 13: valor = "D"; break;
+			case 14: valor = "E"; break;
+			case 15: valor = "F"; break;
+			default: valor = valor;
+		}
+		return valor;
+	}
+</script>
+</html>

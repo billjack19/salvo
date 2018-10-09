@@ -1,0 +1,50 @@
+$(document).ready(function() {
+
+    var tour = new Tour({
+
+      onEnd: function() {
+        endTour.restart();
+      },
+    });
+
+    var endTour = new Tour({
+      steps: [
+      {
+        template: '<div class="popover" role="tooltip"> <div class="arrow"></div> <h3 class="popover-title"></h3> <div class="popover-content"></div> <div class="text-center popover-navigation"><button style = "float:none" class="margin-bottom-10px btn btn-sm btn-success" data-role="next"><i class = "glyphicon glyphicon-ok" style = "margin-right:3px"></i> Entendi</button></div> </div>',
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Vídeo tutorial',
+        content: 'Sempre que quiser ver este vídeo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        assistirVideoTutorial();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+
+    $('#video-tutorial').on('hidden.bs.modal', function (e) {
+        $('#video-tutorial').find('iframe').attr('src', '');
+        endTour.restart();
+    });
+
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

@@ -1,0 +1,104 @@
+$(document).ready(function() {
+    var tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'bottom',
+        element: '#botao-periodo',
+        title: 'Período',
+        content: 'Aqui você pode selecionar o período das movimentações. <br><b>Obs.:</b> Por padrão o sistema busca somente o mês atual podendo ser alterado pelo usuário.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-saldo',
+        title: 'Saldo',
+        content: 'Mostra o saldo das movimentações do período selecionado separando-as em pagamentos e recebimentos.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-resumo',
+        title: 'Resumo',
+        content: 'Mostra um resumo das movimentações do período selecionado em uma mesma planilha.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-diario',
+        title: 'Resumo',
+        content: 'Mostra um resumo das movimentações mostrando o saldo diário.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-estatistica',
+        title: 'Estatísticas',
+        content: 'Mostra as movimentações do período selecionado em representações gráficas.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-dre',
+        title: 'DRE',
+        content: 'A DRE descreve a origem e aplicação das movimentações do período selecionado.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-exportar',
+        title: 'Exportar',
+        content: 'Neste botão poderá exportar as movimentações cadastradas em formato de excel.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.botao-busca-avancada',
+        title: 'Busca avançada',
+        content: 'Aqui você encontra funções mais avançadas para buscar os recebimentos como, entidade, descrição, plano de contas, período, valor, situação, conta bancária e forma de pagamento.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+            assistirVideoTutorial();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    var endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        tour.restart();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

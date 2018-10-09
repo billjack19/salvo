@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<!--
+	Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	 KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+<html>
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+<!-- Good default declaration:
+* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+* https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+* Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+	* Enable inline JS: add 'unsafe-inline' to default-src
+	* Enable eval(): add 'unsafe-eval' to default-src
+* Create your own at http://cspisawesome.com
+-->
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+<script type="text/javascript" src="js/jQuery.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/estilo.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+<script defer src="css/fontawesome-free-5.0.9/svg-with-js/js/fontawesome-all.js"></script>
+
+<!-- Scrips padrão -->
+<script type="text/javascript" src="js/scripts.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+
+<script type="text/javascript" src="js/bootbox.js"></script>
+<script type="text/javascript" src="js/masked2.js"></script>
+<script type="text/javascript" src="js/masked.js"></script>
+<script type="text/javascript" src="js/toast.js"></script>
+<script type="text/javascript" src="js/maskmoney.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+
+<!-- Biblioteca dataList usando Jquery  -->
+<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+
+
+<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/toast.css">
+
+<!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+<title>Entregas CDI</title>
+
+<!-- Configuração Geral da aplicação -->
+<script>
+	// var hostWebService = "192.168.0.199";
+	// var portaWebService = ":8080";
+	// var caminhoWebService = "/CacambaCDI/webresources/";
+	// var urlWebService = "http://"+hostWebService+portaWebService+caminhoWebService;
+
+	// var hostWebService = "192.168.0.199";
+	// var caminhoWebService = "/projeto_cacanba-google_maps/controllers/";
+
+	var hostWebService = "cacambateste.000webhostapp.com";
+	var caminhoWebService = "/CasaDuarteWeb/controllers/";
+	var portaWebService = "";//":8080";
+
+
+	var urlWebService = "http://"+hostWebService+caminhoWebService;
+	var parametrosWebService = "?tagmode=any&jsoncallback=?";
+	var arrayJogos = new Array();
+	var arrayJogadores = new Array();
+	var listagem = false;
+	var chamaLocalizacao = false;
+</script>
+</head>
+
+<body bgcolor="#000;" onload="criarBancoDeDados();">
+<input type="button" class="hidden" id="buttonChecarLocalização" onclick="localizarumavez()">
+<!--  style="width:100%;height:70px;font-size:20px;" -->
+<!--  value="Verificar posição uma vez" -->
+
+<!-- <input type="button" style="width:100%;height:70px;font-size:20px;" value="Verificar sempre" onclick="localizarsempre()"> -->
+<!-- <input type="button" style="width:100%;height:70px;font-size:20px;" value="Verificar sempre - desativar" onclick="localizarsemprepausar()"> -->
+
+<div class="col-md-12">
+	<div class="container-fluid " style="margin-left: 0px; margin-top: -50px;">
+		<div class="jumbotron">
+			<div class="row">
+				<div id="hiddenUsuario">
+					<!-- Para colocar o nome com todos os dados dinamicamente -->
+				</div>
+				<input type="hidden" value="0" id="editar">
+				<input type="hidden" value="0" id="id_caminhao_constante">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="col-md-12" id="mapa"></div> -->
+<div class="col-md-12" id="cabecarioPrincipal" style="background-color: #fff;">
+	<form id="formLogin" method="post">
+		<div class="col-md-12">
+			<h2 class="text-center">Login</h2>
+			<label class="label-float" for="name">Usuário:</label>
+			<input id="login" type="text" class="form-control" size="12pt" required>
+		</div>
+		<br>
+		<div class="col-md-12">
+			<label class="label-float" for="name">Senha:</label>
+			<input id="password" type="password" class="form-control" size="12pt" required>
+		</div>
+		<br>
+		<div class="col-md-12">
+			<button type="submit" class="btn btn-primary btn-block">
+				Entrar
+			</button><br>
+			<br><br><br>
+		</div>
+	</form>
+</div>
+
+
+<div class="col-md-12" id="listaPagina"></div>
+
+
+
+
+
+<!-- ******************************************************************************** -->
+<!-- ** Rodapé de operações -->
+<!-- ******************************************************************************** -->
+<footer class="fixed-bottom">
+	<div class="row">
+		<div class="col-md-12" style="background-color: #fff;">
+			<table class="table">
+				<tr>
+					<td align="left">
+						<div id="botaoVoltarFixo">
+						</div>
+					</td>
+					<td align="right">
+						<div id="botaoSairCaminhao">
+							<button class="btn btn-info" data-toggle='modal' data-target='#modalConfiguraIp'>
+								<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Configurar IP
+							</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</footer>
+
+
+
+
+
+
+
+<!-- ******************************************************************************************** -->
+<!-- ** Modal configura ip * -->
+<!-- ******************************************************************************************** -->
+<div class="modal fade" id="modalConfiguraIp" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');setarIpCampoConfig();"  id="fecharModalIpBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Configurar IP: <b><span id="modalNomeItem"></span></b></h4>
+			</div>
+			<div class="modal-body">
+				<div id="divAutenticaIP">
+					<label class="label-float" for="name">Uuário: <span style="color: red;">*</span></label>
+					<input id="modalUsuarioIPConfig" type="text" class="form-control" required>
+
+					<label class="label-float" for="name">Chave: <span style="color: red;">*</span></label>
+					<input id="modalChaveIPConfig" type="password" class="form-control" required>
+					<button onclick='autenticarIp();' class="btn btn-success btn-block" style="margin-top: 15px;">Autenticar</button>
+				</div>
+				<div id="divOcultarIp" class="hidden">
+					<label class="label-float" for="name">IP: <span style="color: red;">*</span></label>
+					<input id="modalIpConfig" type="tel" class="form-control" required>
+
+					<label class="label-float" for="name">Porta: <span style="color: red;">*</span></label>
+					<input id="modalPortaConfig" type="tel" class="form-control" required>
+
+					<label class="label-float" for="name">Uuário: <span style="color: red;">*</span></label>
+					<input id="modalUsuarioConfig" type="text" class="form-control" required>
+
+					<label class="label-float" for="name">Chave: <span style="color: red;">*</span></label>
+					<input id="modalChaveConfig" type="password" class="form-control" required>
+				</div>
+				<br>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success hidden" id="confimerIpButton" onclick="adicionarIp($('#modalIpConfig').val());">
+					Confirmar IP
+				</button>
+				<button type="button" class="btn btn-default" onclick="setStatus('pagina3');setarIpCampoConfig();" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script src="js/ajax/ajax_caminhao.js"></script>
+<script src="js/ajax/ajax_login.js"></script>
+<script src="js/ajax/ajax_sql.js"></script>
+<script src="js/ajax/ajax_outros.js"></script>
+
+<!-- <script src="index.js"></script> -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="js/mapa.js"></script>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+	app.initialize();
+
+	function onSuccessLocation(position){
+		var id_caminhao = $("#id_caminhao_constante").val();
+		var latitude = position.coords.latitude;
+		var longitude = position.coords.longitude;
+		var objetoLatLng = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
+		// {lat: parseFloat(latitude), lng: parseFloat(longitude)}
+
+		/*var ultima_atualizacao = new Date();
+		var dia = comcatenaZero(ultima_atualizacao.getDate());
+		var mes = ultima_atualizacao.getMonth()+1;
+		mes = comcatenaZero(mes);
+		ultima_atualizacao = dia+"/"+mes+"/"+ultima_atualizacao.getFullYear()+"  "+ultima_atualizacao.getHours()+":"+ultima_atualizacao.getMinutes()+":"+ultima_atualizacao.getSeconds();*/
+		console.log("id_caminhao: "+id_caminhao+"\nlatitude: "+latitude+"\nlogitude: "+longitude);
+
+		$.ajax({
+			url:urlWebService+'funcoesController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'atualizarPosicao': true,
+				'longitude': longitude,
+				'latitude': latitude,
+				'id_caminhao': id_caminhao
+			}
+		}).done( function(data){
+			console.log(data);
+
+			console.log(caminhao);
+			console.log(objetoLatLng);
+			caminhao.position = objetoLatLng;//{lat: latitude, lng: longitude};
+			caminhao.setMap(null);
+			caminhao.setMap(map);
+		});
+	}
+
+
+	function onErrorLocation(error){
+		console.error("Não localizou ;(");
+	}
+
+	function localizarumavez(){
+		console.log("localizarumavez");
+		setInterval( function(){
+			console.log("Buscar Localização!");
+			navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
+		}, 5000);
+	}
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+		function onDeviceReady() {
+			document.addEventListener("backbutton", function (e) {
+				e.preventDefault();
+				alert("botão voltar");
+			}, false);
+	}
+
+	// function localizarsempre()
+	//     {
+	//     var watchID = navigator.geolocation.watchPosition(onSuccessLocation, onErrorLocation, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+	//     }
+	// function localizarsemprepausar()
+	//     {
+	//     navigator.geolocation.clearWatch(watchID);
+	//     }
+
+</script>
+<style type="text/css">
+
+	@media screen and (min-width: 450px)  {
+	    [data-role=page]{height: 100% !important; position:relative !important; top:0 !important;}
+
+	    .legenda{
+	    	border-style: ridge;
+	    	width: 50px;
+	    	height: 25px;
+	    }
+	    .btn {
+	    	height: 50px;
+	    	font-size: 25px;
+	    }
+	    .form-control {
+	    	height: 50px;
+	    	font-size: 35px;
+	    }
+	    footer {
+	    	position: fixed;
+	    	height: 60px;
+	    	bottom: 0px;
+	    	width: 100%;
+	    }
+
+	    .fontTable{
+	    	font-size: 25px;
+	    	color: #fff;
+	    }    
+	}
+
+	@media screen and (max-width: 450px) {
+	    footer {
+	    	position: fixed;
+	    	height: 45px;
+	    	bottom: 0px;
+	    	width: 100%;
+	    }
+
+	    .fontTable{
+	    	font-size: 20px;
+	    	color: #fff;
+	    }
+	}
+		
+
+		.botoesTelaPedidoImprimir{
+			color:blue;
+		}
+
+		/*.legenda{
+			border-style: ridge;
+			width: 50px;
+			height: 25px;
+		}
+
+		footer {
+			position: fixed;
+			height: 60px;
+			bottom: 0px;
+			width: 100%;
+		}*/
+</style>
+</body>
+</html>

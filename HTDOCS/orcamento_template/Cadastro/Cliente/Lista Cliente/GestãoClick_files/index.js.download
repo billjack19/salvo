@@ -1,0 +1,125 @@
+var tour,endTour;
+$(document).ready(function() {
+    tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'right',
+        element: '#botao-adicionar',
+        title: 'Adicionar cliente',
+        content: 'Neste botão poderá cadastrar um novo Cliente.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-importar',
+        title: 'Importar clientes',
+        content: 'Neste botão poderá importar seus clientes utilizando uma planilha de excel ou suas notas fiscais de vendas.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-exportar',
+        title: 'Exportar clientes',
+        content: 'Neste botão poderá exportar cadastros e e-mails.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '#ClienteNome',
+        title: 'Filtro',
+        content: 'Aqui você pode pesquisar os clientes por alguma parte do nome.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.botao-busca-avancada',
+        title: 'Busca avançada',
+        content: 'Aqui você encontra funções mais avançadas para buscar o cliente como, email, telefone, cidade e estado.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+            if(!$('.index .btn-info:first').length){
+                assistirVideoTutorial();
+            }
+        },
+      },
+      {
+        placement: 'top',
+        element: '.index tbody tr:first',
+        title: 'Resumo do cliente',
+        content: 'Aqui você visualiza um resumo do cliente.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-info:first',
+        title: 'Visualizar cliente',
+        content: 'Neste botão poderá visualizar os detalhes do cliente.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-warning:first',
+        title: 'Editar cliente',
+        content: 'Neste botão poderá atualizar os dados do cliente.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-danger:first',
+        title: 'Deletar cliente',
+        content: 'Neste botão poderá excluir o cliente.',
+        backdrop: true,
+        onNext: function() {
+            if($('.index .btn-info:first').length){
+                if(exibirVideo){
+                    assistirVideoTutorial();
+                }else{
+                    tour.end();
+                    endTour.restart();
+                    exibirVideo = true;
+                }
+            }
+        },
+      },
+      {
+
+      }
+    ]});
+
+    endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        tour.restart();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

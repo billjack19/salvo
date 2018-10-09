@@ -1,0 +1,132 @@
+var tour,endTour;
+$(document).ready(function() {
+    var tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'bottom',
+        element: '#ul-ClienteId',
+        title: 'Cliente',
+        content: 'Utilize este campo para indicar o cliente.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#PedidoData',
+        title: 'Data',
+        content: 'Utilize este campo para indicar a data da venda.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#ul-UsuarioId',
+        title: 'Vendedor',
+        content: 'Utilize este campo para indicar o vendedor da venda.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#PedidoVisibilidade',
+        title: 'WebDesk',
+        content: 'Se a opção Público estiver selecionada e o cliente estiver vinculado ao Webdesk, o mesmo poderá ter acesso externo a esta venda.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#PedidoSituacao',
+        title: 'Situação',
+        content: 'Utilize este campo para indicar a situação da venda. <br><b>Importante: </b>Para atualizar o estoque dos produtos e lançar a venda ao financeiro, é necessário que a venda esteja <b>Confirmada</b>.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#produtos table',
+        title: 'Produtos',
+        content: 'Utilize este espaço para vincular os produtos já cadastrados no sistema.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#adicionar-produto  ',
+        title: 'Adicionar produtos',
+        content: 'Para adicionar mais produtos clique neste botão.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#transporte table',
+        title: 'Transporte',
+        content: 'Utilize este espaço para vincular uma transportadora já cadastrada no sistema.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#total table',
+        title: 'Total',
+        content: 'Utilize este espaço para conceder descontos e visualizar o total da venda.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#forma-pagamento .row .col-lg-12',
+        title: 'Forma de pagamento',
+        content: 'Utilize este espaço para selecionar a forma de pagamento.',
+        backdrop: true,
+      },
+      {
+        placement: 'top',
+        element: '#salvar',
+        title: 'Cadastrar',
+        content: 'Parabéns, agora você já sabe como cadastrar uma venda. Para finalizar o cadastro basta clicar no botão <b>Cadastrar</b>.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+          tour.end();
+          endTour.restart();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    var endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+          $('[href="#dados-gerais"]').click();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        $('[href="#dados-gerais"]').click();
+        setTimeout(function(){
+            tour.restart();
+        },500);
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

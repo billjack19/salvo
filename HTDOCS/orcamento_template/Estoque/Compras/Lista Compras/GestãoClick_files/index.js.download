@@ -1,0 +1,133 @@
+var tour,endTour;
+$(document).ready(function() {
+    tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'right',
+        element: '#botao-adicionar',
+        title: 'Adicionar compra',
+        content: 'Neste botão poderá cadastrar uma nova compra.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-importar-xml',
+        title: 'Importar XML',
+        content: 'Neste botão poderá importar suas notas fiscais enviadas pelos fornecedores.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-exportar',
+        title: 'Exportar compras',
+        content: 'Neste botão poderá exportar os cadastros em formato de excel.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.botao-busca-avancada',
+        title: 'Busca avançada',
+        content: 'Aqui você encontra funções para filtrar as compras por fornecedor, data e situação.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+            if(!$('.index .btn-info:first').length){
+                assistirVideoTutorial();
+            }
+        },
+      },
+      {
+        placement: 'top',
+        element: '.index tbody tr:first',
+        title: 'Resumo da compra',
+        content: 'Aqui você visualiza um resumo da compra.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '.index tbody span.label:first',
+        title: 'Situação',
+        content: 'Aqui você pode alterar a situação da compra. <br> <b>Importante: </b>Para atualizar o estoque dos produtos e lançar a compra ao financeiro, é necessário que a compra esteja <b>Confirmada</b>.',
+        backdrop: true,
+      },
+
+      {
+        placement: 'left',
+        element: '.index .btn-info:first',
+        title: 'Visualizar compra',
+        content: 'Neste botão poderá visualizar os detalhes da compra.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-warning:first',
+        title: 'Editar compra',
+        content: 'Neste botão poderá atualizar os dados da compra.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-danger:first',
+        title: 'Deletar compra',
+        content: 'Neste botão poderá excluir a compra.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-success:first',
+        title: 'Mais ações',
+        content: 'Neste botão poderá realizar mais ações como Alterar situação, Imprimir PDF, Emitir nota fiscal e Enviar por e-mail.',
+        backdrop: true,
+        onNext: function() {
+            if($('.index .btn-info:first').length){
+                if(exibirVideo){
+                    assistirVideoTutorial();
+                }else{
+                    tour.end();
+                    endTour.restart();
+                    exibirVideo = true;
+                }
+            }
+        },
+      },
+      {
+
+      }
+    ]});
+
+    endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        tour.restart();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

@@ -1,0 +1,125 @@
+var tour,endTour;
+$(document).ready(function() {
+    tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'right',
+        element: '#botao-adicionar',
+        title: 'Adicionar contrato',
+        content: 'Neste botão poderá cadastrar um novo contrato.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-exportar',
+        title: 'Exportar contratos',
+        content: 'Neste botão poderá exportar os cadastros em formato xls.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.botao-busca-avancada',
+        title: 'Busca avançada',
+        content: 'Aqui você encontra funções para filtrar os contratos por cliente, data e situação.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+            if(!$('.index .btn-info:first').length){
+                assistirVideoTutorial();
+            }
+        },
+      },
+      {
+        placement: 'top',
+        element: '.index tbody tr:first',
+        title: 'Resumo do contrato',
+        content: 'Aqui você visualiza um resumo do contrato.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .situacao:first',
+        title: 'Situação',
+        content: 'Neste botão poderá ativar e desativar o contrato.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-info:first',
+        title: 'Visualizar contrato',
+        content: 'Neste botão poderá visualizar os detalhes do contrato.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-warning:first',
+        title: 'Editar contrato',
+        content: 'Neste botão poderá atualizar os dados do contrato.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-danger:first',
+        title: 'Deletar contrato',
+        content: 'Neste botão poderá excluir o contrato.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-success:first',
+        title: 'Mais ações',
+        content: 'Neste botão poderá realizar mais ações como Alterar situação, Renovar o contrato e  Visualizar no financeiro.',
+        backdrop: true,
+        onNext: function() {
+            if($('.index .btn-info:first').length){
+                if(exibirVideo){
+                    assistirVideoTutorial();
+                }else{
+                    tour.end();
+                    endTour.restart();
+                    exibirVideo = true;
+                }
+            }
+        },
+      },
+      {
+
+      }
+    ]});
+
+    endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        tour.restart();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

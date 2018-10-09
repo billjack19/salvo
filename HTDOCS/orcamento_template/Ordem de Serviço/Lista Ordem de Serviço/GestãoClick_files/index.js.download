@@ -1,0 +1,126 @@
+var tour,endTour;
+$(document).ready(function() {
+    tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'right',
+        element: '#botao-adicionar',
+        title: 'Adicionar ordem de serviço',
+        content: 'Neste botão poderá cadastrar uma nova ordem de serviço.',
+        backdrop: true,
+      },
+      {
+        placement: 'right',
+        element: '#botao-exportar',
+        title: 'Exportar ordens de serviços',
+        content: 'Neste botão poderá exportar os cadastros em formato xls.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.botao-busca-avancada',
+        title: 'Busca avançada',
+        content: 'Aqui você encontra funções para filtrar as ordens de serviços por cliente, data e situação.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+            if(!$('.index .btn-info:first').length){
+                assistirVideoTutorial();
+            }
+        },
+      },
+      {
+        placement: 'top',
+        element: '.index tbody tr:first',
+        title: 'Resumo da ordem de serviço',
+        content: 'Aqui você visualiza um resumo da ordem de serviço.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '.index tbody span.label:first',
+        title: 'Situação',
+        content: 'Aqui você pode alterar a situação da ordem de serviço. <br> <b>Importante: </b>Para atualizar o estoque dos produtos e lançar a ordem de serviço ao financeiro, é necessário que a ordem de serviço esteja <b>Confirmada</b>.',
+        backdrop: true,
+      },
+
+      {
+        placement: 'left',
+        element: '.index .btn-info:first',
+        title: 'Visualizar ordem de serviço',
+        content: 'Neste botão poderá visualizar os detalhes da ordem de serviço.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-warning:first',
+        title: 'Editar ordem de serviço',
+        content: 'Neste botão poderá atualizar os dados da ordem de serviço.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-danger:first',
+        title: 'Deletar ordem de serviço',
+        content: 'Neste botão poderá excluir a ordem de serviço.',
+        backdrop: true,
+      },
+      {
+        placement: 'left',
+        element: '.index .btn-success:first',
+        title: 'Mais ações',
+        content: 'Neste botão poderá realizar mais ações como Alterar situação, Imprimir PDF e Enviar por e-mail.',
+        backdrop: true,
+        onNext: function() {
+            if($('.index .btn-info:first').length){
+                if(exibirVideo){
+                    assistirVideoTutorial();
+                }else{
+                    tour.end();
+                    endTour.restart();
+                    exibirVideo = true;
+                }
+            }
+        },
+      },
+      {
+
+      }
+    ]});
+
+    endTour = new Tour({
+      steps: [
+      {
+        placement: 'left',
+        element: '#start-tour',
+        title: 'Passo-a-passo',
+        content: 'Sempre que quiser ver este passo-a-passo, clique neste botão.',
+        backdrop: true,
+        onNext: function() {
+          endTour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+    $('.start-tour').click(function(){
+        tour.restart();
+    });
+
+    $('.end-tour').click(function(){
+        endTour.restart();
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}

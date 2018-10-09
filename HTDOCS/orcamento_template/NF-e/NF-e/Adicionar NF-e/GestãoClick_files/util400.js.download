@@ -1,0 +1,2085 @@
+var calculaImpostos = true;
+var lojaAtual = '';
+$(document).ready(function(){
+
+    $('.xProd').live('keyup',function(){
+        nfAqui = $(this).parents('.bloco');
+        ref = $(this).attr('referencia');
+        $('fieldset[bloco="'+ref+'"]').find('legend.legend-xProd').html($(this).val());
+    });
+
+    $('.ISSQN_cListServ').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+        bloco = nfAqui.attr('bloco');
+        if($(this).val() != ''){
+            $.post('/atividades_servicos/buscaAtividadeServico?loja='+lojaAtual,{codigo:$(this).val()},function(retorno){
+                if(retorno){
+                    retorno = $.parseJSON(retorno);
+                    nfAqui.find('.ISSQN_vAliq').val(retorno.valor_aliquota).change();
+                    nfAqui.find('.ISSQN_cServico_Opc').val(retorno.cnae);
+                    pisCST = $('#pis').find('[bloco="'+bloco+'"]').find('.PIS_CST').find('option:selected').attr('codigo');
+                    if(pisCST != '' && pisCST != '04' && pisCST != '05' && pisCST != '06' && pisCST != '07' && pisCST != '08' && pisCST != '09'){
+                        if(moeda2float(retorno.aliquota_pis) > 0){
+                            $('#pis').find('[bloco="'+bloco+'"]').find('[data="PIS_pPIS"]').val(retorno.aliquota_pis).change();
+                            $('#pis').find('[bloco="'+bloco+'"]').find('[data="PIS_TipoCalculo"]').val('P').change();
+                        }
+                    }
+                    cofinsCST = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINS_CST').find('option:selected').attr('codigo');
+                    if(cofinsCST != '' && cofinsCST != '04' && cofinsCST != '05' && cofinsCST != '06' && cofinsCST != '07' && cofinsCST != '08' && cofinsCST != '09'){
+                        if(moeda2float(retorno.aliquota_cofins) > 0){
+                            $('#cofins').find('[bloco="'+bloco+'"]').find('[data="COFINS_pCOFINS"]').val(retorno.aliquota_cofins).change();
+                            $('#cofins').find('[bloco="'+bloco+'"]').find('[data="COFINS_TipoCalculo"]').val('P').change();
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    $('.produto-especifico').live('change',function(){
+
+        nfAqui = $(this).parents('.bloco');
+        nfAqui.find('.box-veiculo,.box-medicamento,.box-armamento,.box-combustivel,.box-papel').addClass('hidden').find('input,select,textarea').attr('disabled',true).val('');
+        if($(this).val() == 'V'){
+            nfAqui.find('.box-veiculo').removeClass('hidden').find('input,select,textarea').attr('disabled',false);
+        }
+        if($(this).val() == 'M'){
+            nfAqui.find('.box-medicamento').removeClass('hidden').find('input,select,textarea').attr('disabled',false);
+        }
+        if($(this).val() == 'A'){
+            nfAqui.find('.box-armamento').removeClass('hidden').find('input,select,textarea').attr('disabled',false);
+        }
+        if($(this).val() == 'C'){
+            nfAqui.find('.box-combustivel').removeClass('hidden').find('input,select,textarea').attr('disabled',false);
+        }
+        if($(this).val() == 'P'){
+            nfAqui.find('.box-papel').removeClass('hidden').find('input,select,textarea').attr('disabled',false);
+        }
+    });
+
+    $('.botao-ii').live('ifChanged', function(){
+        nfAqui = $(this).parents('.bloco');
+        if($(this).is(':checked')){
+            nfAqui.find('.box-ii').removeClass('hidden').find('input,select').attr('disabled', false);
+        }else{
+            nfAqui.find('.box-ii').addClass('hidden').find('input,select').attr('disabled', true);
+        }
+    });
+
+    $('.botao-di').live('ifChanged', function(){
+        nfAqui = $(this).parents('.bloco');
+        if($(this).is(':checked')){
+            nfAqui.find('.box-di').removeClass('hidden').find('input,select').attr('disabled', false);
+            if(nfAqui.find('.box-di').find('.lista-di').html() == ''){
+                nfAqui.find('.box-di').find('.botao-adicionar-di').click();
+            }
+        }else{
+            nfAqui.find('.box-di').addClass('hidden').find('input,select').attr('disabled', true);
+        }
+    });
+
+    iDi = [];
+    qDi = [];
+
+    $('.botao-adicionar-di').live('click', function(){
+
+        diProdutoId = $(this).attr('di-produto-id');
+
+        if(qDi[diProdutoId] >= 100){
+            bootbox.error('Não é permitido adicionar mais do que 100 declarações!');
+            return false;
+        }
+
+        dados = {
+            referencia:diProdutoId,
+            iDi:iDi[diProdutoId],
+        };
+
+        nfAqui = $(this).parents('.bloco');
+        $.post('/fiscal/nfe400/gera_campos_di',{dados},function(retorno){
+            retorno = $.parseJSON(retorno);
+            nfAqui.find('.lista-di').append(retorno);
+            $('html, body').animate({ scrollTop: nfAqui.find('.lista-di').find('.bloco-di').last().offset().top }, 500);
+
+            iAdicao[diProdutoId][iDi[diProdutoId]] = 0;
+            qAdicao[diProdutoId][iDi[diProdutoId]] = 0;
+
+            iDi[diProdutoId]++;
+            qDi[diProdutoId]++;
+
+            nfAqui.find('.botao-adicionar-adicao').click();
+
+        });
+    });
+
+    $('.tpViaTransp').live('change',function(){
+        if($(this).find('option:selected').val() == 1){
+            $(this).parents('.bloco-di').find('.vAFRMM_Opc').attr('readonly', false);
+        }else{
+            $(this).parents('.bloco-di').find('.vAFRMM_Opc').attr('readonly', true).val('');
+        }
+    });
+
+    $('.remove-di').live('click',function(){
+        diProdutoId = $(this).attr('di-produto-id');
+        if(qDi[diProdutoId] == 1){
+            $('[name="data[NotasFiscaisProduto]['+diProdutoId+'][informar_di]"]').iCheck('uncheck');
+        }
+        $(this).parents('.bloco-di').remove();
+        qDi[diProdutoId]--;
+    });
+
+    iAdicao = [];
+    qAdicao = [];
+
+    $('.botao-adicionar-adicao').live('click', function(){
+        nfAqui = $(this).parents('.bloco');
+        diProdutoId = $(this).attr('di-produto-id');
+        diId = $(this).attr('di-id');
+
+        if(qAdicao[diProdutoId][diId] >= 100){
+            bootbox.error('Não é permitido adicionar mais do que 100 declarações!');
+            return false;
+        }
+
+        dados = {
+            diProdutoId:diProdutoId,
+            diId:diId,
+            iAdicao:iAdicao[diProdutoId][diId],
+        };
+
+        $.post('/fiscal/nfe400/gera_campos_di_adicao',{dados},function(retorno){
+            retorno = $.parseJSON(retorno);
+            nfAqui.find('#bloco-di-'+diId).find('.lista-adicoes').append(retorno);
+            iAdicao[diProdutoId][diId]++;
+            qAdicao[diProdutoId][diId]++;
+        });
+    });
+
+    $('.remove-adicao').live('click',function(){
+        diProdutoId = $(this).attr('di-produto-id');
+        diId = $(this).attr('di-id');
+        if(qAdicao[diProdutoId][diId] == 1){
+            return false;
+        }
+        $(this).parents('.bloco-adicao').remove();
+        qAdicao[diProdutoId][diId]--;
+    });
+
+    $('.botao-exportacao').live('ifChanged', function(){
+        nfAqui = $(this).parents('.bloco');
+        if($(this).is(':checked')){
+            nfAqui.find('.box-exportacao').removeClass('hidden').find('input,select').attr('disabled', false);
+            if(nfAqui.find('.box-exportacao').find('.lista-exportacao').html() == ''){
+                nfAqui.find('.box-exportacao').find('.botao-adicionar-exportacao').click();
+            }
+        }else{
+            nfAqui.find('.box-exportacao').addClass('hidden').find('input,select').attr('disabled', true);
+        }
+    });
+
+    iExportacao = [];
+    qExportacao = [];
+    $('.botao-adicionar-exportacao').live('click', function(){
+
+        nfAqui = $(this).parents('.bloco');
+        exportacaoProdutoId = $(this).attr('exportacao-produto-id');
+
+        dados = {
+            exportacaoProdutoId:exportacaoProdutoId,
+            iExportacao:iExportacao[exportacaoProdutoId],
+        };
+
+        $.post('/fiscal/nfe400/gera_campos_exportacao',{dados},function(retorno){
+            retorno = $.parseJSON(retorno);
+            nfAqui.find('.lista-exportacao').append(retorno);
+            iExportacao[exportacaoProdutoId]++;
+            qExportacao[exportacaoProdutoId]++;
+            $('html, body').animate({ scrollTop: nfAqui.find('.lista-exportacao').find('.bloco-exportacao').last().offset().top }, 500);
+        });
+    });
+
+    $('.remove-exportacao ').live('click',function(){
+        exportacaoProdutoId = $(this).attr('exportacao-produto-id');
+        if(qExportacao[exportacaoProdutoId] == 1){
+            $('[name="data[NotasFiscaisProduto]['+exportacaoProdutoId+'][informar_exportacao]"]').iCheck('uncheck');
+        }
+        $(this).parents('.bloco-exportacao').remove();
+        qExportacao[exportacaoProdutoId]--;
+    });
+
+
+    $('.botao-nve').live('ifChanged', function(){
+        nfAqui = $(this).parents('.bloco');
+        if($(this).is(':checked')){
+            nfAqui.find('.box-nve').removeClass('hidden').find('input,select').attr('disabled', false);
+            if(nfAqui.find('.box-nve').find('.lista-nve').html() == ''){
+                nfAqui.find('.box-nve').find('.botao-adicionar-nve').click();
+            }
+        }else{
+            nfAqui.find('.box-nve').addClass('hidden').find('input,select').attr('disabled', true);
+        }
+    });
+
+    iNve = [];
+    qNve = [];
+    $('.botao-adicionar-nve').live('click', function(){
+
+        nfAqui = $(this).parents('.bloco');
+        referencia = $(this).attr('nve-produto-id');
+
+        dados = {
+            referencia:referencia,
+            iNve:iNve[referencia],
+        };
+
+        $.post('/fiscal/nfe400/gera_campos_nve',{dados},function(retorno){
+            retorno = $.parseJSON(retorno);
+            nfAqui.find('.lista-nve').append(retorno);
+            iNve[referencia]++;
+            qNve[referencia]++;
+            $('html, body').animate({ scrollTop: nfAqui.find('.lista-nve').find('.bloco-nve').last().offset().top }, 500);
+        });
+    });
+
+    $('.remove-nve').live('click',function(){
+        referencia = $(this).attr('nve-produto-id');
+        if(qNve[referencia] == 1){
+            $('[name="data[NotasFiscaisProduto]['+referencia+'][informar_nve]"]').iCheck('uncheck');
+        }
+        $(this).parents('.bloco-nve').remove();
+        qNve[referencia]--;
+    });
+
+    $('.situacao-tributaria').live('change',function(){
+
+        nfAqui = $(this).parents('.bloco');
+
+        imposto = $(this).attr('imposto');
+        if(imposto == 'icms'){
+
+            nfAqui.find('.atencao-icms').addClass('hidden');
+            nfAqui.find('.atencao-icms-st').addClass('hidden');
+            nfAqui.find('.icms-campos-extras,.box-icms,.box-icms-st').find('.form-group').addClass('hidden').removeClass('required').find('input,select').removeClass('required').attr('disabled', true);
+
+            if($(this).val() != ''){
+                atributos = $(this).find('option:selected').attr('atributos');
+                atributos = atributos.split(',');
+                $(atributos).each(function(i,atributo) {
+                    at = atributo.split(':');
+                    nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).parents('.form-group').removeClass('hidden');
+                    if(validaTributos == true){
+                        if(at[1] == 1){
+                            nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).addClass('required').attr('valida',1).parents('.form-group').removeClass('hidden').addClass('required');
+                        }
+                    }
+                });
+
+                codigo = $(this).find('option:selected').attr('codigo');
+
+                if(codigo == 201 || codigo == 202){
+                    nfAqui.find('.atencao-icms-st').removeClass('hidden');
+                }
+
+                if(codigo == 30){
+                    nfAqui.find('.box-icms').find('[data="ICMS_vICMSDeson"]').attr('disabled', true).parent().addClass('hidden');
+                    nfAqui.find('.box-icms').find('[data="ICMS_motDesICMS"]').attr('disabled', true).parent().addClass('hidden');
+                }
+                if(codigo == 20 || codigo == 40 || codigo == 41 || codigo == 50 || codigo == 70 || codigo == 90){
+                    nfAqui.find('.box-icms-st').find('[data="ICMS_vICMSDeson"]').attr('disabled', true).parent().addClass('hidden');
+                    nfAqui.find('.box-icms-st').find('[data="ICMS_motDesICMS"]').attr('disabled', true).parent().addClass('hidden');
+                }
+                if(codigo == 51 || codigo == 90){
+                    nfAqui.find('.atencao-icms').removeClass('hidden');
+                }
+
+                nfAqui.find('[data="ICMS_motDesICMS"]').find('option').show();
+                if(codigo == 20 || codigo == 70 || (codigo == 90 && $(this).find('option:selected').val() == 11)){
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option').hide();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value=""]').show();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value="3"]').show();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value="9"]').show();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value="12"]').show();
+                }
+                if(codigo == 30){
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option').hide();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value=""]').show();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value="6"]').show();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value="7"]').show();
+                    nfAqui.find('[data="ICMS_motDesICMS"]').find('option[value="9"]').show();
+                }
+                if(codigo == 41){
+                     nfAqui.find('[data="ICMS_vBCSTRet"]').parent().find('label').html('BC ICMS ST retido na UF do rementente');
+                     nfAqui.find('[data="ICMS_pICMSSTRet"]').parent().find('label').html('Alíquota ICMS ST retido na UF do remetente');
+                     nfAqui.find('[data="ICMS_vICMSSTRet"]').parent().find('label').html('ICMS ST retido na UF do remetente');
+                }else{
+                    nfAqui.find('[data="ICMS_vBCSTRet"]').parent().find('label').html('BC ICMS ST Retido');
+                    nfAqui.find('[data="ICMS_pICMSSTRet"]').parent().find('label').html('Alíquota ICMS ST Retido');
+                    nfAqui.find('[data="ICMS_vICMSSTRet"]').parent().find('label').html('ICMS ST Retido');
+                }
+                nfAqui.find('[data="IPI_CNPJProd"]').val('');
+            }
+
+            iIcmsExtras = 0;
+            nfAqui.find('.icms-campos-extras').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iIcmsExtras++;
+                }
+            });
+
+            iIcms = 0;
+            nfAqui.find('.box-icms').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iIcms++;
+                }
+            });
+
+            iIcmsSt = 0;
+            nfAqui.find('.box-icms-st').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iIcmsSt++;
+                }
+            });
+
+            if(iIcmsExtras == 0){
+                nfAqui.find('.icms-campos-extras').addClass('hidden');
+            }else{
+                nfAqui.find('.icms-campos-extras').removeClass('hidden');
+            }
+
+            if(iIcms == 0){
+                nfAqui.find('.box-icms').addClass('hidden');
+            }else{
+                nfAqui.find('.box-icms').removeClass('hidden');
+            }
+
+            if(iIcmsSt == 0){
+                nfAqui.find('.box-icms-st').addClass('hidden');
+            }else{
+                nfAqui.find('.box-icms-st').removeClass('hidden');
+            }
+
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,$(this).attr('data'));
+        }
+
+        if(imposto == 'ipi'){
+            nfAqui.find('input:text,select,textarea').not('[data="IPI_CST"]').val('').attr('disabled', true).parents('.form-group').addClass('hidden');
+            if($(this).val() != ''){
+                atributos = $(this).find('option:selected').attr('atributos');
+                atributos = atributos.split(',');
+                $(atributos).each(function(i,atributo) {
+                    at = atributo.split(':');
+                    nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).removeClass('required').parents('.form-group').removeClass('hidden').removeClass('required');
+                    if(validaTributos == true){
+                        if(at[1] == 1){
+                            nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).addClass('required').attr('valida',1).parents('.form-group').removeClass('hidden').addClass('required');
+                        }
+                    }
+                });
+                nfAqui.find('.box-botao-ipi-devolvido').removeClass('hidden').find('div').removeClass('hidden');
+                nfAqui.find('.box-botao-ipi-devolvido').find('input').attr('disabled', false).iCheck('uncheck');
+            }else{
+                nfAqui.find('input:text').not('.impostoDevol_pDevol,.impostoDevol_pDevol,.impostoDevol_IPI_vIPIDevol').parent().addClass('hidden').find('input').attr('disabled', true);
+                nfAqui.find('.box-botao-ipi-devolvido,.box-ipi-devolvido').addClass('hidden').find('input').iCheck('uncheck');
+            }
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIpi(bloco,$(this).attr('data'));
+        }
+        if(imposto == 'pis'){
+            nfAqui.find('.box-pis,.box-pis-st').find('.form-group').addClass('hidden').find('input,select').attr('disabled', true);
+            if($(this).val() != ''){
+                atributos = $(this).find('option:selected').attr('atributos');
+                atributos = atributos.split(',');
+                nfAqui.find('.box-pis,.box-pis-st').find('input,select').attr('disabled', true).parents('.form-group').addClass('hidden');
+
+                $(atributos).each(function(i,atributo) {
+                    at = atributo.split(':');
+                    nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).parents('.form-group').removeClass('hidden');
+                    if(at[0] == 'PIS_TipoCalculo' || at[0] == 'PISST_TipoCalculo'){
+                        if(nfAqui.find('[data="'+at[0]+'"]').val() != ''){
+                            nfAqui.find('[data="'+at[0]+'"]').change();
+                        }
+                    }
+                    if(validaTributos == true){
+                        if(at[1] == 1){
+                            nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).addClass('required').attr('valida',1).parents('.form-group').removeClass('hidden').addClass('required');
+                        }
+                    }
+                });
+                bloco = $(this).parents('.bloco').attr('bloco');
+                calculaPis(bloco,$(this).attr('data'));
+            }
+
+            iPis = 0;
+            nfAqui.find('.box-pis').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iPis++;
+                }
+            });
+
+            iPisSt = 0;
+            nfAqui.find('.box-pis-st').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iPisSt++;
+                }
+            });
+
+            if(iPis == 0){
+                nfAqui.find('.box-pis').addClass('hidden');
+            }else{
+                nfAqui.find('.box-pis').removeClass('hidden');
+            }
+
+            if(iPisSt == 0){
+                nfAqui.find('.box-pis-st').addClass('hidden');
+            }else{
+                nfAqui.find('.box-pis-st').removeClass('hidden');
+            }
+        }
+
+        if(imposto == 'cofins'){
+
+            nfAqui.find('.box-cofins,.box-cofins-st').find('.form-group').addClass('hidden').find('input,select').attr('disabled', true);
+            if($(this).val() != ''){
+                atributos = $(this).find('option:selected').attr('atributos');
+                atributos = atributos.split(',');
+                nfAqui.find('.box-cofins,.box-cofins-st').find('input,select').attr('disabled', true).parents('.form-group').addClass('hidden');
+
+                $(atributos).each(function(i,atributo) {
+                    at = atributo.split(':');
+                    nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).parents('.form-group').removeClass('hidden');
+                    if(at[0] == 'COFINS_TipoCalculo' || at[0] == 'COFINSST_TipoCalculo'){
+                        if(nfAqui.find('[data="'+at[0]+'"]').val() != ''){
+                            nfAqui.find('[data="'+at[0]+'"]').change();
+                        }
+                    }
+                    if(validaTributos == true){
+                        if(at[1] == 1){
+                            nfAqui.find('[data="'+at[0]+'"]').attr('disabled', false).addClass('required').attr('valida',1).parents('.form-group').removeClass('hidden').addClass('required');
+                        }
+                    }
+                });
+                bloco = $(this).parents('.bloco').attr('bloco');
+                calculaCofins(bloco,$(this).attr('data'));
+            }
+
+            iCofins = 0;
+            nfAqui.find('.box-cofins').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iCofins++;
+                }
+            });
+
+            iCofinsSt = 0;
+            nfAqui.find('.box-cofins-st').find('input,select').each(function() {
+                if(!$(this).attr('disabled')){
+                    iCofinsSt++;
+                }
+            });
+
+            if(iCofins == 0){
+                nfAqui.find('.box-cofins').addClass('hidden');
+            }else{
+                nfAqui.find('.box-cofins').removeClass('hidden');
+            }
+
+            if(iCofinsSt == 0){
+                nfAqui.find('.box-cofins-st').addClass('hidden');
+            }else{
+                nfAqui.find('.box-cofins-st').removeClass('hidden');
+            }
+        }
+    });
+
+    $('[data="informar_ipi_devolvido"]').live('ifChanged', function(){
+        nfAqui = $(this).parents('.bloco');
+        if($(this).is(':checked')){
+            nfAqui.find('.box-ipi-devolvido').removeClass('hidden').find('input').addClass('required').attr('disabled', false).parent().addClass('required').removeClass('hidden');
+        }else{
+            nfAqui.find('.box-ipi-devolvido').addClass('hidden').find('input').removeClass('required').attr('disabled', true).parent().removeClass('required');
+        }
+    });
+
+    $('[data="informar_icms_interestadual"]').live('ifChanged', function(){
+        nfAqui = $(this).parents('.bloco');
+        if($(this).is(':checked')){
+            nfAqui.find('.box-icms-interestadual').removeClass('hidden').find('input').attr('disabled', false).parent().removeClass('hidden');
+        }else{
+            nfAqui.find('.box-icms-interestadual').addClass('hidden').find('input').attr('disabled', true).parent();
+        }
+        calculaIcms(nfAqui.attr('bloco'),$(this).attr('data'));
+    });
+
+    $('[data="IPI_TipoCalculo"]').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+        if(nfAqui.find('[data="IPI_CST"]').val() == ''){
+            return false;
+        }
+
+        nfAqui.find('[data="IPI_vBC"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="IPI_pIPI"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="IPI_qUnid"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="IPI_vUnid"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="IPI_vIPI"]').removeClass('required').parents('.form-group').removeClass('required');
+
+        if($(this).val() == 'P'){
+            nfAqui.find('[data="IPI_vBC"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="IPI_pIPI"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="IPI_qUnid"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_vUnid"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_vIPI"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="IPI_vBC"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="IPI_pIPI"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="IPI_qUnid"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="IPI_vUnid"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="IPI_vIPI"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else if($(this).val() == 'V'){
+            nfAqui.find('[data="IPI_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_pIPI"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_qUnid"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="IPI_vUnid"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="IPI_vIPI"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="IPI_vBC"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="IPI_pIPI"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="IPI_qUnid"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="IPI_vUnid"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="IPI_vIPI"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else{
+            nfAqui.find('[data="IPI_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_pIPI"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_qUnid"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_vUnid"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="IPI_vIPI"]').parents('.form-group').addClass('hidden').find('input').attr('disabled', true);
+        }
+
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaIpi(bloco,$(this).attr('data'));
+    });
+
+    $('[data="PIS_TipoCalculo"]').live('change',function(){
+
+        nfAqui = $(this).parents('.bloco');
+
+        nfAqui.find('[data="PIS_vBC"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PIS_pPIS"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PIS_vAliqProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PIS_qBCProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PIS_vPIS"]').removeClass('required').parents('.form-group').removeClass('required');
+
+        if($(this).val() == 'P'){
+            nfAqui.find('[data="PIS_vBC"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PIS_pPIS"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PIS_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_vPIS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="PIS_vBC"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PIS_pPIS"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PIS_vAliqProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PIS_qBCProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PIS_vPIS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else if($(this).val() == 'V'){
+            nfAqui.find('[data="PIS_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_pPIS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_vAliqProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PIS_qBCProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PIS_vPIS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="PIS_vBC"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PIS_pPIS"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PIS_vAliqProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PIS_qBCProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PIS_vPIS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else{
+            nfAqui.find('[data="PIS_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_pPIS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PIS_vPIS"]').parents('.form-group').addClass('hidden').find('input').attr('disabled', true);
+        }
+
+        if($(this).val() != ''){
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaPis(bloco,$(this).attr('data'));
+        }
+    });
+
+    $('[data="PISST_TipoCalculo"]').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+
+        nfAqui.find('[data="PISST_vBC"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PISST_pPIS"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PISST_vAliqProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PISST_qBCProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="PISST_vPIS"]').removeClass('required').parents('.form-group').removeClass('required');
+
+        if($(this).val() == 'P'){
+            nfAqui.find('[data="PISST_vBC"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PISST_pPIS"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PISST_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_vPIS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="PISST_vBC"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PISST_pPIS"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PISST_vAliqProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PISST_qBCProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PISST_vPIS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else if($(this).val() == 'V'){
+            nfAqui.find('[data="PISST_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_pPIS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_vAliqProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PISST_qBCProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="PISST_vPIS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="PISST_vBC"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PISST_pPIS"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="PISST_vAliqProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PISST_qBCProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="PISST_vPIS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else{
+            nfAqui.find('[data="PISST_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_pPIS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="PISST_vPIS"]').parents('.form-group').addClass('hidden').find('input').attr('disabled', true);
+        }
+        if($(this).val() != ''){
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaPis(bloco,$(this).attr('data'));
+        }
+    });
+
+    $('[data="COFINS_TipoCalculo"]').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+
+        nfAqui.find('[data="COFINS_vBC"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINS_pCOFINS"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINS_vAliqProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINS_qBCProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINS_vCOFINS"]').removeClass('required').parents('.form-group').removeClass('required');
+
+        if($(this).val() == 'P'){
+            nfAqui.find('[data="COFINS_vBC"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINS_pCOFINS"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINS_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_vCOFINS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="COFINS_vBC"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINS_pCOFINS"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINS_vAliqProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINS_qBCProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINS_vCOFINS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else if($(this).val() == 'V'){
+            nfAqui.find('[data="COFINS_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_pCOFINS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_vAliqProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINS_qBCProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINS_vCOFINS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="COFINS_vBC"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINS_pCOFINS"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINS_vAliqProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINS_qBCProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINS_vCOFINS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else{
+            nfAqui.find('[data="COFINS_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_pCOFINS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINS_vCOFINS"]').parents('.form-group').addClass('hidden').find('input').attr('disabled', true);
+        }
+        if($(this).val() != ''){
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaCofins(bloco,$(this).attr('data'));
+        }
+    });
+
+    $('[data="COFINSST_TipoCalculo"]').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+
+        nfAqui.find('[data="COFINSST_vBC"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINSST_pCOFINS"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINSST_vAliqProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINSST_qBCProd"]').removeClass('required').parent().removeClass('required');
+        nfAqui.find('[data="COFINSST_vCOFINS"]').removeClass('required').parents('.form-group').removeClass('required');
+
+        if($(this).val() == 'P'){
+            nfAqui.find('[data="COFINSST_vBC"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINSST_pCOFINS"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINSST_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_vCOFINS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="COFINSST_vBC"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINSST_pCOFINS"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINSST_vAliqProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINSST_qBCProd"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINSST_vCOFINS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else if($(this).val() == 'V'){
+            nfAqui.find('[data="COFINSST_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_pCOFINS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_vAliqProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINSST_qBCProd"]').parent().removeClass('hidden').find('input').attr('disabled', false);
+            nfAqui.find('[data="COFINSST_vCOFINS"]').parents('.form-group').removeClass('hidden').find('input').attr('disabled', false);
+
+            if(validaTributos == true){
+                nfAqui.find('[data="COFINSST_vBC"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINSST_pCOFINS"]').removeClass('required').parent().removeClass('required');
+                nfAqui.find('[data="COFINSST_vAliqProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINSST_qBCProd"]').addClass('required').parent().addClass('required');
+                nfAqui.find('[data="COFINSST_vCOFINS"]').addClass('required').parents('.form-group').addClass('required');
+            }
+
+        }else{
+            nfAqui.find('[data="COFINSST_vBC"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_pCOFINS"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_vAliqProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_qBCProd"]').parent().addClass('hidden').find('input').attr('disabled', true);
+            nfAqui.find('[data="COFINSST_vCOFINS"]').parents('.form-group').addClass('hidden').find('input').attr('disabled', true);
+        }
+        if($(this).val() != ''){
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaCofins(bloco,$(this).attr('data'));
+        }
+    });
+
+    $('.ICMS_pRedBC,.ICMS_vBC,.ICMS_pICMS,.ICMS_pRedBCST,.ICMS_pMVAST,.ICMS_vBCST,.ICMS_pICMSST,.ICMS_vBCFCPST,.ICMS_pFCPST,.ICMS_pCredSN,.ICMS_pDif,.ICMSUFDest_vBCUFDest,.ICMSUFDest_pFCPUFDest,.ICMSUFDest_pICMSUFDest,.ICMSUFDest_pICMSInter,.ICMS_vBCFCP,.ICMS_pFCP,.ICMS_vBCFCPSTRet,.ICMS_pFCPSTRet').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaIcms(bloco,$(this).attr('data'));
+    });
+
+    $('.IPI_vBC,.IPI_pIPI,.IPI_qUnid,.IPI_vUnid').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaIpi(bloco,$(this).attr('data'));
+    });
+
+    $('.PIS_vBC,.PIS_pPIS,.PIS_vAliqProd,.PIS_qBCProd,.PISST_vBC,.PISST_pPIS,.PISST_vAliqProd,.PISST_qBCProd').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaPis(bloco,$(this).attr('data'));
+    });
+
+    $('.COFINS_vBC,.COFINS_pCOFINS,.COFINS_vAliqProd,.COFINS_qBCProd,.COFINSST_vBC,.COFINSST_pCOFINS,.COFINSST_vAliqProd,.COFINSST_qBCProd').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaCofins(bloco,$(this).attr('data'));
+    });
+
+    $('.ISSQN_vBC,.ISSQN_vAliq').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaIssqn(bloco,$(this).attr('data'));
+    });
+
+    $('.comb_qBCprod,.comb_vAliqProd').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+        qBCprod = (nfAqui.find('.comb_qBCprod').val() != '') ? moeda2float(nfAqui.find('.comb_qBCprod').val()) : 0;
+        vAliqProd = (nfAqui.find('.comb_vAliqProd').val() != '') ? moeda2float(nfAqui.find('.comb_vAliqProd').val()) : 0;
+        //if(qBCprod != '' && vAliqProd != ''){
+            vCIDE = float2moeda((qBCprod * vAliqProd) / 100);
+            nfAqui.find('.comb_vCIDE').val(vCIDE);
+        //}
+
+        if($(this).val() != '' && moeda2float($(this).val()) != 0){
+            nfAqui.find('.comb_qBCprod').addClass('required').parent().addClass('required');
+            nfAqui.find('.comb_vAliqProd').addClass('required').parent().addClass('required');
+            nfAqui.find('.comb_vCIDE').addClass('required').parent().addClass('required');
+        }else{
+            nfAqui.find('.comb_qBCprod').removeClass('required').val('').parent().removeClass('required');
+            nfAqui.find('.comb_vAliqProd').removeClass('required').val('').parent().removeClass('required');
+            nfAqui.find('.comb_vCIDE').removeClass('required').val('').parent().removeClass('required');
+        }
+    });
+
+    $('.comb_cProdANP').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+        cProdANP = nfAqui.find('.comb_cProdANP').val();
+        if(cProdANP == 210203001){
+            nfAqui.find('.comb_pMixCN_Opc').attr('readonly', false);
+        }else{
+            nfAqui.find('.comb_pMixCN_Opc').attr('readonly', true).val('');
+        }
+    });
+
+    $('.uCom').live('change',function(){
+        nfAqui = $(this).parents('.bloco');
+        if(!$('.botao-tributacao-diferente').is(':checked')){
+            nfAqui.find('.uTrib ').val(nfAqui.find('.uCom').val());
+        }
+        calculaTotalProdutos();
+    });
+
+    $('.qCom,.vUnCom,.vFrete,.vSeg,.vDesc').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        if($(this).attr('data') == 'qCom' || $(this).attr('data') == 'vUnCom'){
+            nfAqui = $('#dados-gerais').find('[bloco="'+bloco+'"]');
+            qCom = (nfAqui.find('.qCom').val() != '') ? moeda2float(nfAqui.find('.qCom').val()) : 0;
+            vUnCom = (nfAqui.find('.vUnCom').val() != '') ? moeda2float(nfAqui.find('.vUnCom').val()) : 0;
+            //if(qCom != '' && vUnCom != ''){
+                vProd = float2moeda(qCom * vUnCom);
+                nfAqui.find('.vProd').val(vProd);
+            //}
+        }
+        calculaIpi(bloco,$(this).attr('data'));
+    });
+
+    $('.qCom').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaTributo(bloco);
+        calculaTotalQuantidade();
+    });
+
+    $('.vUnCom').live('change',function(){
+        bloco = $(this).parents('.bloco').attr('bloco');
+        calculaTributo(bloco);
+    });
+
+    $('.cEAN').live('change',function(){
+        if(!nfAqui.find('.botao-tributacao-diferente').is(':checked')){
+            nfAqui = $(this).parents('.bloco');
+            nfAqui.find('.cEANTrib').val(nfAqui.find('.cEAN').val());
+        }
+    });
+
+    $('.vTroco').live('change',function(){
+        calculaPagamentos();
+    });
+
+    $('.vFrete').live('change',function(){
+        calculaTotalFrete();
+    });
+
+    $('.vSeg').live('change',function(){
+        calculaTotalSeguro();
+    });
+
+    $('.vDesc').live('change',function(){
+        calculaTotalDesconto();
+    });
+
+    $('.vOutro').live('change',function(){
+        calculaTotalDespesas();
+    });
+
+    $('.II_vII').live('change',function(){
+        calculaTotalII();
+    });
+
+    $('.vTotTrib').live('change',function(){
+        calculaTotalTributos();
+    });
+
+    $('.pesoL').live('change',function(){
+        calculaTotalPesoLiquido();
+    });
+    $('.pesoB').live('change',function(){
+        calculaTotalPesoBruto();
+    });
+
+    $('.ICMS_vICMSDeson').live('change',function(){
+        calculaTotalICMSDesonerado();
+    });
+
+
+    $('.ISSQN_vBC').live('change',function(){
+        calculaTotalBCISSQN();
+    });
+
+    $('.ISSQN_vISSQN').live('change',function(){
+        calculaTotalISSQN();
+    });
+
+    $('.ISSQN_vDeducao_Opc').live('change',function(){
+        calculaTotalDeducoes();
+    });
+
+    $('.ISSQN_vOutro_Opc').live('change',function(){
+        calculaTotalOutrasRetencoes();
+    });
+
+    $('.ISSQN_vDescIncond_Opc').live('change',function(){
+        calculaTotalDescontosIncodicionais();
+    });
+
+    $('.ISSQN_vDescCond_Opc').live('change',function(){
+        calculaTotalDescontosCondicionais();
+    });
+
+     $('.ISSQN_vISSRet_Opc').live('change',function(){
+        calculaTotalRetencoes();
+    });
+
+    $('.ICMS_vICMSDeson').live('change',function(){
+        if(validaTributos == true){
+            nfAqui = $(this).parents('.bloco');
+            if($(this).val() != '' && moeda2float($(this).val()) != 0){
+                nfAqui.find('.ICMS_motDesICMS').addClass('required').parent().addClass('required');
+                $(this).addClass('required').parent().addClass('required');
+            }else{
+                nfAqui.find('.ICMS_motDesICMS').removeClass('required').val('').parent().removeClass('required');
+                $(this).removeClass('required').parent().removeClass('required');
+            }
+
+        }
+    });
+
+    $('.ICMS_motDesICMS').live('change',function(){
+        if(validaTributos == true){
+            nfAqui = $(this).parents('.bloco');
+            if($(this).val() != ''){
+                nfAqui.find('.ICMS_vICMSDeson').addClass('required').parent().addClass('required');
+                $(this).addClass('required').parent().addClass('required');
+            }else{
+                nfAqui.find('.ICMS_vICMSDeson').removeClass('required').val('').parent().removeClass('required');
+                $(this).removeClass('required').parent().removeClass('required');
+            }
+
+        }
+    });
+
+    $('.ICMS_vBCSTRet').live('change',function(){
+        if(validaTributos == true){
+            nfAqui = $(this).parents('.bloco');
+            if($(this).val() != '' && moeda2float($(this).val()) != 0){
+                nfAqui.find('.ICMS_vICMSSTRet').addClass('required').parent().addClass('required');
+                $(this).addClass('required').parent().addClass('required');
+            }else{
+                nfAqui.find('.ICMS_vICMSSTRet').removeClass('required').val('').parent().removeClass('required');
+                $(this).removeClass('required').parent().removeClass('required');
+            }
+
+        }
+    });
+
+    $('.ICMS_vICMSSTRet').live('change',function(){
+        if(validaTributos == true){
+            nfAqui = $(this).parents('.bloco');
+            if($(this).val() != ''){
+                nfAqui.find('.ICMS_vBCSTRet').addClass('required').parent().addClass('required');
+                $(this).addClass('required').parent().addClass('required');
+            }else{
+                nfAqui.find('.ICMS_vBCSTRet').removeClass('required').val('').parent().removeClass('required');
+                $(this).removeClass('required').parent().removeClass('required');
+            }
+
+        }
+    });
+
+    $('.ICMS_modBC').live('change',function(){
+        if(validaTributos == true){
+            nfAqui = $(this).parents('.bloco');
+            vBC = nfAqui.find('.ICMS_vBC');
+            pICMS = nfAqui.find('.ICMS_pICMS');
+            vICMS = nfAqui.find('.ICMS_vICMS');
+
+            if(vBC.val() != '' || pICMS.val() != ''){
+                vBC.addClass('required').parent().addClass('required');
+                pICMS.addClass('required').parent().addClass('required');
+                vICMS.addClass('required').parent().addClass('required');
+                $(this).addClass('required').parent().addClass('required');
+            }else{
+                if(vBC.attr('valida') != 1){
+                    vBC.removeClass('required').parent().removeClass('required');
+                }
+                if(pICMS.attr('valida') != 1){
+                    pICMS.removeClass('required').parent().removeClass('required');
+                }
+                if(vICMS.attr('valida') != 1){
+                    vICMS.removeClass('required').parent().removeClass('required');
+                }
+                if($(this).attr('valida') != 1){
+                    $(this).removeClass('required').parent().removeClass('required');
+                }
+                //vBC.val('');
+                //pICMS.val('');
+                vICMS.val('');
+            }
+        }
+    });
+
+
+    $('[data="nRE"],[data="chNFe"],[data="qExport"]').live('change', function(){
+        nfAqui = $(this).parents('.bloco-exportacao');
+        if($(this).val() != '' && moeda2float($(this).val()) != 0){
+            nfAqui.find('[data="nRE"]').addClass('required').parent().addClass('required');
+            nfAqui.find('[data="chNFe"]').addClass('required').parent().addClass('required');
+            nfAqui.find('[data="qExport"]').addClass('required').parent().addClass('required');
+        }else{
+            nfAqui.find('[data="nRE"]').val('').removeClass('required').parent().removeClass('required');
+            nfAqui.find('[data="chNFe"]').val('').removeClass('required').parent().removeClass('required');
+            nfAqui.find('[data="qExport"]').val('').removeClass('required').parent().removeClass('required');
+        }
+    });
+
+    $('#ProdutoProdutoEspecifico').change(function(){
+          $('a[href="#veiculo"]').parent().addClass('hidden');
+          $('a[href="#medicamento"]').parent().addClass('hidden');
+          $('a[href="#armamento"]').parent().addClass('hidden');
+          $('a[href="#combustivel"]').parent().addClass('hidden');
+          $('a[href="#papel"]').parent().addClass('hidden');
+
+          $('#veiculo').addClass('hidden').find('input, select').attr('disabled', true);
+          $('#medicamento').addClass('hidden').find('input, select').attr('disabled', true);
+          $('#armamento').addClass('hidden').find('input, select').attr('disabled', true);
+          $('#combustivel').addClass('hidden').find('input, select').attr('disabled', true);
+          $('#papel').addClass('hidden').find('input, select').attr('disabled', true);
+
+          if($(this).val() == 'V'){
+              $('a[href="#veiculo"]').parent().removeClass('hidden');
+              $('#veiculo').removeClass('hidden').find('input, select').attr('disabled', false);
+              $('a[href="#veiculo"]').click();
+              flashTab('veiculo');
+          }else if($(this).val() == 'M'){
+              $('a[href="#medicamento"]').parent().removeClass('hidden');
+              $('#medicamento').removeClass('hidden').find('input, select').attr('disabled', false);
+              $('a[href="#medicamento"]').click();
+              flashTab('medicamento');
+          }else if($(this).val() == 'A'){
+              $('a[href="#armamento"]').parent().removeClass('hidden');
+              $('#armamento').removeClass('hidden').find('input, select').attr('disabled', false);
+              $('a[href="#armamento"]').click();
+              flashTab('armamento');
+          }else if($(this).val() == 'C'){
+              $('a[href="#combustivel"]').parent().removeClass('hidden');
+              $('#combustivel').removeClass('hidden').find('input, select').attr('disabled', false);
+              $('a[href="#combustivel"]').click();
+              flashTab('combustivel');
+          }else if($(this).val() == 'P'){
+              $('a[href="#papel"]').parent().removeClass('hidden');
+              $('#papel').removeClass('hidden').find('input, select').attr('disabled', false);
+              $('a[href="#papel"]').click();
+              flashTab('papel');
+          }else{
+              $('a[href="#icms"]').click();
+          }
+     });
+     $('#NotasFiscalTranspVeicTranspPlaca').change(function(){
+        if($(this).val() != ''){
+            $('#NotasFiscalTranspVeicTranspPlaca').addClass('required').parent().addClass('required');
+            $('#NotasFiscalTranspVeicTranspUF').addClass('required').parent().addClass('required');
+            //$('#NotasFiscalTranspVeicTranspRNTC').addClass('required').parent().addClass('required');
+        }else{
+            $('#NotasFiscalTranspVeicTranspPlaca').val('').removeClass('required').parent().removeClass('required');
+            $('#NotasFiscalTranspVeicTranspUF').val('').removeClass('required').parent().removeClass('required');
+            //$('#NotasFiscalTranspVeicTranspRNTC').val('').removeClass('required').parent().removeClass('required');
+        }
+     });
+
+    $('#NotasFiscalTranspRetTransp').live('ifChanged', function(){
+        if($(this).is(':checked')){
+            $('#transporte-retencao-icms').removeClass('hidden').find('input:text').attr('disabled', false).parent();
+        }else{
+            $('#transporte-retencao-icms').addClass('hidden').find('input:text').attr('disabled', true).parent();
+        }
+    });
+
+    $('.IPI_vIPI').live('change', function(){
+        calculaTotalIPI();
+    });
+
+    $('.impostoDevol_IPI_vIPIDevol').live('change', function(){
+        calculaTotalIPIDevolvido();
+    });
+
+    $('.ICMS_vICMS').live('change', function(){
+        calculaTotalICMS();
+    });
+
+    $('.ICMS_vFCP').live('change', function(){
+        calculaTotalFCP();
+    });
+
+    $('.ICMS_vFCPST').live('change', function(){
+        calculaTotalFCPST();
+    });
+
+    $('.ICMS_vFCPSTRet').live('change', function(){
+        calculaTotalFCPSTRet();
+    });
+
+    $('.ICMS_vICMSST').live('change', function(){
+        calculaTotalICMSST();
+    });
+
+    $('.PIS_vPIS').live('change', function(){
+        calculaTotalPIS();
+    });
+
+    $('.PIS_vPIS,.PISST_vPIS').live('change', function(){
+        calculaTotalPIS();
+    });
+
+    $('.COFINS_vCOFINS,.COFINSST_vCOFINS').live('change', function(){
+        calculaTotalCOFINS();
+    });
+
+    $('.editar-vIPI').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIpi(bloco,'IPI_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vICMS').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMS_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vICMSST').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMS_vBCST');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vFCP').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMS_vFCP');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vFCPST').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMS_vFCPST');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vFCPSTRet').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMS_vFCPSTRet');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vPIS').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaPis(bloco,'PIS_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vPISST').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaPis(bloco,'PISST_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vCOFINS').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaCofins(bloco,'COFINS_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vCOFINSST').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaCofins(bloco,'COFINSST_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vISSQN').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIssqn(bloco,'ISSQN_vBC');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vFCPUFDest').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMSUFDest_pFCPUFDest');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vICMSUFRemet').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMSUFDest_pICMSUFDest');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+
+    $('.editar-vICMSUFDest').live('click', function(){
+        campoEditar = $(this).find('input:hidden');
+        if(campoEditar.val() == 1){
+            campoEditar.val(0).attr('disabled', true);
+            $(this).find('span').removeClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',true);
+            bloco = $(this).parents('.bloco').attr('bloco');
+            calculaIcms(bloco,'ICMSUFDest_pICMSInter');
+        }else{
+            campoEditar.val(1).attr('disabled', false);
+            $(this).find('span').addClass('text-success');
+            $(this).parents('.input-group').find('input:text').attr('readonly',false);
+        }
+    });
+});
+
+function atualizaCfop(id,codigo,descricao){
+    $('#dados-gerais').find('.dados-gerais').find('.campo-cfop').each(function() {
+        $(this).tokenInput('clear');
+        $(this).tokenInput('add',{id: id, codigo: codigo, descricao: descricao});
+    });
+}
+
+function calculaIpi(bloco,referencia){
+
+    if(calculaImpostos != true){
+        return false;
+    }
+
+    setTimeout(function(){
+        IPI = {};
+        $('#ipi').find('[bloco="'+bloco+'"]').find('input,select,textarea').not('[disabled]').each(function() {
+            IPI[$(this).attr('data')] =  $(this).val();
+        });
+        IPI['IPI_qUnid'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        IPI['IPI_vBC'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vUnCom').val();
+
+        if(referencia == 'IPI_qUnid' || referencia == 'IPI_vUnid'){
+            IPI['IPI_qUnid'] = $('#ipi').find('[bloco="'+bloco+'"]').find('.IPI_qUnid').val();
+            IPI['ref'] = 'qUnid';
+        }
+        if(referencia == 'IPI_vBC' || referencia == 'IPI_pIPI'){
+            IPI['IPI_vBC'] = $('#ipi').find('[bloco="'+bloco+'"]').find('.IPI_vBC').val();
+            IPI['ref'] = 'vBC';
+        }
+
+        DADOS = {};
+        DADOS['qCom'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        DADOS['vUnCom'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vUnCom').val();
+        DADOS['vProd'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();  DADOS['vFrete'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vFrete').val();
+        DADOS['vDesc'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vDesc').val();
+        DADOS['vOutro'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vOutro').val();
+        DADOS['vSeg'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vSeg').val();
+
+        $.post('/fiscal/nfe400/calcula_ipi',{IPI,DADOS},function(retorno){
+            retorno = $.parseJSON(retorno);
+            $.each(retorno, function(chave, valor) {
+                $('#ipi').find('[bloco="'+bloco+'"]').find('[data="'+chave+'"]').not('[disabled]').val(valor);
+            });
+            calculaTotalProdutos();
+            calculaTotalPesoLiquido();
+            calculaTotalPesoBruto();
+            calculaTotalQuantidade();
+            calculaTotalBCISSQN();
+            calculaTotalISSQN();
+            calculaTotalDeducoes();
+            calculaTotalOutrasRetencoes();
+            calculaTotalDescontosIncodicionais();
+            calculaTotalDescontosCondicionais();
+            calculaTotalRetencoes();
+            calculaTotalTributos();
+            calculaTotalIPI();
+            calculaIcms(bloco,referencia);
+        });
+    },100);
+}
+
+function calculaIcms(bloco,referencia){
+
+    if(calculaImpostos != true){
+        return false;
+    }
+
+    setTimeout(function(){
+        ICMS = {};
+        $('#icms').find('[bloco="'+bloco+'"]').find('input,select,textarea').not('[disabled]').each(function() {
+            ICMS[$(this).attr('data')] =  $(this).val();
+        });
+
+        if(referencia == 'ICMS_vBC' || referencia == 'ICMS_pICMS'){
+            ICMS['ref'] = 'vBC';
+            ICMS['ICMS_vBC'] = $('#icms').find('[bloco="'+bloco+'"]').find('.ICMS_vBC').val();
+        }
+
+        if(referencia == 'ICMS_vBCST' || referencia == 'ICMS_pICMSST'){
+            ICMS['ref'] = 'vBCST';
+            ICMS['ICMS_vBCST'] = $('#icms').find('[bloco="'+bloco+'"]').find('.ICMS_vBCST').val();
+        }
+
+        if(referencia == 'ICMS_vBCFCP' || referencia == 'ICMS_pFCP'){
+            ICMS['ref'] = 'vBCFCP';
+            ICMS['ICMS_vBCFCP'] = $('#icms').find('[bloco="'+bloco+'"]').find('.ICMS_vBCFCP').val();
+        }
+
+        if(referencia == 'ICMS_vBCFCPST' || referencia == 'ICMS_pFCPST'){
+            ICMS['ref'] = 'vBCFCPST';
+            ICMS['ICMS_vBCFCPST'] = $('#icms').find('[bloco="'+bloco+'"]').find('.ICMS_vBCFCPST').val();
+        }
+
+        if(referencia == 'ICMS_vBCFCPSTRet' || referencia == 'ICMS_pFCPSTRet'){
+            ICMS['ref'] = 'vBCFCPSTRet';
+            ICMS['ICMS_vBCFCPSTRet'] = $('#icms').find('[bloco="'+bloco+'"]').find('.ICMS_vBCFCPSTRet').val();
+        }
+
+        if(referencia == 'ICMSUFDest_vBCUFDest' || referencia == 'ICMSUFDest_pFCPUFDest' || referencia == 'ICMSUFDest_pICMSUFDest' || referencia == 'ICMSUFDest_pICMSInter'){
+            ICMS['ref'] = 'vBCUFDes';
+        }
+
+        IPI = {};
+        vIpi = $('#ipi').find('[bloco="'+bloco+'"]').find('[data="IPI_vIPI"]');
+        IPI['IPI_vIPI'] = (!vIpi.is(':disabled') ? vIpi.val() : '');
+
+        DADOS = {};
+        DADOS['qCom'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        DADOS['vUnCom'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vUnCom').val();
+        DADOS['vProd'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();
+        DADOS['vFrete'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vFrete').val();
+        DADOS['vDesc'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vDesc').val();
+        DADOS['vOutro'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vOutro').val();
+        DADOS['vSeg'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vSeg').val();
+
+        $.post('/fiscal/nfe400/calcula_icms',{ICMS,IPI,DADOS},function(retorno){
+            retorno = $.parseJSON(retorno);
+            $.each(retorno, function(chave, valor) {
+                $('#icms').find('[bloco="'+bloco+'"]').find('[data="'+chave+'"]').not('[disabled]').val(valor);
+            });
+            calculaTotalBCICMS();
+            calculaTotalICMS();
+            calculaTotalBCICMSST();
+            calculaTotalICMSST();
+            calculaTotalICMSDesonerado();
+            calculaTotalTributos();
+            calculaTotalFCPInter();
+            calculaTotalUfRemetente();
+            calculaTotalUfDestino();
+            calculaTotalFCP();
+            calculaTotalFCPST();
+            calculaTotalFCPSTRet();
+        });
+    },100);
+}
+
+function calculaPis(bloco,referencia){
+
+    if(calculaImpostos != true){
+        return false;
+    }
+
+    setTimeout(function(){
+        PIS = {};
+        $('#pis').find('[bloco="'+bloco+'"]').find('input,select,textarea').not('[disabled]').each(function() {
+            PIS[$(this).attr('data')] =  $(this).val();
+        });
+        PIS['PIS_qBCProd'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        PIS['PIS_vBC'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();
+
+        if(referencia == 'PIS_vBC' || referencia == 'PIS_pPIS'){
+            PIS['PIS_vBC'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PIS_vBC').val();
+            PIS['PIS_pPIS'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PIS_pPIS').val();
+        }
+        if(referencia == 'PIS_vAliqProd' || referencia == 'PIS_qBCProd'){
+            PIS['PIS_vAliqProd'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PIS_vAliqProd').val();
+            PIS['PIS_qBCProd'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PIS_qBCProd').val();
+        }
+
+        PIS['PISST_qBCProd'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        PIS['PISST_vBC'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();
+
+        if(referencia == 'PISST_vBC' || referencia == 'PISST_pPIS'){
+            PIS['PISST_vBC'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PISST_vBC').val();
+            PIS['PISST_pPIS'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PISST_pPIS').val();
+        }
+        if(referencia == 'PISST_vAliqProd' || referencia == 'PISST_qBCProd'){
+            PIS['PISST_vAliqProd'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PISST_vAliqProd').val();
+            PIS['PISST_qBCProd'] = $('#pis').find('[bloco="'+bloco+'"]').find('.PISST_qBCProd').val();
+        }
+
+        $.post('/fiscal/nfe400/calcula_pis',{PIS},function(retorno){
+            retorno = $.parseJSON(retorno);
+            $.each(retorno, function(chave, valor) {
+                $('#pis').find('[bloco="'+bloco+'"]').find('[data="'+chave+'"]').not('[disabled]').val(valor);
+            });
+            calculaTotalPIS();
+            calculaTotalTributos();
+        });
+    },100);
+}
+
+function calculaCofins(bloco,referencia){
+
+    if(calculaImpostos != true){
+        return false;
+    }
+
+    setTimeout(function(){
+        COFINS = {};
+
+        $('#cofins').find('[bloco="'+bloco+'"]').find('input,select,textarea').not('[disabled]').each(function() {
+            COFINS[$(this).attr('data')] =  $(this).val();
+        });
+
+        COFINS['COFINS_qBCProd'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        COFINS['COFINS_vBC'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();
+
+        if(referencia == 'COFINS_vBC' || referencia == 'COFINS_pCOFINS'){
+            COFINS['COFINS_vBC'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINS_vBC').val();
+            COFINS['COFINS_pCOFINS'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINS_pCOFINS').val();
+        }
+        if(referencia == 'COFINS_vAliqProd' || referencia == 'COFINS_qBCProd'){
+            COFINS['COFINS_vAliqProd'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINS_vAliqProd').val();
+            COFINS['COFINS_qBCProd'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINS_qBCProd').val();
+        }
+
+        COFINS['COFINSST_qBCProd'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        COFINS['COFINSST_vBC'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();
+
+        if(referencia == 'COFINSST_vBC' || referencia == 'COFINSST_pCOFINS'){
+            COFINS['COFINSST_vBC'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINSST_vBC').val();
+            COFINS['COFINSST_pCOFINS'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINSST_pCOFINS').val();
+        }
+        if(referencia == 'COFINSST_vAliqProd' || referencia == 'COFINSST_qBCProd'){
+            COFINS['COFINSST_vAliqProd'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINSST_vAliqProd').val();
+            COFINS['COFINSST_qBCProd'] = $('#cofins').find('[bloco="'+bloco+'"]').find('.COFINSST_qBCProd').val();
+        }
+
+        $.post('/fiscal/nfe400/calcula_cofins',{COFINS},function(retorno){
+            retorno = $.parseJSON(retorno);
+            $.each(retorno, function(chave, valor) {
+                $('#cofins').find('[bloco="'+bloco+'"]').find('[data="'+chave+'"]').not('[disabled]').val(valor);
+            });
+            calculaTotalCOFINS();
+            calculaTotalTributos();
+        });
+    },100);
+}
+
+function calculaIssqn(bloco,referencia){
+
+    if(calculaImpostos != true){
+        return false;
+    }
+
+    setTimeout(function(){
+        ISSQN = {};
+
+        $('#issqn').find('[bloco="'+bloco+'"]').find('input,select,textarea').not('[disabled]').each(function() {
+            ISSQN[$(this).attr('data')] =  $(this).val();
+        });
+
+        ISSQN['ISSQN_vAliq'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.qCom').val();
+        ISSQN['ISSQN_vBC'] = $('#dados-gerais').find('[bloco="'+bloco+'"]').find('.vProd').val();
+
+        if(referencia == 'ISSQN_vBC' || referencia == 'ISSQN_vAliq'){
+            ISSQN['ISSQN_vBC'] = $('#issqn').find('[bloco="'+bloco+'"]').find('.ISSQN_vBC').val();
+            ISSQN['ISSQN_vAliq'] = $('#issqn').find('[bloco="'+bloco+'"]').find('.ISSQN_vAliq').val();
+        }
+
+        $.post('/fiscal/nfe400/calcula_issqn',{ISSQN},function(retorno){
+            retorno = $.parseJSON(retorno);
+            $.each(retorno, function(chave, valor) {
+                $('#issqn').find('[bloco="'+bloco+'"]').find('[data="'+chave+'"]').not('[disabled]').val(valor);
+            });
+            calculaTotalISSQN();
+        });
+    },100);
+}
+
+function calculaTributo(bloco){
+    if(calculaImpostos != true){
+        return false;
+    }
+    setTimeout(function(){
+        totalFederais = 0;
+        totalEstaduais = 0;
+        totalTributos = 0;
+        $('.dados-gerais[bloco="'+bloco+'"]').each(function() {
+            federais = ($(this).find('.federais').val() != '' ? parseFloat($(this).find('.federais').val()) : 0);
+            estaduais = ($(this).find('.estaduais').val() != '' ? parseFloat($(this).find('.estaduais').val()) : 0);
+            vProd = ($(this).find('.vProd').val() != '' ? moeda2float($(this).find('.vProd').val()) : 0);
+
+            federais = ((federais / 100) * vProd);
+            estaduais = ((estaduais / 100) * vProd);
+
+            tributo = federais + estaduais;
+            $(this).find('.vTotTrib').val(float2moeda(tributo, 2));
+        });
+        calculaTotalTributos();
+    },100);
+}
+
+function calculaTodos(){
+    calculaTotalBCICMS();
+    calculaTotalICMS();
+    calculaTotalBCICMSST();
+    calculaTotalICMSST();
+    calculaTotalFCP();
+    calculaTotalFCPST();
+    calculaTotalFCPSTRet();
+    calculaTotalProdutos();
+    calculaTotalFrete();
+    calculaTotalSeguro();
+    calculaTotalDesconto();
+    calculaTotalDespesas();
+    calculaTotalII();
+    calculaTotalIPI();
+    calculaTotalPIS();
+    calculaTotalCOFINS();
+    calculaTotalTributos();
+    calculaTotalICMSDesonerado();
+    calculaTotalPesoLiquido();
+    calculaTotalPesoBruto();
+    calculaTotalFCPInter();
+    calculaTotalUfRemetente();
+    calculaTotalUfDestino();
+    calculaTotalQuantidade();
+    calculaTotalBCISSQN();
+    calculaTotalISSQN();
+    calculaTotalDeducoes();
+    calculaTotalOutrasRetencoes();
+    calculaTotalDescontosIncodicionais();
+    calculaTotalDescontosCondicionais();
+    calculaTotalRetencoes();
+    //pegaEspecieVolume();
+}
+
+function validaIssqn(){
+    ok = false;
+    $('#area-produtos').find('.tipo-ps').each(function(){
+        if($(this).val() == 'S'){
+            ok = true;
+        }
+    });
+
+    if(ok){
+        $('#total-issqn').removeClass('hidden').find('input,select,textarea').attr('disabled',false);
+    }else{
+        $('#total-issqn').addClass('hidden').find('input,select,textarea').attr('disabled',true);
+    }
+}
+
+function calculaTotalBCICMS(){
+    total = 0;
+    $('.ICMS_vBC').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVBC').val(float2moeda(total));
+}
+
+function calculaTotalICMS(){
+    total = 0;
+    $('.ICMS_vICMS').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVICMS').val(float2moeda(total));
+}
+
+function calculaTotalFCP(){
+    total = 0;
+    $('.ICMS_vFCP').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVFCP').val(float2moeda(total));
+}
+
+function calculaTotalBCICMSST(){
+    total = 0;
+    $('.ICMS_vBCST').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVBCST').val(float2moeda(total));
+}
+
+function calculaTotalICMSST(){
+    total = 0;
+    $('.ICMS_vICMSST').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVST').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalFCPST(){
+    total = 0;
+    $('.ICMS_vFCPST').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVFCPST').val(float2moeda(total));
+}
+
+function calculaTotalFCPSTRet(){
+    total = 0;
+    $('.ICMS_vFCPSTRet').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVFCPSTRet').val(float2moeda(total));
+}
+
+function calculaTotalFCPInter(){
+    total = 0;
+    $('.ICMSUFDest_vFCPUFDest').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+
+    });
+    $('#NotasFiscalTotalVFCPUFDest').val(float2moeda(total));
+}
+
+function calculaTotalIPIDevolvido(){
+    total = 0;
+    $('.impostoDevol_IPI_vIPIDevol').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+
+    });
+    $('#NotasFiscalTotalICMSVIPIDevol').val(float2moeda(total));
+}
+
+function calculaTotalUfRemetente(){
+    total = 0;
+    $('.ICMSUFDest_vICMSUFRemet').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+
+    });
+    $('#NotasFiscalTotalVICMSUFRemet').val(float2moeda(total));
+}
+
+function calculaTotalUfDestino(){
+    total = 0;
+    $('.ICMSUFDest_vICMSUFDest').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+
+    });
+    $('#NotasFiscalTotalVICMSUFDest').val(float2moeda(total));
+}
+
+function calculaTotalProdutos(){
+    total = 0;
+    totalIssqn = 0;
+    $('.vProd').each(function() {
+        if($(this).attr('tipo') == 'P'){
+            total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+        }else{
+            totalIssqn += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+        }
+    });
+    $('#NotasFiscalTotalICMSVProd').val(float2moeda(total));
+    $('#NotasFiscalTotalISSQNVServOpc').val(float2moeda(totalIssqn));
+    calculaTotalNF();
+}
+
+function calculaTotalFrete(){
+    total = 0;
+    $('.vFrete').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVFrete').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalSeguro(){
+    total = 0;
+    $('.vSeg').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVSeg').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalDesconto(){
+    total = 0;
+    $('.vDesc').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVDesc').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalDespesas(){
+    total = 0;
+    $('.vOutro').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVOutro').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalII(){
+    total = 0;
+    $('.II_vII').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVII').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalIPI(){
+    total = 0;
+    $('.IPI_vIPI').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVIPI').val(float2moeda(total));
+    calculaTotalNF();
+}
+
+function calculaTotalPIS(){
+    total = 0;
+    totalIssqn = 0;
+    $('.PIS_vPIS').each(function() {
+        if($(this).attr('tipo') == 'P'){
+            total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+        }else{
+            totalIssqn += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+        }
+    });
+    $('#NotasFiscalTotalICMSVPIS').val(float2moeda(total));
+    $('#NotasFiscalTotalISSQNVPISOpc').val(float2moeda(totalIssqn));
+}
+
+function calculaTotalCOFINS(){
+    total = 0;
+    totalIssqn = 0;
+    $('.COFINS_vCOFINS').each(function() {
+        if($(this).attr('tipo') == 'P'){
+            total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+        }else{
+            totalIssqn += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+        }
+    });
+    $('#NotasFiscalTotalICMSVCOFINS').val(float2moeda(total));
+    $('#NotasFiscalTotalISSQNVCOFINSOpc').val(float2moeda(totalIssqn));
+}
+
+function calculaTotalTributos(){
+    setTimeout(function(){
+        var totalFederais = 0;
+        var totalEstaduais = 0;
+        var totalTributos = 0;
+        $('#area-produtos').find('.dados-gerais').each(function() {
+
+            federais = ($(this).find('.federais').val() != '' ? parseFloat($(this).find('.federais').val()) : 0);
+            estaduais = ($(this).find('.estaduais').val() != '' ? parseFloat($(this).find('.estaduais').val()) : 0);
+            vProd = ($(this).find('.vProd').val() != '' ? moeda2float($(this).find('.vProd').val()) : 0);
+
+            federais = ((federais / 100) * vProd);
+            estaduais = ((estaduais / 100) * vProd);
+
+            tributo = moeda2float($(this).find('.vTotTrib').val());
+
+            $(this).find('.vTotTrib').val(float2moeda(tributo));
+
+            totalFederais += federais;
+            totalEstaduais += estaduais;
+            totalTributos += tributo;
+
+        });
+
+        setTimeout(function(){
+            $('#NotasFiscalTotalImpostosFederais').val(float2moeda(totalFederais, 2));
+            $('#NotasFiscalTotalImpostosEstaduais').val(float2moeda(totalEstaduais, 2));
+            $('#NotasFiscalTotalICMSVTotTrib').val(float2moeda(totalTributos, 2));
+        },100);
+    },100);
+}
+
+function calculaTotalICMSDesonerado(){
+    total = 0;
+    $('.ICMS_vICMSDeson').each(function() {
+        total += ($(this).val() == '' || $(this).is(':disabled') == true) ? 0 : moeda2float($(this).val());
+    });
+    $('#NotasFiscalTotalICMSVICMSDeson').val(float2moeda(total));
+}
+
+function calculaTotalNF(){
+    setTimeout(function(){
+        total = 0;
+        total += ($('#NotasFiscalTotalICMSVIPI').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVIPI').val());
+        total += ($('#NotasFiscalTotalICMSVST').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVST').val());
+        total += ($('#NotasFiscalTotalICMSVFCPST').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVFCPST').val());
+        total += ($('#NotasFiscalTotalICMSVII').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVII').val());
+        total += ($('#NotasFiscalTotalICMSVProd').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVProd').val());
+        total += ($('#NotasFiscalTotalICMSVFrete').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVFrete').val());
+        total += ($('#NotasFiscalTotalICMSVSeg').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVSeg').val());
+        total += ($('#NotasFiscalTotalICMSVOutro').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVOutro').val());
+        total += ($('#NotasFiscalTotalISSQNVServOpc').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalISSQNVServOpc').val());
+        total -= ($('#NotasFiscalTotalICMSVDesc').val() == '') ? 0 : moeda2float($('#NotasFiscalTotalICMSVDesc').val());
+        $('#NotasFiscalTotalICMSVNF').val(float2moeda(total));
+        calculaPagamentos();
+    }, 500);
+    $('#botao-calcular').attr('disabled', true).addClass('btn-default').removeClass('btn-primary');
+}
+
+function calculaPagamentos(){
+    iFat = 0;
+    $('#faturas-pagamentos').find('.box-pagamentos').each(function(){
+        campoVTroco = $(this).find('.vTroco');
+        vPag = $(this).find('.vPag');
+        if(campoVTroco.length){
+            vTroco = moeda2float(campoVTroco.val());
+        }else{
+            vTroco = 0;
+        }
+        iFat++;
+    });
+    if(iFat == 1){
+        totalVPag = moeda2float($('#NotasFiscalTotalICMSVNF').val()) + vTroco;
+        if(totalVPag > 0){
+            vPag.val(float2moeda(totalVPag));
+        }
+    }
+}
+
+
+function calculaTotalPesoLiquido(){
+    total = 0;
+    $('.pesoL').each(function() {
+        nfAqui = $(this).parents('.bloco');
+        pesoL = ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+        qCom = (nfAqui.find('.qCom').val() != '') ? moeda2float(nfAqui.find('.qCom').val()) : 0;
+        total += pesoL * qCom;
+    });
+    $('#NotasFiscalPesoL').val(float2moeda(total));
+}
+
+function calculaTotalPesoBruto(){
+    total = 0;
+    $('.pesoB').each(function() {
+        nfAqui = $(this).parents('.bloco');
+        pesoB = ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+        qCom = (nfAqui.find('.qCom').val() != '') ? moeda2float(nfAqui.find('.qCom').val()) : 0;
+        total += pesoB * qCom;
+    });
+    $('#NotasFiscalPesoB').val(float2moeda(total));
+}
+
+function pegaEspecieVolume(){
+    total = 0;
+    unidades = {};
+    $('.nome-unidade').each(function() {
+        unidades[$(this).val()] = $(this).val();
+    });
+    i = 0;
+    especies = '';
+    $.each(unidades, function(chave, unidade) {
+        if(unidade != undefined && unidade != ''){
+            if(i > 0){
+                especies += ', ';
+            }
+            especies += unidade;
+            i++;
+        }
+    });
+    $('#NotasFiscalEsp').val(especies);
+}
+
+function calculaTotalQuantidade(){
+    total = 0;
+    $('.qCom').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalQVol').val(float2moeda(total));
+}
+
+function calculaTotalBCISSQN(){
+    total = 0;
+    $('.ISSQN_vBC').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVBCOpc').val(float2moeda(total));
+}
+
+function calculaTotalISSQN(){
+    total = 0;
+    $('.ISSQN_vISSQN').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVISSOpc').val(float2moeda(total));
+}
+
+
+function calculaTotalDeducoes(){
+    total = 0;
+    $('.ISSQN_vDeducao_Opc').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVDeducaoOpc').val(float2moeda(total));
+}
+
+function calculaTotalOutrasRetencoes(){
+    total = 0;
+    $('.ISSQN_vOutro_Opc').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVOutroOpc').val(float2moeda(total));
+}
+
+function calculaTotalDescontosIncodicionais(){
+    total = 0;
+    $('.ISSQN_vDescIncond_Opc').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVDescIncondOpc').val(float2moeda(total));
+}
+
+function calculaTotalDescontosCondicionais(){
+    total = 0;
+    $('.ISSQN_vDescCond_Opc').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVDescCondOpc').val(float2moeda(total));
+}
+
+function calculaTotalRetencoes(){
+    total = 0;
+    $('.ISSQN_vISSRet_Opc').not('[disabled]').each(function() {
+        total += ($(this).val() != '') ? moeda2float($(this).val()) : 0;
+    });
+    $('#NotasFiscalTotalISSQNVISSRetOpc').val(float2moeda(total));
+}
+
+function arred(d,casas) {
+   var aux = Math.pow(10,casas)
+   return Math.floor(d * aux)/aux
+}
+
+function editarValorAprox(referencia){
+
+    ref = $('#valor-aprox-'+referencia);
+    if(ref.hasClass('hidden')){
+        $('#valor-aprox-'+referencia).removeClass('hidden');
+        $('#valor-aprox-'+referencia).find('.vTotTrib').attr('readonly', false);
+        $('#valor-aprox-'+referencia).find('.edite-vtrib').val(1);
+    }else{
+        $('#valor-aprox-'+referencia).addClass('hidden');
+        $('#valor-aprox-'+referencia).find('.vTotTrib').attr('readonly', true);
+        $('#valor-aprox-'+referencia).find('.edite-vtrib').val(0);
+    }
+    calculaTotalTributos();
+}

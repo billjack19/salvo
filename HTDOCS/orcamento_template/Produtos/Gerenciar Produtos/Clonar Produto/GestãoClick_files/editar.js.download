@@ -1,0 +1,299 @@
+$(document).ready(function() {
+    var tour = new Tour({
+      onEnd: function() {
+        endTour.restart();
+      },
+      steps: [
+      {
+        placement: 'bottom',
+        element: '#ProdutoNome',
+        title: 'Nome do produto',
+        content: 'Utilize este campo para informar o nome do produto',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoCodigo',
+        title: 'Código do produto',
+        content: 'Utilize este campo para informar o código de controle interno do produto. O mesmo pode ser inserido manualmente ou gerado pelo sistema utilizando o botão ao lado.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoCodigoBarra',
+        title: 'Código de barra',
+        content: 'Utilize este campo para informar o código de barras (EAN) do produto. Somente serão aceitos os tamanhos exatos de 8,12,13 ou 14 caractéres numéricos.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#token-input-ProdutoGrupoId',
+        title: 'Grupo do produto',
+        content: 'Utilize este campo para informar o grupo ao qual pertence este produto. <br><b>Obs.: </b>Os grupos podem ser administrados através do Menu principal > Produtos > Cadastros auxiliares > Grupos de produtos.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoMovimentaEstoque',
+        title: 'Movimentação de estoque',
+        content: 'Utilize este campo para informar se o produto movimenta estoque.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoPossuiNf',
+        title: 'Emissão de nota fiscal',
+        content: 'Utilize este campo para informar se o produto emite nota fiscal.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoPossuiVariacao',
+        title: 'Grades e variações',
+        content: 'Utilize esta opção para informar se o produto possui variações como por exemplo: Tamanho, Cor, Gênero e etc...',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoPossuiComposicao',
+        title: 'Composição',
+        content: 'Utilize este campo para informar se o produto possui composição. <br> <b>Obs.: </b>Composição é utilizada normalmente por empresas que fabricam ou produzem seus próprios produtos. Ex: Sanduíches, Bicicletas, etc.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#unidade-medida',
+        title: 'Unidade de medida',
+        content: 'Utilize este espaço para informar a unidade de entrada e saída. <br> <b>Obs.:</b> A conversão de unidades permite que você compre em uma quantidade de medida e unidade, e venda em outra unidade de medida e quantidade. Ex.: 1 caixa de leite pode ser vendida separadamente em 12 unidades. Se o produto for unitário deixe no padrão do sistema.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#abas-principais',
+        title: 'Abas',
+        content: 'Agora vamos explicar um pouco sobre cada Aba do cadastro. Não é obrigatório acessar todas as abas para cadastrar um produto básico, mas caso queira detalhar mais o produto, é importante conhecê-las',
+        backdrop: true,
+        onNext: function() {
+          $('[href="#detalhes"]').click();
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#detalhes"]',
+        title: 'Detalhes',
+        content: 'Nesta aba você poderá indicar alguns detalhes do produto.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoComissao',
+        title: 'Comissão por produto',
+        content: 'Neste campo você pode configurar a comissão do produto. <br> Obs.: As comissões também podem ser configuradas através do cadastro do vendedor.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#adicionar-atributo',
+        title: 'Particularidades',
+        content: 'Aqui você definir algumas particularidades para este produto, como por exemplo uma marca, modelo e etc...',
+        backdrop: true,
+        onNext: function() {
+          $('[href="#detalhes"]').click();
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#valores"]',
+        title: 'Custos e valores',
+        content: 'Nesta aba você poderá indicar os custos e os valores de venda do produto.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoValorCustoMedio',
+        title: 'Valor de custo',
+        content: 'O valor de custo é o preço pago pela mercadoria para aquisição da mesma.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoValorDespesasAcessorias',
+        title: 'Despesas acessórias',
+        content: 'O campo Despesas Acessórias são baseadas no Frete, Seguro e Outras Despesas vinculadas ao produto.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoValorOutrasDespesas',
+        title: 'Outras despesas',
+        content: 'Campo livre para indicação de demais despesas.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#ProdutoValorCusto',
+        title: 'Custo final',
+        content: 'Este é o valor de custo final do produto, será carregado de acordo com os valores de custo e/ou despesas.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#tipos-valores',
+        title: 'Valores de venda',
+        content: 'O valor de venda é a valoração monetária dos produtos comercializados pelo estabelecimento. Ele pode ser calculado, ou então indicado livremente.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '#botao-calcula-valor-venda',
+        title: 'Calcular valor de venda',
+        content: 'Você pode utilizar este botão para calcular o valor de venda com base no custo final e porcentagem cadastrada para cada tipo de valor de venda. <br> <b>Obs.:</b> Os tipos de valores de venda (Ex. Varejo) e seus percentuais de lucro podem ser alterados acessando o menu principal Produtos > Valores de venda.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+      },
+      {
+        placement: 'bottom',
+        element: 'td.valor-venda:first input',
+        title: 'Valor de venda utilizado',
+        content: 'Este será o valor de venda utilizado no momento da venda. Pode ser calculado ou inserido livremente.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+            if($('[href="#estoque"]').parent().css('display') == 'block'){
+                $('[href="#estoque"]').click();
+            }
+        },
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#estoque"]',
+        title: 'Estoque',
+        content: 'Nesta aba você poderá inserir as informações de estoque como, quantidade atual, quantidade mínima e quantidade máxima.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#nota-fiscal"]',
+        title: 'Nota fiscal',
+        content: 'Nesta aba você pode indicar os dados da nota fiscal como, NCM, CFOP, ICMS, IPI, PIS, e COFINS.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#composicao"]',
+        title: 'Composição',
+        content: 'Nesta aba você pode indicar produtos que compõe o produto cadastrado, como no caso de uma bicicleta (que é composta por pneus, banco, etc).',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '[href="#fornecedores"]',
+        title: 'Fornecedores',
+        content: 'Nesta aba você pode indicar fornecedores que lhe vendem este produto.',
+        backdrop: true,
+      },
+      {
+        placement: 'bottom',
+        element: '#salvar',
+        title: 'Atualizar',
+        content: 'Parabéns, agora você já sabe como atualizar um produto. Para finalizar a atualização basta clicar no botão <b>Atualizar</b>.',
+        backdrop: true,
+        onShown: function(tour) {
+          var stepElement = getTourElement(tour);
+          $(stepElement).after($('.tour-step-background'));
+          $(stepElement).after($('.tour-backdrop'));
+        },
+        onNext: function() {
+          tour.end();
+        },
+      },
+      {
+
+      }
+    ]});
+
+
+    $('.start-tour').click(function(){
+        $('[href="#dados-gerais"]').click();
+        setTimeout(function(){
+            tour.restart();
+        },500);
+    });
+});
+
+function getTourElement(tour){
+   return tour._options.steps[tour._current].element
+}
