@@ -1,0 +1,192 @@
+
+$(document).ready(function(){
+	
+	var id_configurar_site = "";
+	var titulo_configurar_site = "";
+	var cor_pagina_configurar_site = "";
+	var contra_cor_pagina_configurar_site = "";
+	var imagem_icone_configurar_site = "";
+	var imagem_logo_configurar_site = "";
+	var data_atualizacao_configurar_site = "";
+	var bool_ativo_configurar_site = "";
+
+	var acumularFunctionId = [];
+	var acumularFunctionCampo = [];
+	var desabilitar = "";
+	var icone_ativo = "";
+	var cor_ativo = "";
+	var telaCadastroConfigurar_site = "";
+	var valorAtivo = 0;
+	var tabela_cliente = "";
+	var tabelaViewBody = "";
+	var simOUnao = "";
+
+	$.ajax({
+		url:'app/controllers/funcoes_configurar_siteController.php',
+		type: 'POST',
+		dataType: 'text',
+		data: { 'pequisa_configurar_site': true }
+	}).done( function(data){
+		var vetor = data.split("[]");
+		var subvetor = vetor[0].split(",");
+		if (subvetor[1] == undefined) {
+			telaCadastroConfigurar_site += "<h3>Nenhum registro encontrado!</h3>";
+		} else {
+			telaCadastroConfigurar_site += "<br>";
+
+			telaCadastroConfigurar_site += "<div class='bloco2'>";
+
+			// var vetor = data.split("[]");
+			// var subvetor = [];
+			for (var i = 0; i < vetor.length; i++) {
+				subvetor = vetor[i].split(",");
+
+				
+				id_configurar_site = subvetor[0];
+				titulo_configurar_site = subvetor[1];
+				cor_pagina_configurar_site = subvetor[2];
+				contra_cor_pagina_configurar_site = subvetor[3];
+				imagem_icone_configurar_site = subvetor[4];
+				imagem_logo_configurar_site = subvetor[5];
+				data_atualizacao_configurar_site = subvetor[6];
+				bool_ativo_configurar_site = subvetor[7];
+				
+
+				if (bool_ativo_configurar_site == 1) { 
+					desabilitar = "";
+					icone_ativo = "<i class=\"fa fa-check\" aria-hidden=\"true\"></i>";
+					cor_ativo = "#0f0;";
+					valorAtivo = 0;
+				} else {
+					desabilitar = "disabled";
+					cor_ativo = "#f00;";
+					icone_ativo = "<i class=\"fa fa-times\" aria-hidden=\"true\"></i>";
+					valorAtivo = 1;
+				}
+
+				tabelaViewBody += 		"<tr>";
+				tabelaViewBody +=			"<td align='center'>";
+				tabelaViewBody +=				"<a href='principal.php#!editar_configurar_site' style='color: #f0ad4e;' data-id='"+id_configurar_site+"' onclick='editar(this);' title='Editar' "+desabilitar+">";
+				tabelaViewBody +=				 	"<b><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></b>";
+				tabelaViewBody += 				"</a>";
+				tabelaViewBody +=			"</td>";
+				tabelaViewBody += 			"<td>"+titulo_configurar_site+"</td>";
+				tabelaViewBody += 			"<td>"+cor_pagina_configurar_site+"</td>";
+				tabelaViewBody += 			"<td>"+contra_cor_pagina_configurar_site+"</td>";
+				tabelaViewBody += 			"<td>"+imagem_icone_configurar_site+"</td>";
+				tabelaViewBody += 			"<td>"+imagem_logo_configurar_site+"</td>";
+				tabelaViewBody += 			"<td align='center'>";
+				tabelaViewBody += 				"<a href='principal.php#!grade_cards-configurar_site' style='color: green' data-id='"+id_configurar_site+"' onclick=\"grade(this , 'configurar_site', 'cards')\" title='Cards'>";
+				tabelaViewBody += 					"<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>";
+				tabelaViewBody +=  				"</a>";
+				tabelaViewBody +=  			"</td>";
+				tabelaViewBody += 			"<td align='center'>";
+				tabelaViewBody += 				"<a href='principal.php#!grade_slide_show-configurar_site' style='color: green' data-id='"+id_configurar_site+"' onclick=\"grade(this , 'configurar_site', 'slide_show')\" title='Slide Show'>";
+				tabelaViewBody += 					"<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>";
+				tabelaViewBody +=  				"</a>";
+				tabelaViewBody +=  			"</td>";
+				tabelaViewBody += 			"<td align='center'>";
+				tabelaViewBody += 				"<a href='principal.php#!grade_endereco_site-configurar_site' style='color: green' data-id='"+id_configurar_site+"' onclick=\"grade(this , 'configurar_site', 'endereco_site')\" title='Endereço Site'>";
+				tabelaViewBody += 					"<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>";
+				tabelaViewBody +=  				"</a>";
+				tabelaViewBody +=  			"</td>";
+				tabelaViewBody += 			"<td align='center'>";
+				tabelaViewBody += 				"<a href='principal.php#!grade_loja-configurar_site' style='color: green' data-id='"+id_configurar_site+"' onclick=\"grade(this , 'configurar_site', 'loja')\" title='Loja'>";
+				tabelaViewBody += 					"<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>";
+				tabelaViewBody +=  				"</a>";
+				tabelaViewBody +=  			"</td>";
+				tabelaViewBody += 			"<td align='center'>";
+				tabelaViewBody += 				"<a href='principal.php#!grade_destaque_grupo-configurar_site' style='color: green' data-id='"+id_configurar_site+"' onclick=\"grade(this , 'configurar_site', 'destaque_grupo')\" title='Destaque Grupo'>";
+				tabelaViewBody += 					"<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>";
+				tabelaViewBody +=  				"</a>";
+				tabelaViewBody +=  			"</td>";
+				tabelaViewBody += 			"<td align='center'>";
+				tabelaViewBody += 				"<a href='#!configurar_site' style='color: "+cor_ativo+"' data-id='"+id_configurar_site+"' onclick=\"excluir(this , 'configurar_site')\" title='Excluir'>";
+				tabelaViewBody += 					icone_ativo;
+				tabelaViewBody +=  				"</a>";
+				tabelaViewBody +=  			"</td>";
+				tabelaViewBody += 		"</tr>";
+				// 	tabela_cliente += jk_tr("","",
+				// 		  jk_td("left", razao_social)
+				// 		+ jk_td("left", inscricao_federal)
+				// 		+ jk_td("left", telefone)
+				// 		+ jk_td("left", email)
+				// 		// jk_td("left", "<td>Bairro</td>";
+				// 		// jk_td("left", "<td>Cidade</td>";
+				// 		// jk_td("left", "<td>UF</td>";
+				// 		+ jk_td("left",  
+				// 			jk_buttonComplemento("", "", "", "", "telaAdicionarCliente("+id_cliente+");", 
+				// 				jk_icon("pencil"), "style='color:#f0ad4e;' "+desabilitar)
+				// 		)
+				// 		/* + jk_td("left",  
+				// 			jk_buttonComplemento("", "", "", "", "chamarTelaLocalEntrega("+id_cliente+");", 
+				// 				jk_icon("plus"), style='color:green;' "+desabilitar)
+				// 		)*/
+				// 		+ jk_td("center",  
+				// 			jk_buttonComplemento("", "", "", "", "alteraAtivoCliente("+id_cliente+", "+valorAtivo+");", 
+				// 				icone_ativo, "style='color:"+cor_ativo+"'")
+				// 		)
+				// 	);
+			}
+			telaCadastroConfigurar_site += 	"<table class='table'>";
+			telaCadastroConfigurar_site += 		"<tr bgcolor='white'>";
+			telaCadastroConfigurar_site += 			"<td><b>Editar</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Titulo</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Cor Pagina</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Contra Cor Pagina</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Imagem Icone</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Imagem Logo</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Cards</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Slide Show</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Endereço Site</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Loja</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Destaque Grupo</b></td>";
+			telaCadastroConfigurar_site += 			"<td><b>Ativo</b></td>";
+			telaCadastroConfigurar_site += 		"</tr>";
+			telaCadastroConfigurar_site +=		tabelaViewBody;
+			telaCadastroConfigurar_site += 	"</table>";
+			// 	telaCadastroConfigurar_site += jk_table("table", "0",
+			// 		jk_tr("","",
+			// 			  jk_td("left", "Razão Social")
+			// 			+ jk_td("left", "CPF/cnpj")
+			// 			+ jk_td("left", "Telefone")
+			// 			+ jk_td("left", "E-mail")
+			// 			// jk_td("left", "<td>Bairro</td>";
+			// 			// jk_td("left", "<td>Cidade</td>";
+			// 			// jk_td("left", "<td>UF</td>";
+			// 			+ jk_td("left", "Editar")
+			// 			// + jk_td("left", "Interagir")
+			// 			+ jk_td("center", "Ativo")
+			// 		) + tabela_cliente
+			// 	);
+			// telaCadastroConfigurar_site += "</div>";	
+		}
+		telaCadastroConfigurar_site += "</div>";
+		$("#conteudoConfigurar_site").html(telaCadastroConfigurar_site);
+		for (var i = acumularFunctionId.length - 1; i >= 0; i--) {
+			setarValorEstrangeiroLista(acumularFunctionId[i], acumularFunctionCampo[i]);
+		}
+		// montarComboBuscaCliente();
+	});
+});
+
+function setarValorEstrangeiroLista(id, tabelaEstrangeira){
+	id = parseInt(id);
+	tabelaEstrangeira = tabelaEstrangeira.split("+");
+	var idTabelaEstrangeira = tabelaEstrangeira[0];
+	tabelaEstrangeira = tabelaEstrangeira[1];
+	var colunaParam = "pequisa_"+tabelaEstrangeira+"_id";
+
+	var param = JSON.parse('{ "'+colunaParam+'":true, "id":'+idTabelaEstrangeira+' }');
+
+	$.ajax({
+		url:'app/controllers/funcoes_'+tabelaEstrangeira+'Controller.php',
+		type: 'POST',
+		dataType: 'text',
+		data: param
+	}).done( function(data){
+		vetor = data.split(",");
+		document.getElementById(tabelaEstrangeira+'_'+id).innerHTML = vetor[1];
+	});
+}
+

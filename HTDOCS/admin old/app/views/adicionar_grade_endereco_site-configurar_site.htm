@@ -1,0 +1,93 @@
+
+
+<h1>Adicionar: Endereço Site</h1>
+
+<div class="text-right">
+	<a href="principal.php#!grade_endereco_site-configurar_site" class="btn btn-primary">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Descrição &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="descricao_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Endereço &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="endereco_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Número &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="number" class="form-control" id="numero_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Complemento &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="complemento_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Bairro &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="bairro_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Cidade &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="cidade_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Estado &nbsp;&nbsp;<span style='color: red'>*</span>
+	<div id="estadoDiv"></div>
+</div>
+<div class="col-md-4">
+	<br>Cep &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="15" class="form-control" id="cep_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Telefone &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="50" class="form-control" id="telefone_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Celular &nbsp;&nbsp;
+	<input type="text" maxlength="50" class="form-control" id="celular_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Email &nbsp;&nbsp;
+	<input type="text" maxlength="100" class="form-control" id="email_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Horário Funcionamento &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="" class="form-control" id="horario_funcionamento_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Latitude &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="latitude_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Longitude &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="100" class="form-control" id="longitude_endereco_site">
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_endereco_site">
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="configurar_site_id">
+			<script>$("#configurar_site_id").val(retornaValorIdTabelaPrimaria('configurar_site', 'endereco_site'))</script>
+			
+			<input type="hidden" id="data_atualizacao_endereco_site">
+			<script>$("#data_atualizacao_endereco_site").val("1")</script>
+			
+		<button class="btn btn-success" onclick='gravarRegistro()'>
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="app/js/ajax/ajax_adicionar_endereco_site.js"></script>
+
+<script type="text/javascript" src="app/js/combo/estadoCombo.js"></script>
