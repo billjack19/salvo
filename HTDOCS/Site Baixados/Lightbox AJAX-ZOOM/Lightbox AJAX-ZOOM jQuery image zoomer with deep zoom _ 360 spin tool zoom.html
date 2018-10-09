@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://www.ajax-zoom.com/examples/example3.php -->
+<html itemscope="itemscope" itemtype="https://schema.org/WebPage"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom / 360 spin tool zoom</title>
+		
+		<meta http-equiv="imagetoolbar" content="no">
+
+		<meta property="og:type" content="article">
+		<meta property="og:title" content="Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom / 360 spin tool zoom">
+		<meta property="og:description" content="Open AJAX-ZOOM player in a lightbox (Colorbox and Fancybox) from a simple link as Ajax invoked content. 360 degree product spins can be opened as well. ">
+		<meta name="description" content="Open AJAX-ZOOM player in a lightbox (Colorbox and Fancybox) from a simple link as Ajax invoked content. 360 degree product spins can be opened as well. ">
+		<meta property="og:image" content="https://www.ajax-zoom.com/pic/layout/thumbs/image-zoom_3.jpg"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+		<!-- Bootstrap is not needed -->
+		<link rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/examples.css" type="text/css">
+
+		<!-- jQuery core, needed for the lightboxes. Include if not already present. -->
+		<script type="text/javascript" async="" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/analytics.js.download"></script><script src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery-1.8.3.min.js.download"></script>
+
+		<!-- AJAX-ZOOM core, needed! -->
+		<link href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/axZm.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.axZm.js.download"></script>
+
+		<!--  Fancybox lightbox javascript, only needed if used, please note: it has been slightly modified for AJAX-ZOOM -->
+		<link rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.fancybox-1.3.4.css" media="screen" type="text/css">
+		<script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.fancybox-1.3.4.pack.js.download"></script>
+
+		<!-- Colorbox plugin, only needed if used -->
+		<link rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/colorbox.css" media="screen" type="text/css">
+		<script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.colorbox-min.js.download"></script>
+
+		<!-- Javascript to style the syntax, not needed! -->
+		<link name="az_editor_css_scripts" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/prism.css" type="text/css" media="screen">
+		<script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/prism.min.js.download"></script>
+		<script type="text/javascript">Prism.plugins.NormalizeWhitespace.setDefaults({'remove-trailing': true, 'remove-indent': true, 'left-trim': true, 'right-trim': true, 'break-lines': 110});</script>
+
+		<!-- These styles are all not needed! -->
+		<style type="text/css" media="screen">
+			h4 {
+				margin-top: 25px;
+			}
+			h3 {
+				margin-top: 35px;
+			}
+			@media (max-width: 991px) {
+				.azOuterLayoutBack {
+					height: 20px;
+				}
+				.azOuterLayoutBack > img{
+					display: none;
+				}
+			}
+		</style>
+
+		<script type="text/javascript" id="exampleJs">
+			jQuery(document).ready(function() {
+
+				// Bind Colorbox to all elements with class ajaxExampleColorbox
+				jQuery(".ajaxExampleColorbox")
+				.colorbox({
+					initialWidth: 300,
+					initialHeight: 300,
+					scrolling: false,
+					scrollbars: false,
+					preloading: false,
+					opacity: 0.95,
+					// this option has been added by ajax-zoom to enforce loading href as url and not image
+					ajax: true, 
+					onClosed: function() {
+						jQuery.fn.axZm.spinStop();
+					},
+					onComplete: function() {
+						// Trigger AJAX-ZOOM after loading
+						jQuery.fn.axZm();
+					}
+				});
+
+				// Bind Fancybox to all elements with class ajaxExampleFancybox
+				jQuery(".ajaxExampleFancybox")
+				.fancybox({
+					padding: 0,
+					overlayShow: true,
+					overlayOpacity: 0.9,
+					zoomSpeedIn: 0,
+					zoomSpeedOut: 100,
+					easingIn: "swing",
+					easingOut: "swing",
+					hideOnContentClick: false,
+					centerOnScroll: false,
+					onComplete: function() {
+						jQuery.fn.axZm(); // Important callback after loading
+					},
+					onClosed: function() {
+						jQuery.fn.axZm.spinStop();
+					},
+					// fancybox ver.2.x options in case fancybox 2.x is used
+					type: "ajax", // 
+					afterLoad: function(a) {
+						// Need to trigger delayed
+						setTimeout(function() {
+							jQuery.fn.axZm();
+						}, 1)
+					},
+					beforeClose: function() {
+						jQuery.fn.axZm.spinStop();
+					}
+				});
+			});
+		</script>
+
+	<style type="text/css">.backpack.dropzone {
+  font-family: 'SF UI Display', 'Segoe UI';
+  font-size: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 150px;
+  font-weight: lighter;
+  color: white;
+  will-change: right;
+  z-index: 2147483647;
+  bottom: 20%;
+  background: #333;
+  position: fixed;
+  user-select: none;
+  transition: left .5s, right .5s;
+  right: 0px; }
+  .backpack.dropzone .animation {
+    height: 80px;
+    width: 250px;
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/hoverstate.png") left center; }
+  .backpack.dropzone .title::before {
+    content: 'Save to'; }
+  .backpack.dropzone.closed {
+    right: -250px; }
+  .backpack.dropzone.hover .animation {
+    animation: sxt-play-anim-hover 0.91s steps(21);
+    animation-fill-mode: forwards;
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/hoverstate.png") left center; }
+
+@keyframes sxt-play-anim-hover {
+  from {
+    background-position: 0px; }
+  to {
+    background-position: -5250px; } }
+  .backpack.dropzone.saving .title::before {
+    content: 'Saving to'; }
+  .backpack.dropzone.saving .animation {
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/saving_loop.png") left center;
+    animation: sxt-play-anim-saving steps(59) 2.46s infinite; }
+
+@keyframes sxt-play-anim-saving {
+  100% {
+    background-position: -14750px; } }
+  .backpack.dropzone.saved .title::before {
+    content: 'Saved to'; }
+  .backpack.dropzone.saved .animation {
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/saved.png") left center;
+    animation: sxt-play-anim-saved steps(20) 0.83s forwards; }
+
+@keyframes sxt-play-anim-saved {
+  100% {
+    background-position: -5000px; } }
+</style><link type="text/css" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/axZm_white.css" name="AJAX-ZOOM-THEME-axZm_white"><link type="text/css" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.axZm.thumbSlider.css"><link type="text/css" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.ui.core.css"><link type="text/css" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.ui.slider.css"><link type="text/css" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.ui.theme.css"><link type="text/css" rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/style.css"><script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery-ui-1.8.24.axZm.min.js.download"></script><script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.requestAnimationFrame.min.js.download"></script><script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.axZm.thumbSlider.js.download"></script></head>
+	<body>
+		
+<style>
+.aze_example_navi_container {
+	height: 58px;
+	overflow: hidden;
+	width: 100%;
+}
+.aze_example_navi_buttons {
+	width: 48px;
+	height: 48px;
+	margin-bottom: 5px;
+}
+@media screen and (max-width: 768px) {
+	.aze_example_navi_buttons {
+		width: 32px;
+		height: 32px;
+	}
+	.aze_example_navi_container {
+		height: 42px;
+	}
+}
+</style>
+<div class="aze_example_navi_container" style="box-sizing: content-box !important; background-color: #808080;">
+	<div style="float: left; box-sizing: content-box !important; padding: 5px 0px 0px 5px"><a href="https://www.ajax-zoom.com/examples/example2.php">
+	<img class="aze_example_navi_buttons" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/previous-icon-48.png" border="0" alt="example2.php" title="example2.php">
+	</a><a href="https://www.ajax-zoom.com/">
+		<img class="aze_example_navi_buttons" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/home-icon.png" border="0" style="margin-left: 25px" alt="HOME" title="HOME">
+		</a><a href="https://www.ajax-zoom.com/examples/">
+		<img class="aze_example_navi_buttons" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/overview_48x48.png" border="0" style="margin-left: 5px" alt="Examples overview" title="Examples overview">
+		</a><a href="https://www.ajax-zoom.com/index.php?cid=download">
+		<img class="aze_example_navi_buttons" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/download_48x48.png" border="0" style="margin-left:5px" alt="Download" title="Download">
+		</a><a href="https://www.ajax-zoom.com/index.php?cid=contact">
+	<img class="aze_example_navi_buttons" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/support_48x48.png" border="0" title="Ask a question / privacy policy / imprint" alt="Ask a question / privacy policy / imprint" style="margin-left: 5px">
+	</a></div>
+	<div style="float: right; box-sizing: content-box !important; padding: 5px 5px 0px 0px"><a href="https://www.ajax-zoom.com/examples/example4.php">
+	<img class="aze_example_navi_buttons" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/next-icon-48.png" border="0" alt="example4.php" title="example4.php">
+	</a></div>
+</div>
+
+	<script type="text/javascript">
+		var gaProperty = "UA-15598343-1";
+		var disableStr = "ga-disable-" + gaProperty;
+		if (document.cookie.indexOf(disableStr + "=true") > -1) {
+			window[disableStr] = true;
+		}
+
+		function gaOptout() {
+			document.cookie = disableStr + "=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/";
+			window[disableStr] = true;
+		}
+	</script>
+
+	<script async="" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/js"></script>
+	<script type="text/javascript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+
+		gtag("js", new Date());
+		gtag("config", "UA-15598343-1", { " anonymize_ip ": true });
+	</script>
+	<script type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/jquery.s_event.js.download"></script>
+		<div class="container">
+			<h1 class="page-header">AJAX-ZOOM "Lightbox", examples with AJAX content</h1>
+			<div class="row">
+				<div class="col-md-12">
+					<p>This example demonstrates how to open multiple zoom galleries with some lightbox clones (please click on the links above).
+						The content is loaded via Ajax requests. 
+						This solution does not work "cross domain". 
+						Please also note, that not all lightbox clones fully support ajax content.
+					</p>
+					<p>When you have jpg or png in href of the link, which is the case when using zoomData and passing image paths directly without any encoding, 
+						most lightboxes consider it as a direct link to the image file and do not trigger the request to the url via ajax. 
+						<span style="text-decoration: underline">The here used and in the download package included lightboxes (Fancybox &amp; Colorbox) have been slightly modified to load the url and not 
+						"mistakenly" consider it to be an image...</span>
+					</p>
+					<p>Press on the buttons below to open various AJAX-ZOOM configurations in a lightbox as AJAX loaded content:
+					</p>
+				</div>
+
+				<div class="col-md-12">
+					<!-- Folders  -->
+					<h3>Load all images from a directory with "zoomDir"</h3>
+				</div>
+
+				<div class="col-md-3">
+					<h4>Fancybox - not responsive</h4>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=/pic/zoom/estate&amp;example=4">Example 1</a>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=/pic/zoom/animals&amp;zoomID=4&amp;example=5">Example 2</a>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=/pic/zoom/trasportation&amp;example=6">Example 3</a>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=high_res&amp;zoomID=3&amp;example=5">Example 4</a>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=world&amp;zoomID=16&amp;example=7">Example 5</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Colorbox - not responsive</h4>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=/pic/zoom/estate&amp;example=4">Example 1</a>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=/pic/zoom/animals&amp;zoomID=4&amp;example=5">Example 2</a>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=/pic/zoom/trasportation&amp;example=6">Example 3</a>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=high_res&amp;zoomID=3&amp;example=5">Example 4</a>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;zoomDir=world&amp;zoomID=16&amp;example=7">Example 5</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Responsive Fancybox</h4>
+					<a class="btn btn-primary btn-block" href="https://www.ajax-zoom.com/examples/example27.php">See example27.php</a>
+				</div>
+				<div class="col-md-3 azOuterLayoutBack" style="max-height: 230px">
+					<img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/zoom_shot_1.jpg" style="max-width: 100%; max-height: 100%">
+				</div>
+
+				<div class="col-md-12">
+					<!-- Specified images -->
+					<h3>Load specified images with "zoomData"</h3>
+				</div>
+				<div class="col-md-3">
+					<h4>Fancybox - not responsive</h4>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=4&amp;zoomData=/pic/zoom/animals/animals_011.jpg|/pic/zoom/animals/animals_012.jpg|/pic/zoom/animals/animals_015.jpg">Example 6</a>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=7&amp;zoomData=/pic/zoom/animals/animals_011.jpg|/pic/zoom/animals/animals_012.jpg|/pic/zoom/animals/animals_015.jpg">Example 7</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Colorbox - not responsive</h4>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=4&amp;zoomData=/pic/zoom/animals/animals_011.jpg|/pic/zoom/animals/animals_012.jpg|/pic/zoom/animals/animals_015.jpg">Example 6</a>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=7&amp;zoomData=/pic/zoom/animals/animals_011.jpg|/pic/zoom/animals/animals_012.jpg|/pic/zoom/animals/animals_015.jpg">Example 7</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Responsive Fancybox</h4>
+					<a class="btn  btn-primary btn-block" href="https://www.ajax-zoom.com/examples/example27.php">See example27.php</a>
+				</div>
+				<div class="col-md-3"></div>
+
+				<div class="col-md-12">
+					<!-- 360 / 3D  -->
+					<h3>Load 360 / 3D images with "3dDir"</h3>
+				</div>
+				<div class="col-md-3">
+					<h4>Fancybox - not responsive</h4>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=17&amp;3dDir=/pic/zoom3d/Uvex_Occhiali">360 Example</a>
+					<a class="btn btn-info btn-block ajaxExampleFancybox" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=17&amp;3dDir=/pic/zoomVR/nike">3D Example</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Colorbox - not responsive</h4>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=17&amp;3dDir=/pic/zoom3d/Uvex_Occhiali">360 Example</a>
+					<a class="btn btn-info btn-block ajaxExampleColorbox cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=17&amp;3dDir=/pic/zoomVR/nike">3D Example</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Responsive Fancybox</h4>
+					<a class="btn  btn-primary btn-block" href="https://www.ajax-zoom.com/examples/example27.php">See example27.php</a>
+				</div>
+				<div class="col-md-3"></div>
+
+				<div class="col-md-12">
+					<h3>Load specified images with zoomData and play with descriptions</h3>
+					<p>For this type of descriptions some additional JS code is passed over AJAX-ZOOM callbacks. 
+						The code creates an empty div element in the "onLoad" AJAX-ZOOM callback and appends it after the player. 
+						Title and descriptions are defined in a separate JS object for each image and appended to the created 
+						div element over "onImageChange" AJAX-ZOOM callback which is triggered whenever the image changes. 
+						All the AJAX-ZOOM callbacks are passed to AJAX-ZOOM when it is initialized with jQuery.fn.axZm(); 
+						you will find the code commented in the source of this file right after the buttons below.
+					</p>
+					<p>For custom description handling see also <a href="https://www.ajax-zoom.com/examples/example25.php">example25.php</a>
+					</p>
+				</div>
+				<div class="col-md-3">
+					<h4>Fancybox</h4>
+					Todo
+				</div>
+				<div class="col-md-3">
+					<h4>Colorbox</h4>
+					<a class="btn btn-info btn-block ajaxExampleColorboxDesc cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=4&amp;zoomData=/pic/zoom/animals/animals_011.jpg|/pic/zoom/animals/animals_012.jpg|/pic/zoom/animals/animals_015.jpg">Example 8</a>
+					<a class="btn btn-info btn-block ajaxExampleColorboxDesc cboxElement" href="https://www.ajax-zoom.com/axZm/zoomLoad.php?zoomLoadAjax=1&amp;example=7&amp;zoomData=/pic/zoom/animals/animals_011.jpg|/pic/zoom/animals/animals_012.jpg|/pic/zoom/animals/animals_015.jpg">Example 9</a>
+				</div>
+				<div class="col-md-3">
+					<h4>Responsive Fancybox</h4>
+					Todo
+				</div>
+				<div class="col-md-3"></div>
+
+				<!-- This additional JS is only needed for ajaxExampleColorboxDesc where we append descriptions to the lightbox after the player-->	
+				<script type="text/javascript">
+					// JS objects to store descriptions and titles
+					var testTitle = {}; // Object with titles
+					var testDescr = {}; // Object with longer descriptions
+					var thumbTitle = {}; // Object with thumb descriptions
+
+					testTitle["animals_011.jpg"] = "Description animals 1";
+					testDescr["animals_011.jpg"] = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+					thumbTitle["animals_011.jpg"] = "animals 1";
+
+					testTitle["animals_012.jpg"] = "Description animals 2";
+					testDescr["animals_012.jpg"] = "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+					thumbTitle["animals_012.jpg"] = "animals 2";
+
+					testTitle["animals_015.jpg"] = "Description animals 3";
+					testDescr["animals_015.jpg"] = "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.";
+					thumbTitle["animals_015.jpg"] = "animals 3";
+
+					// Simple function to put descriptions in a div with fade effect
+					var ajaxZoomAnimateDescr = function(title, descr) {
+						jQuery("#testTitleDiv").fadeTo(300, 0, function() {
+							jQuery(this).empty().html(title).fadeTo(300, 1);
+						});
+
+						jQuery("#testDescrDiv").fadeTo(300,0, function() {
+							jQuery(this).empty().html(descr).fadeTo(300, 1);
+						});
+
+						setTimeout(function() {
+							jQuery.colorbox.resize();
+						}, 500);
+					};
+
+					// Callbacks to pass to jQuery.fn.axZm() function
+					var ajaxZoomCallbacks = {
+						onLoad: function(){
+							// Container for external title and description
+							var testTitleDescrContainer = jQuery('<DIV />').css({
+								clear: 'both', 
+								padding: '5px 10px 10px 10px',
+								backgroundColor: '#1D1D1A'
+							});
+
+							// Title div
+							jQuery('<DIV />').attr('id', 'testTitleDiv').css({
+								minHeight: 30,
+								fontSize: '16pt',
+								color: '#D3D3D3'
+							}).appendTo(testTitleDescrContainer);
+
+							// Description div
+							jQuery('<DIV />').attr('id', 'testDescrDiv').css({
+								minHeight: 40,
+								fontSize: '10pt',
+								color: '#FFFFFF'
+							}).appendTo(testTitleDescrContainer);
+
+							// Margin div
+							jQuery('<DIV />').css({
+								minHeight: 10,
+								clear: 'both'
+							}).appendTo('#axZm_zoomAll');
+
+							// Append everything above after the player, could also be inside...
+							testTitleDescrContainer.insertAfter('#axZm_zoomAll');
+
+							// Resize the colorbox
+							jQuery.colorbox.resize();
+
+							// Current image name
+							var getImgName = jQuery.axZm.zoomGA[jQuery.axZm.zoomID]["img"];
+
+							// Set descriptions and title
+							ajaxZoomAnimateDescr(testTitle[getImgName], testDescr[getImgName]);
+
+							// Titles of the thumbs
+							jQuery.each(thumbTitle, function (fName, descr, download){
+								jQuery.fn.axZm.setDescr(fName, testTitle[fName], descr, download);
+							});
+						}, 
+						onImageChange: function(info){
+							// Current image name
+							var getImgName = jQuery.axZm.zoomGA[jQuery.axZm.zoomID]["img"];
+
+							// Set descriptions and title
+							ajaxZoomAnimateDescr(testTitle[getImgName], testDescr[getImgName]);
+						}
+					};
+
+					// Colorbox example
+					jQuery(".ajaxExampleColorboxDesc").colorbox({
+						initialWidth: 300,
+						initialHeight: 300,
+						scrolling: false,
+						scrollbars: false,
+						preloading: false,
+						opacity: 0.95,
+						ajax: true, // this option has been added by ajax-zoom to enforce loading href as url and not image
+						onComplete: function(){
+							// Trigger AJAX-ZOOM after loading
+							jQuery.fn.axZm(ajaxZoomCallbacks); 
+						}
+					});
+				</script>
+
+				<div class="col-md-12">
+					<h3>JavaScript &amp; CSS files in Head</h3>
+					<div style="margin: 5px 0px 5px 0px;">
+						<pre class=" language-markup"><code class=" language-markup"><span class="token comment" spellcheck="true">&lt;!-- jQuery core, needed for the lightboxes. Include if not already present. --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/plugins/jquery-1.8.3.min.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- AJAX-ZOOM core, needed! --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/axZm.css<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/jquery.axZm.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--  Fancybox lightbox javascript, only needed if used, please note: it has been slightly modified for 
+AJAX-ZOOM --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.css<span class="token punctuation">"</span></span> <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>screen<span class="token punctuation">"</span></span> 
+<span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> 
+<span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- Colorbox plugin, only needed if used --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/plugins/demo/colorbox/example1/colorbox.css<span class="token punctuation">"</span></span> <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>screen<span class="token punctuation">"</span></span> 
+<span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../axZm/plugins/demo/colorbox/jquery.colorbox-min.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></pre>					</div>
+
+					<h3>JavaScript: bind either colorbox and/or fancybox to elements with certain classes</h3>
+					<p>Please notice that jQuery.fn.axZm(); needs to be triggered in onComplete callbacks 
+						(when AJAX request is finished)
+					</p>
+
+					<div style="margin: 5px 0px 5px 0px;">
+						<pre class=" language-js"><code class=" language-js" id="exampleJsPrism"><span class="token function">jQuery</span><span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ready</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+	<span class="token comment" spellcheck="true">// Bind Colorbox to all elements with class ajaxExampleColorbox</span>
+	<span class="token function">jQuery</span><span class="token punctuation">(</span><span class="token string">".ajaxExampleColorbox"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">.</span><span class="token function">colorbox</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+		initialWidth<span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+		initialHeight<span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+		scrolling<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+		scrollbars<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+		preloading<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+		opacity<span class="token punctuation">:</span> <span class="token number">0.95</span><span class="token punctuation">,</span>
+		<span class="token comment" spellcheck="true">// this option has been added by ajax-zoom to enforce loading href as url and not image</span>
+		ajax<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		onClosed<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			jQuery<span class="token punctuation">.</span>fn<span class="token punctuation">.</span>axZm<span class="token punctuation">.</span><span class="token function">spinStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		onComplete<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token comment" spellcheck="true">// Trigger AJAX-ZOOM after loading</span>
+			jQuery<span class="token punctuation">.</span>fn<span class="token punctuation">.</span><span class="token function">axZm</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment" spellcheck="true">// Bind Fancybox to all elements with class ajaxExampleFancybox</span>
+	<span class="token function">jQuery</span><span class="token punctuation">(</span><span class="token string">".ajaxExampleFancybox"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">.</span><span class="token function">fancybox</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+		padding<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		overlayShow<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		overlayOpacity<span class="token punctuation">:</span> <span class="token number">0.9</span><span class="token punctuation">,</span>
+		zoomSpeedIn<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		zoomSpeedOut<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+		easingIn<span class="token punctuation">:</span> <span class="token string">"swing"</span><span class="token punctuation">,</span>
+		easingOut<span class="token punctuation">:</span> <span class="token string">"swing"</span><span class="token punctuation">,</span>
+		hideOnContentClick<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+		centerOnScroll<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+		onComplete<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			jQuery<span class="token punctuation">.</span>fn<span class="token punctuation">.</span><span class="token function">axZm</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Important callback after loading</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		onClosed<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			jQuery<span class="token punctuation">.</span>fn<span class="token punctuation">.</span>axZm<span class="token punctuation">.</span><span class="token function">spinStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token comment" spellcheck="true">// fancybox ver.2.x options in case fancybox 2.x is used</span>
+		type<span class="token punctuation">:</span> <span class="token string">"ajax"</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//</span>
+		afterLoad<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token comment" spellcheck="true">// Need to trigger delayed</span>
+			<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				jQuery<span class="token punctuation">.</span>fn<span class="token punctuation">.</span><span class="token function">axZm</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		beforeClose<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			jQuery<span class="token punctuation">.</span>fn<span class="token punctuation">.</span>axZm<span class="token punctuation">.</span><span class="token function">spinStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+						<script>
+							// this is only for demo to show js code
+							$('#exampleJsPrism').html($('#exampleJs').html());
+						</script>
+					</div>
+						<script type="text/javascript">
+		// Inject any js file
+		function loadJS(jsFile){
+			var js = document.createElement('script');
+			js.setAttribute("type","text/javascript")
+			js.setAttribute('src', jsFile);
+			document.getElementsByTagName("head")[0].appendChild(js);
+		}
+
+		//  Check, if jquery is loaded
+		if (typeof jQuery == 'undefined'){
+			loadJS('https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');
+		}
+	</script>
+
+	
+	<link rel="stylesheet" href="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/facebox.css" type="text/css" media="all" onload="if(media!=&#39;all&#39;)media=&#39;all&#39;">
+	<script async="" type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/facebox.min.js.download"></script>
+	<script async="" type="text/javascript" src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/md5.js.download"></script>
+	
+
+
+	<div id="aZcommentsWrap">
+		<div id="aZcomments">
+			<h3>Comments (0)</h3>
+			<div id="comments"></div>			<h3>Leave a Comment</h3>
+			<div>
+				<div id="leaveComment">
+		<input type="hidden" name="commentField" id="commentField" value="example3">
+		<div style="position: relative; margin-right: 100px;">
+			<div style="position: absolute; right: -100px; top: 0;"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/avatar64.png" id="avatar_preview"></div>
+			<div class="input-group form-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input id="commentName" type="text" class="form-control" placeholder="Name">
+			</div>
+			<div class="input-group form-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+				<input id="commentEmail" type="text" class="form-control" placeholder="Email (will not be published)">
+			</div>
+			<div class="input-group form-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+				<input id="commentWeb" type="text" class="form-control" placeholder="Website">
+			</div>
+		</div>
+
+		<textarea id="commentText" class="form-control form-group" placeholder="Your comment (no html)" style="width: 100%; height: 150px;"></textarea>
+		<div class="row form-group">
+			<div class="col-sm-8">
+				<span class="azp_comments_gravatar aze_comments_gravatar"><span style="font-weight: bold">Looking for a place to add a personal image?</span> Visit 
+				<a href="https://www.gravatar.com/" target="_blank" rel="nofollow">www.gravatar.com</a> 
+				to get Your own gravatar, a globally-recognized avatar. After you're all setup, 
+				your personal image will be attached every time you comment.</span>
+			</div>
+			<div class="col-sm-4">
+				<button id="addComment" class="btn btn-primary pull-right">Add Comment</button>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		jQuery(function() {
+			//retrieve comments to display on page
+			function retrieveComments(last, fade, field){
+				if (!last){last='';}
+				jQuery.getJSON("/comments.php?jsoncallback=?&get=1&field="+field+"&last="+last, function(data) {
+					if (data != null) {
+						for (var x = 0; x < data.length; x++) {
+							var img = '<img class="azp_gravatar" src="https://www.ajax-zoom.com/pic/layout/avatar64.png" width="64" height"64" border="0">';
+							var div = '<div id="cmnt'+data[x].id+'" class="panel panel-default">';
+								div += '<div class="panel-heading">'+data[x].name+' <span class="pull-right">'+data[x].time+'</span></div>';
+								div += '<div class="panel-body">'+img+' '+data[x].comment+'</div>';
+								div += '</div>';
+
+							jQuery("#comments").append(div);
+							if (fade){
+								jQuery('#cmnt'+data[x].id).fadeTo(1000, 1.0);
+							}
+						}
+					}
+				});
+			}
+
+			jQuery("#commentEmail").one('focus', function(){
+				jQuery(this).attr('value','');
+			});
+
+			jQuery("#commentEmail").bind('blur', function(){
+				var emailReg=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+				if (!emailReg.test(jQuery(this).val())){return;}
+				var src = MD5(jQuery(this).val());
+				if (src){
+					var rsrc = 'https://www.gravatar.com/avatar/'+src+'?d=https%3A%2F%2Fwww.ajax-zoom.com%2Fpic%2Flayout%2Favatar64.png&s=64';
+					jQuery('#avatar_preview').attr('src',rsrc);
+				}
+			});
+
+			jQuery("#addComment").click(function() {
+				var emailReg=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+
+				var error = false;
+				var comment = jQuery("#commentText").val();
+				var name = jQuery("#commentName").val();
+				var email = jQuery("#commentEmail").val();
+				var web = jQuery("#commentWeb").val();
+				var field = jQuery("#commentField").val();
+
+				if (!emailReg.test(email) || !comment || !name){
+					jQuery.facebox("Please fill the required fields!");
+					return false;
+				}
+
+				var ajaxOpts = {
+					type: "post",
+					url: "/comments.php",
+					data: "insert=1&name=" + name + "&comment=" + comment + "&email=" + email + "&web=" + web + "&field=" + field,
+					success: function(data) {
+						if (data != 'error'){
+							retrieveComments(1,true,field);
+							jQuery.facebox("Your comment has been added. Thank You!");
+							jQuery("#leaveComment").find("input").val("");
+							jQuery("#leaveComment").find("textarea").val("");
+							jQuery('#addComment').attr('disabled',true);
+						}
+					}
+				};
+
+				jQuery.ajax(ajaxOpts);
+			});
+		});
+	</script>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+var load_other_examples_slider = function() {
+	if (!window.jQuery) {
+		return;
+	}
+	jQuery('#load_other_examples_slider_link').replaceWith('<iframe width="100%" height="230" frameborder="0" src="nav_thumbs.php?ref=example3.php&footerMargin=0&bootstrap=1" allowfullscreen></iframe>');
+};
+</script>
+<a id="load_other_examples_slider_link" href="javascript:void(0)" class="btn btn-info" style="margin-bottom: 50px;" onclick="load_other_examples_slider()">Load other examples in slider</a>				</div>
+			</div>
+		</div><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+	
+<div id="fancybox-tmp" style="padding: 40px;"></div><div id="fancybox-loading" style="display: none;"><div style="top: -200px;"></div></div><div id="fancybox-overlay" style="background-color: rgba(120, 120, 120, 0.9); cursor: pointer; height: 3454px; display: none;"></div><div id="fancybox-wrap" style="width: 600px; height: auto; top: 393px; left: 354px; display: none;"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content" style="border-width: 0px; width: 600px; height: auto;"></div><a id="fancybox-close" style="display: none;"></a><div id="fancybox-title" style="display: none;"></div><a href="javascript:;" id="fancybox-left" style="display: none;"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right" style="display: none;"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div id="axZmCache" style="display: none;"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/openhand.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/closedhand.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/crop.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/openhand360.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/closedhand360.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/openhand360N.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/closedhand360N.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/openhand3D.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/closedhand3D.cur"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/tr_black_90.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/tr_black_70.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/tr_black_50.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/tr_white_30.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/zoombutton_fsc_init.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_004_200x200.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_001_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_002_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_003_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_004_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_005_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_006_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_007_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_008_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_009_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_010_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_011_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/zoombutton_fsc_init_down.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/zoombutton_fsc_init_over.png"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_012_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_013_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_014_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_015_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_016_70x70.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_004_600x400.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_004_900x900.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_005_600x400.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_003_900x900.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_003_600x400.jpg"><img src="./Lightbox AJAX-ZOOM jQuery image zoomer with deep zoom _ 360 spin tool zoom_files/animals_005_900x900.jpg"></div></body></html>

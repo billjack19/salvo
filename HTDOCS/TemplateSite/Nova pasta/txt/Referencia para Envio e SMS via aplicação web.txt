@@ -1,0 +1,27 @@
+Referencia para Envio e SMS via aplicação web
+
+https://api-rest.zenvia360.com.br/services
+
+
+
+Deve-se mandar a requisição via POST
+Exemplo (se for via AJAX): 
+
+data: {
+    "sendSmsRequest": {
+        "from": "Remetente", // alguma String kkkkkkkkk
+        "to": "555199999999", // deve ser o telefone que írá receber
+        "schedule": "2014-08-22T14:55:00", // horario de envio eu acho ????? kkkkkkkkkk
+        "msg": "Mensagem de teste", // a mensagem que será enviada Content-Type:application/json || Accept:application/json
+        "callbackOption": "NONE", // acho que é o tipo de retorno tentar 
+        "id": "002", //É uma chave que assim que se faz o cadastro no site ele envia em base64
+        "aggregateId": "1111",
+        "flashSms": true // para saber se deseja que a mensagem seja enviada com um flashSms
+    }
+}
+
+
+
+base64 = é um tipo de criptografia que da para descriptografar no terminal do linux ou no site https://www.base64encode.org/
+
+flashSms : Para o envio do Flash SMS a Zenvia API tem um parâmetro opcional para indicar que a mensagem deve ser enviada como um Flash SMS. Este parâmetro chama-se flashSms e aceita os valores true (como Flash SMS) ou false(como SMS normal) e poderá ser informado tanto no envio único como no envio para vários destinatários. Para efeitos de compatibilidade, caso o parâmetro não seja informado na requisição a mensagem será considerada um SMS normal.Para utilizar do Flash SMS é necessário entrar em contato com nosso atendimento e solicitar que sua conta seja habilitada para esse tipo de envio.

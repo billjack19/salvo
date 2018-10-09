@@ -1,0 +1,15 @@
+function movimenta(rolar){
+ $('html, body').animate({ scrollTop: $(rolar).offset().top}, 1500);
+}
+
+window.onscroll = function () {
+	if (window.scrollY > 100){
+		$(".topo").slideDown('normal');
+	} else {
+		$(".topo").slideUp('normal');
+	}
+}
+
+function sobe(){
+	$('html,body').animate({scrollTop:0}, 1000);
+}

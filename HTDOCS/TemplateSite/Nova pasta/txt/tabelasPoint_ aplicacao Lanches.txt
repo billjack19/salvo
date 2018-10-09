@@ -1,0 +1,221 @@
+
+1
+CLIEFORNEC
+	CODIGO
+	RAZAOSOCIAL
+/* carregado */
+
+
+2
+CLIEFORNEC_TELEFONE
+	Cliente
+	Sequencia
+	Telefone
+/* carregado */
+
+
+3
+GRUPO_ESTOQUE
+	DESCRICAO
+	GRUPO
+	Imagem
+/* carregado */
+
+
+4
+Lanc_Pedidos
+	filial
+	Documento
+	CONTATO
+	Observacao
+	Desconto
+	ValorTroco
+	TOTAL
+	Cliente
+	Vendedor
+	Emissao
+	Condpagamento
+	USUARIOATUALIZACAO
+	flagCancelada
+	DataEntregue
+	Mesa
+	ENCERRADOENTREGUE
+/* carregado */
+
+
+5
+Lanc_Pedidos_Vencimento
+	Valor
+	CondPagamento
+	Filial
+	Documento
+	Sequencia
+/* carregado */
+
+
+6
+CondPagamento
+	Codigo
+	DESCRICAO
+/* carregado */
+
+
+7
+LANC_PEDIDOS_ITENS
+	- ID_Lanc_Pedidos_Itens
+	- Filial
+	- Documento
+	- Sequencia
+	- GRUPO
+	- SUB_GRUPO
+	- ITEM
+	- QUANTIDADE
+	- VALOR_UNITARIO
+	- VALOR_TOTAL
+	- VALOR_BASE
+	- FlagImpressao
+	- QUANTIDADEPRINCIPAL
+	- AdicionalProduto
+	- UNIDADE
+/* carregado */
+
+
+8
+ITEM
+	ITEM
+	DESCRICAO
+	UNIDADE_MEDIDA
+	GRUPO
+	SUB_GRUPO
+	Preparo
+	Adicional
+/* carregado */
+
+
+9
+Lanc_pedidos_itens_Excessao
+	item
+	ID_Lanc_Pedidos_itens
+/* carregado */
+
+
+10
+Lanc_Pedidos_Itens_Preparo
+	Filial
+	Documento
+	DescricaoPreparo
+	ID_TabPreparoProdutosItens
+/* carregado */
+
+
+11
+Lanc_Pedidos_Itens_Adicional
+	Filial
+	Documento
+	QUANTIDADE
+	VALOR_UNITARIO
+	VALOR_TOTAL
+	item
+	ID_TabAdicionalProdutosItens
+/* carregado */
+
+
+12
+ITEM_FILIAL
+	filial
+	ITEM
+	PRECO_BASE
+	VALOR_INCLUSAO
+/* carregado */
+
+
+13
+ITEM_PRODUCAO
+	item
+	ITeM_ITEM
+	QUANTIDADE
+/* carregado */
+
+
+14
+TabPreparoProdutosItens
+	codigo
+	DescricaoPreparo
+	Sequencia
+/* carregado */
+
+
+15
+TabPreparoProdutos
+	CODIGO
+/* carregado */
+
+
+16
+TabAdicionalProdutosItens
+	codigo
+	item
+	QUANTIDADE
+/* carregado */
+
+
+17
+TabAdicionalProdutos
+	CODIGO
+	QTD_NAO_COBRAR
+/* carregado */
+
+
+18
+Lanc_Pedidos_Itens_Impressao
+	Filial
+	Documento
+	Sequencia
+	Item
+	Quantidade
+	Descricao
+	DataAtualizacao
+	HoraAtualizacao
+	UsuarioAtualizacao
+	CK_CONFIRMADO
+/* carregado */
+
+
+19
+Tab_Mesas
+	Codigo
+	DESCRICAO
+/* carregado */
+
+
+20
+NF_RECEBER  ------------------------------------------------------------------------------------------------
+	PEDIDO
+	NotaFiscal
+	FlagCancelada
+
+
+21
+PARAMETROS
+	CondPagamentoDinheiro
+	CondPagamentoCartaoDebito
+	CondPagamentoCartaoCredito
+/* carregado */
+
+
+22
+SUB_GRUPO_ESTOQUE
+	SUB_GRUPO
+	DESCRICAO
+	Imagem
+/* carregado */
+
+
+23
+TabUsuarios
+	Identificacao
+	Senha
+	Nome
+	Vendedor
+	FILIAL
+/* carregado */

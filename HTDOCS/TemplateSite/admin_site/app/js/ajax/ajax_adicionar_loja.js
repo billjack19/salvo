@@ -1,0 +1,42 @@
+
+function gravarRegistro(){
+	var campoFocus = "";
+		 if(validation($("#titulo_loja").val() == "")) campoFocus = "titulo_loja";
+	else if(validation($("#descricao_loja").val() == "")) campoFocus = "descricao_loja";
+	else if(validation($("#data_atualizacao_loja").val() == "")) campoFocus = "data_atualizacao_loja";
+	else if(validation($("#bool_ativo_loja").val() == "")) campoFocus = "bool_ativo_loja";
+
+
+	else {
+		$.ajax({
+			url:'app/controllers/cadastro_lojaController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'titulo_loja': $("#titulo_loja").val(),
+				'descricao_loja': $("#descricao_loja").val(),
+				'data_atualizacao_loja': $("#data_atualizacao_loja").val(),
+				'bool_ativo_loja': $("#bool_ativo_loja").val()
+			}
+		}).done( function(data){
+			console.log(data);
+			if (data != 1 && data != "1") 	toast.danger("Falha ao Cadastrar!");
+			else {
+				toast.success("Cadastrado com sucesso!");
+				$("#titulo_loja").val("");
+				$("#descricao_loja").val("");
+				$("#data_atualizacao_loja").val("");
+			}
+		});
+	} 
+
+	if (campoFocus != "") {
+		document.getElementById(campoFocus).focus();
+		toast.danger('Preencha no mínimo todos os campos obrigatórios!');
+	}
+}
+
+function validation(valor){
+	if (valor == "") 	return false;
+	else 				return true;
+}
