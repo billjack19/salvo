@@ -1,0 +1,5 @@
+bcdedit -set loadoptions DISABLE_INTEGRITY_CHECKS
+bcdedit -set TESTSIGNING ON
+bcdedit /deletevalue loadoptions
+bcdedit -set TESTSIGNING OFF
+bcdedit /set nointegritychecks on
