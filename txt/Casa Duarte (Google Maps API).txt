@@ -1,0 +1,9 @@
+Casa Duarte (Google Maps API)
+
+conta: casaduartecdi@gmail.com
+senha: cdc!@#123
+
+Chave Casa Duarte:  	AIzaSyD8Y4x8RZttSFdrVT9dmw1Ru7zU9ACUcJ0 (JavaScript)
+Chave Casa Duarte:  	AIzaSyBv6di5FwK21X-8OW9MDN3GHkAKvRyBpkM (Geocodificação)
+Chave Casa Duarte:  	AIzaSyATZEPgRLDkT7rt-1otx1yZaugXL_bF2yw (Routes, Directions)
+Chave Jack: 			AIzaSyD4eDXvHfQsi2iTA36ut0kKHHvr-JFMUtg (Routes, Directions)

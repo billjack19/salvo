@@ -1,0 +1,51 @@
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (6, 1, "ATUM","ATUM.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (8, 1, "BROCOLIS","BROCOLIS.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (2, 1, "CALABRESA","CALABRESA.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (1, 1, "CARNE","BOVINOS.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (7, 1, "ESCAROLA","ESCAROLA.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (5, 1, "ESPINAFRE","ESPINAFRE.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (3, 1, "FRANGO","FRANGO.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (4, 1, "PRESUNTO","PRESUNTO.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (9, 1, "X-PANQUECAS DOCES","X-PANQUECAS DOCES.png");
+
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (6, 2, "ATUM","ATUM.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (2, 2, "CALABRESA","CALABRESA.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (1, 2, "CONTRA FILE","CONTRA FILE.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (3, 2, "FRANGO","FRANGO.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (4, 2, "HAMBURGUER","LANCHES.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (5, 2, "PEITO DE PERU","PEITO DE PERU.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (7, 2, "SALAME ITALIANO","SALAME ITALIANO.png");
+
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (2, 3, "BALAS","BALAS.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (1, 3, "CHOCOLATES","CHOCOLATES.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (3, 3, "DOCES","DOCES.png");
+insert into (subGrupoItem, grupoItem, descricao, imagem) values (4, 3, "ISQUEIRO","ISQUEIRO.png");
+
+[{"subGrupoItem":3,"grupoItem":4,"descricao":"AZEITONAS","imagem":"AZEITONAS.png"},{"subGrupoItem":2,"grupoItem":4,"descricao":"BATATA","imagem":"batata.png"},{"subGrupoItem":1,"grupoItem":4,"descricao":"CALABRESA","imagem":"CALABRESA.png"},{"subGrupoItem":12,"grupoItem":4,"descricao":"CARNE SECA","imagem":"CARNE SECA.png"},{"subGrupoItem":6,"grupoItem":4,"descricao":"CONTRA FILE","imagem":"CONTRA FILE.png"},{"subGrupoItem":8,"grupoItem":4,"descricao":"FRANGO A PASSARINHO","imagem":"FRANGO A PASSARINHO.png"},{"subGrupoItem":4,"grupoItem":4,"descricao":"PALMITO","imagem":"PALMITO.png"},{"subGrupoItem":10,"grupoItem":4,"descricao":"PEIXES","imagem":"PEIXES.png"},{"subGrupoItem":9,"grupoItem":4,"descricao":"POLENTA","imagem":"POLENTA.png"},{"subGrupoItem":5,"grupoItem":4,"descricao":"PROVOLONE","imagem":"PROVOLONE.png"},{"subGrupoItem":7,"grupoItem":4,"descricao":"SALAME","imagem":"SALAME ITALIANO.png"},{"subGrupoItem":11,"grupoItem":4,"descricao":"SUINOS","imagem":"SUINOS.png"}]
+
+[{"subGrupoItem":1,"grupoItem":5,"descricao":"NO PAO","imagem":"PAO.png"},{"subGrupoItem":2,"grupoItem":5,"descricao":"NO PRATO","imagem":"PRATO.png"}]
+
+{"subGrupoItem":5,"grupoItem":6,"descricao":"AGUA MINERAL","imagem":"AGUA MINERAL.png"},{"subGrupoItem":8,"grupoItem":6,"descricao":"ENERGETICOS","imagem":"ENERGETICOS.png"},{"subGrupoItem":6,"grupoItem":6,"descricao":"GATORADE","imagem":"GATORADE.png"},{"subGrupoItem":4,"grupoItem":6,"descricao":"REFRIGERANTES 2 LITROS","imagem":"REFRIGERANTES 2 LITROS.png"},{"subGrupoItem":10,"grupoItem":6,"descricao":"REFRIGERANTES 2,5 LITROS","imagem":"REFRIGERANTES 2,5 LITROS.png"},{"subGrupoItem":3,"grupoItem":6,"descricao":"REFRIGERANTES 600 ML","imagem":"REFRIGERANTES 600 ML.png"},{"subGrupoItem":2,"grupoItem":6,"descricao":"REFRIGERANTES LATA","imagem":"REFRIGERANTES LATA.png"},{"subGrupoItem":11,"grupoItem":6,"descricao":"REFRIGERANTES LATINHA","imagem":"REFRIGERANTES LATINHA.png"},{"subGrupoItem":1,"grupoItem":6,"descricao":"SUCOS LATA","imagem":"SUCOS LATA.png"},{"subGrupoItem":7,"grupoItem":6,"descricao":"TONICAS","imagem":"TONICAS.png"}]
+
+[{"subGrupoItem":5,"grupoItem":7,"descricao":"BARRIGUDINHAS","imagem":"BARRIGUDINHAS.png"},{"subGrupoItem":6,"grupoItem":7,"descricao":"CHOPP","imagem":"CERVEJAS.png"},{"subGrupoItem":3,"grupoItem":7,"descricao":"GARRAFA 600 ML","imagem":"GARRAFA 600 ML.png"},{"subGrupoItem":7,"grupoItem":7,"descricao":"LATAO","imagem":"LATAO.png"},{"subGrupoItem":1,"grupoItem":7,"descricao":"LATAS 269 ML","imagem":"LATAO.png"},{"subGrupoItem":2,"grupoItem":7,"descricao":"LATAS 350 ML","imagem":"LATAO.png"},{"subGrupoItem":8,"grupoItem":7,"descricao":"LITRÃO","imagem":"LITRÃO.png"},{"subGrupoItem":4,"grupoItem":7,"descricao":"LONG NECK","imagem":"LONG NECK.png"},{"subGrupoItem":9,"grupoItem":7,"descricao":"SELVAGEN","imagem":"SELVAGEN.png"}]
+
+[{"subGrupoItem":1,"grupoItem":8,"descricao":"CACHAÇAS","imagem":"CACHAÇAS.png"},{"subGrupoItem":3,"grupoItem":8,"descricao":"OUTROS","imagem":"diversos.png"},{"subGrupoItem":2,"grupoItem":8,"descricao":"VODKAS","imagem":"VODKAS.png"},{"subGrupoItem":4,"grupoItem":8,"descricao":"WISKY´S","imagem":"WISKY´S.png"}]
+
+[{"subGrupoItem":5,"grupoItem":9,"descricao":"BATIDAS E CAIPIRINHAS","imagem":"CAIPIRINHAS.png"},{"subGrupoItem":6,"grupoItem":9,"descricao":"DRINK´S","imagem":"DRINK´S.png"},{"subGrupoItem":2,"grupoItem":9,"descricao":"GATORADE","imagem":"GATORADE.png"},{"subGrupoItem":3,"grupoItem":9,"descricao":"ICES","imagem":"ICES.png"},{"subGrupoItem":4,"grupoItem":9,"descricao":"OUTRAS","imagem":"diversos.png"}]
+
+{"subGrupoItem":1,"grupoItem":10,"descricao":"SUCOS","imagem":"SUCOS.png"}]
+
+[{"subGrupoItem":1,"grupoItem":11,"descricao":"DIVERSOS","imagem":"diversos.png"}]
+
+[{"subGrupoItem":3,"grupoItem":12,"descricao":"PAO DE QUEIJO","imagem":"PAO DE QUEIJO.png"},{"subGrupoItem":1,"grupoItem":12,"descricao":"REFRESCOS","imagem":"SUCOS.png"},{"subGrupoItem":2,"grupoItem":12,"descricao":"SALGADOS","imagem":"SALGADOS.png"}]
+
+[{"subGrupoItem":4,"grupoItem":13,"descricao":"AÇAI","imagem":"AÇAI.png"},{"subGrupoItem":2,"grupoItem":13,"descricao":"BALAS","imagem":"BALAS.png"},{"subGrupoItem":1,"grupoItem":13,"descricao":"CHOCOLATES","imagem":"CHOCOLATES.png"},{"subGrupoItem":3,"grupoItem":13,"descricao":"SORVETES JUNDIA","imagem":"SORVETES.png"}]
+
+[{"subGrupoItem":1,"grupoItem":14,"descricao":"BOVINOS","imagem":"BOVINOS.png"},{"subGrupoItem":3,"grupoItem":14,"descricao":"FRANGOS","imagem":"FRANGO.png"},{"subGrupoItem":4,"grupoItem":14,"descricao":"PEIXES","imagem":"PEIXES.png"},{"subGrupoItem":2,"grupoItem":14,"descricao":"SUINOS","imagem":"SUINOS.png"}]
+
+[{"subGrupoItem":6,"grupoItem":15,"descricao":"ASSADOS","imagem":"FRANGO.png"},{"subGrupoItem":3,"grupoItem":15,"descricao":"GUARNIÇOES","imagem":"GUARNIÇOES.png"},{"subGrupoItem":2,"grupoItem":15,"descricao":"PANQUECAS","imagem":"PANQUECAS.png"},{"subGrupoItem":1,"grupoItem":15,"descricao":"REFEIÇÃO","imagem":"REFEIÇÃO.png"},{"subGrupoItem":4,"grupoItem":15,"descricao":"SALADAS","imagem":"SALADAS.png"},{"subGrupoItem":5,"grupoItem":15,"descricao":"SELF SERVICE","imagem":"SELF SERVICE.png"}]
+
+[{"subGrupoItem":2,"grupoItem":16,"descricao":"FRANGO ASSADO","imagem":"FRANGO.png"},{"subGrupoItem":3,"grupoItem":16,"descricao":"GELO","imagem":"GELO.png"}]
+
+[{"subGrupoItem":1,"grupoItem":17,"descricao":"IMPORTADOS","imagem":"CIGARROS.png"}]
+

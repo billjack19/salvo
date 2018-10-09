@@ -1,0 +1,30 @@
+Plugin App Ibrido
+
+
+/* Segundo Plano */
+cordova plugin add cordova-plugin-background-mode
+https://github.com/katzer/cordova-plugin-background-mode
+
+/* Badge (Numero de notificação em cima do icone do aplicativo) */
+cordova plugin add cordova-plugin-badge
+https://github.com/katzer/cordova-plugin-badge
+
+/* Enviar e-mail */
+cordova plugin add cordova-plugin-email-composer
+https://github.com/katzer/cordova-plugin-email-composer
+
+/* Imprimir */
+cordova plugin add cordova-plugin-printer
+https://github.com/katzer/cordova-plugin-printer
+
+/* Notificação local */
+cordova plugin add cordova-plugin-local-notification
+https://github.com/katzer/cordova-plugin-local-notifications
+
+/* Tirar print da tela */
+cordova plugin add https://github.com/gitawego/cordova-screenshot.git
+https://github.com/gitawego/cordova-screenshot
+
+/* PayPal SDKw */
+cordova plugin add https://github.com/gitawego/PayPal-SDK-Cordova.git
+https://github.com/gitawego/PayPal-SDK-Cordova
