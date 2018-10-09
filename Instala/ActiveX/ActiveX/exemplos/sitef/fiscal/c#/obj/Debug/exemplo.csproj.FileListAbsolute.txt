@@ -1,0 +1,13 @@
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\obj\Debug\exemplo.csproj.ResolveComReference.cache
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\obj\Debug\exemplo.FrenteCaixaFrm.resources
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\obj\Debug\exemplo.Properties.Resources.resources
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\bin\Debug\exemplo.exe
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\bin\Debug\exemplo.pdb
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\obj\Debug\exemplo.exe
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\obj\Debug\exemplo.pdb
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\bin\Debug\Interop.EasyTEFSiTef.dll
+C:\Users\robson\Documents\tef\clisitefX\exemplos\c#\obj\Debug\Interop.EasyTEFSiTef.dll
+C:\Users\robson\Documents\TEF\CliSiTefX\exemplos\c#\obj\Debug\exemplo.MenuOperadorFrm.resources
+C:\Users\robson\Documents\TEF\CliSiTefX\exemplos\c#\obj\Debug\exemplo.ValoresFrm.resources
+C:\Users\Robson\Documents\TEF\CliSiTefX\exemplos\c#\obj\Debug\exemplo.csproj.GenerateResource.Cache
+C:\Users\Robson\Documents\TEF\CliSiTefX\exemplos\c#\obj\Debug\exemplo.csprojResolveAssemblyReference.cache

@@ -1,0 +1,12 @@
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\bin\Debug\exemplo.exe.config
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\Interop.EasyTEF.dll
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.vbproj.ResolveComReference.cache
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.exe
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.xml
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.pdb
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.FrenteCaixaFrm.resources
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.Resources.resources
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\obj\Debug\exemplo.vbproj.GenerateResource.Cache
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\bin\Debug\exemplo.exe
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\bin\Debug\exemplo.pdb
+C:\Users\Robson\Documents\TEF\DiscadoX\exemplos\vb.net\bin\Debug\exemplo.xml

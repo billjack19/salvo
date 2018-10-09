@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<SiTef>
+	<UsarTEF>Sim</UsarTEF>
+	<PathCliSiTef32I>C:\Users\robson\Documents\TEF\CliSiTef\dlls\CliSiTef32I.dll</PathCliSiTef32I>
+	<Host>192.168.48.131</Host>
+	<Loja>00000000</Loja>
+	<Operador>Ciclano</Operador>
+	<Terminal>SE000001</Terminal>
+	<ContraSenhaEasyTEF>d7680b9b585708</ContraSenhaEasyTEF>
+</SiTef>

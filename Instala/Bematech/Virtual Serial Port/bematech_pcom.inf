@@ -1,0 +1,71 @@
+;
+; Installation inf for the Bematech USB MP-2500 TH Printers
+;
+; Copyright(C) Bematech International 2011. All rights reserved.
+
+[Version]
+Signature = "$Windows NT$"
+Class = USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+Provider = %ProviderName%
+DriverVer=04/27/2012,2.0.0.0
+CatalogFile=bematech_pcom.cat
+
+; ========== Manufacturer/Models sections ===========
+[Manufacturer]
+%ProviderName% = MyDevice_WinUSB,NTx86,NTamd64
+
+[MyDevice_WinUSB.NTx86]
+%USB\MyDevice.DeviceDesc% =USB_Install, USB\VID_0B1B&PID_0004
+
+[MyDevice_WinUSB.NTamd64]
+%USB\MyDevice.DeviceDesc% =USB_Install, USB\VID_0B1B&PID_0004
+
+; =================== Installation ===================
+[USB_Install]
+Include=usbprint.inf
+
+[USB_Install.Services]
+AddService = usbprint,0x00000002,USB_Install_Service_Inst
+
+[USB_Install_Service_Inst]
+Include=usbprint.inf
+DisplayName    = %USBPRINT.SvcDesc%
+ServiceType    = 1 ;KERNEL_DRIVER
+StartType      = 3 ;DEMAND START
+ErrorControl   = 1 ;RROR_NORMAL
+ServiceBinary  = %12%\usbprint.sys
+LoadOrderGroup = extended base
+
+[USB_Install.HW]
+AddReg=Dev_AddReg
+
+[Dev_AddReg]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{ABB976E2-48A7-46ae-A55D-498413275559}"
+
+; ================= Source Media Section =====================
+;[SourceDisksNames.x86]
+;1 = %DISK_NAME%,,,\x86
+
+;[SourceDisksNames.amd64]
+;2 = %DISK_NAME%,,,\x64
+
+; Copy Files section
+;------------------------------------------------------------------------------
+[_CopyFiles_sys]
+usbprint.sys
+
+;************************************************* *****************************
+; Destination Directories
+;------------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir = 12 ; %SystemRoot%\system32\drivers
+_CopyFiles_sys = 12
+
+; =================== Strings ===================
+[Strings]
+ProviderName="Bematech International"
+USB\MyDevice.DeviceDesc="MP-2500 TH Miniprinter"
+USBPRINT.DeviceDesc   = "MP-2500 TH Miniprinter"
+USBPRINT.SvcDesc      = "UsbPrint for MP-2500 TH Printer"
+DISK_NAME="USB driver for MP-2500 TH"

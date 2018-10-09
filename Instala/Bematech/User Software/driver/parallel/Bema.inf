@@ -1,0 +1,85 @@
+;===============================================================
+; Bematech  MP-4000 Driver
+; for Windows XP/Vista/7
+; Copyright (c) 2010, Bematech International.
+;
+; Model: MP-4000
+; Driver type: Parallel device port
+;
+;===============================================================
+[Version]
+Signature="$Windows NT$"
+Provider=%MS%
+ClassGUID={4d36e97d-e325-11ce-bfc1-08002be10318}
+Class=System
+CatalogFile=BEMA.cat
+DriverVer=02/06/2010,3.1
+
+[DestinationDirs]
+DefaultDestDir   = 12
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%MS%   = MS.Mfg, NTamd64
+
+[MS.Mfg]
+%MS.DeviceDesc0% = disk, LPTENUM\BematechRawPort
+%MS.DeviceDesc0% = disk, BEMATECHMP-4000TH6351
+
+[MS.Mfg.NTamd64]
+%MS.DeviceDesc0% = disk, LPTENUM\BematechRawPort
+%MS.DeviceDesc0% = disk, BEMATECHMP-4000TH6351
+
+[disk.NT]
+CopyFiles=DriverCopyFiles
+
+[DriverCopyFiles]
+
+
+[disk.NT.Services]
+AddService = BematechParallelService, 0x00000002 , disk_Service_Inst
+
+[disk_Service_Inst]
+DisplayName    = %disk.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\parport.sys
+LoadOrderGroup = Extended base
+Dependencies   = +Parallel arbitrator,parport
+
+;
+; Source file information
+;
+[SourceDisksFiles]
+
+[SourceDisksNames]
+1 = %DiskId1%
+
+
+
+[Strings]
+
+;
+; Non-Localizable Strings
+;
+
+REG_SZ         = 0x00000000
+REG_MULTI_SZ   = 0x00010000
+REG_EXPAND_SZ  = 0x00020000
+REG_BINARY     = 0x00000001
+REG_DWORD      = 0x00010001
+SERVICEROOT    = "System\CurrentControlSet\Services"
+
+;
+; Localizable Strings
+;
+
+MS.DeviceDesc0 = "Bematech Parallel Driver"
+DiskId1 = "Bematech Parallel driver installation disk"
+MS = "Bematech International"
+disk.SvcDesc="Bematech Parallel Port Printer"
+

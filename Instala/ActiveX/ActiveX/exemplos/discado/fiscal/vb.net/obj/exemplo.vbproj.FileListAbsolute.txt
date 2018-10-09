@@ -1,0 +1,28 @@
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\bin\Debug\exemplo.exe
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\bin\Debug\exemplo.pdb
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\bin\Debug\exemplo.xml
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\bin\Debug\Interop.EasyTEF.dll
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\Interop.EasyTEF.dll
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.vbproj.ResolveComReference.cache
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.FrenteCaixaFrm.resources
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.Resources.resources
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.vbproj.GenerateResource.Cache
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.exe
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.xml
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\obj\Debug\exemplo.pdb
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplo vb.net\exemplo\exemplo\bin\Debug\BemaFiscal.dll
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.exe
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.xml
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.pdb
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\Interop.EasyTEF.dll
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.vbproj.ResolveComReference.cache
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.FrenteCaixaFrm.resources
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.Resources.resources
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\obj\Debug\exemplo.vbproj.GenerateResource.Cache
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\bin\Debug\exemplo.exe
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\bin\Debug\exemplo.pdb
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\bin\Debug\exemplo.xml
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\bin\Debug\BemaFiscal.dll
+C:\Documents and Settings\Robson\My Documents\tef\ActiveX\exemplos discado\exemplo vb.net\exemplo\bin\Debug\Interop.EasyTEF.dll

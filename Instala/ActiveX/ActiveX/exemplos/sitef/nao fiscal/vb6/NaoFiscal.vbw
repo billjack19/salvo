@@ -1,0 +1,5 @@
+NaoFiscalFrm = 52, 52, 939, 494, Z, 26, 26, 913, 468, C
+IniFiles = 0, 0, 0, 0, C
+frmConsultaCheque = 0, 0, 0, 0, C, 208, 208, 1095, 650, C
+frmMenuOpcoesSitef = 0, 0, 0, 0, C, 0, 0, 887, 442, C
+frmValoresSiTef = 182, 182, 1162, 563, , 26, 26, 913, 468, C

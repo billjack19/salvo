@@ -1,0 +1,1 @@
+reg save HKEY_CURRENT_USER\Software\TortoiseSVN %USERPROFILE%\Desktop\tortoise.hive

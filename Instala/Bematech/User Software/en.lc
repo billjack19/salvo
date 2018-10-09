@@ -1,0 +1,11 @@
+; Translation Notes:
+;	The program sees the language files as UTF-8 (without BOM) files
+;	It's recommended to use filenames that is related to ISO 639 language codes
+;	e.g.: ptbr.lc for Brazilian Portuguese, en.lc for English, zh.lc for Chinese, es.lc for Spanish, etc.
+
+; this key indicates the language description
+ThisLanguageName=English
+
+; date localization
+mm-dd-yyyy=dd-mm-yyyy
+

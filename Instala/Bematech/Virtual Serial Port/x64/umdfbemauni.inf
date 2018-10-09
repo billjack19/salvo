@@ -1,0 +1,103 @@
+[Version]
+Signature="$Windows NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%MSFTUMDF%
+CatalogFile=UMDFbemaUni.cat
+DriverVer=03/01/2010,3.0.0
+
+[Manufacturer]
+%MSFTUMDF%=Bematech, NTamd64
+
+[SourceDisksNames]
+1 = %MediaDescription%
+
+
+[Bematech.NTamd64]
+%VCOMDeviceName%=VCOM_Install,UMDF\BemaUni
+
+
+
+[SourceDisksFiles.amd64]
+BemaUniDriver.dll=1
+WudfUpdate_01009.dll=1
+WdfCoInstaller01009.dll=1
+BemaUniConfigPropertyPage.dll=1
+SiUSBXp.dll=1
+;winusb.dll=1
+
+
+
+
+; =================== UMDF VCOM Device ==================================
+
+[VCOM_Install.NT]
+CopyFiles=UMDriverCopy,DriverDependencies_CopyFiles
+AddReg=VCOM_RegistryAdd
+
+[VCOM_Install.NT.hw]
+
+[VCOM_Install.NT.Services]
+AddService=WUDFRd,0x000001fa,WUDFRD_ServiceInstall
+
+[VCOM_Install.NT.CoInstallers]
+CopyFiles=CoInstallers_CopyFiles
+AddReg=CoInstallers_AddReg
+
+[VCOM_Install.NT.Wdf]
+UmdfService=VCOM,VCOM_Install
+UmdfServiceOrder=VCOM
+UmdfImpersonationLevel=Impersonation
+UmdfDispatcher=FileHandle
+
+
+
+
+[VCOM_RegistryAdd]
+HKR,,EnumPropPages32,,"BemaUniConfigPropertyPage.dll,BemaUniConfigPropertyPageProvider"
+
+
+[VCOM_Install]
+UmdfLibraryVersion=1.9.0
+ServiceBinary=%12%\UMDF\BemaUniDriver.dll
+DriverCLSID={6cc1ac2f-ae0f-401d-87a0-8ae5a44f3e16}
+
+[WUDFRD_ServiceInstall]
+DisplayName = %WudfRdDisplayName%
+ServiceType = 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary = %12%\WUDFRd.sys
+LoadOrderGroup = Base
+
+[DriverDependencies_CopyFiles]
+BemaUniConfigPropertyPage.dll
+SiUSBXP.dll
+;winusb.dll
+
+[CoInstallers_CopyFiles]
+WudfUpdate_01009.dll
+
+[CoInstallers_AddReg]
+HKR,,CoInstallers32,0x00010000,"WUDFUpdate_01009.dll"
+
+[DestinationDirs]
+UMDriverCopy=12,UMDF ; copy to drivers\UMDF
+CoInstallers_CopyFiles=11
+DriverDependencies_CopyFiles=11 ; copy to system32
+
+
+
+[UMDriverCopy]
+BemaUniDriver.dll
+
+
+
+; =================== Generic ==================================
+
+[Strings]
+MSFTUMDF="Bematech Printers Virtual Serial Driver"
+MediaDescription="Bematech Virtual Serial Driver Installation Media"
+WudfRdDisplayName="Bematech VCOMM Drivers "
+VCOMDeviceName="Bematech Virtual Serial for Mini Printers"
+
