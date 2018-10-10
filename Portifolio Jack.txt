@@ -1,0 +1,52 @@
+Portifolio Jack
+
+Sites desenvolvidos
+1. http://construtorabrothers.com.br
+2. http://amfiosecabos.com.br/
+3. http://minassystem.com.br/
+4. http://cdiinfo.com.br/
+6. site da cafepocos
+
+Projetos Desenvolvimento Web
+1. seuICMSdevolta
+	- aplicação que visa auxiliar no processo de restituição do ICMS cobrando indevidamente na conta de Luz
+2. vendasCDI
+	- aplicativo para fazer pedidos
+3. panquecaCDI
+	- aplicativo de restaurantes para fazer pedido pelo garçom
+4. cacamba (não terminado)
+	- aplicativo de rastreio de caçambas
+	- geolocalização e google maps
+5. entregasCDI
+	- aplicativo de rastreio de entregas e traçar rotas para entregas
+	- geolocalização e google maps
+	- falta o aplicativo rodar em segundo plano
+6. lanchesCDI
+	- aplicativo para carrinho de lanche
+7. biblioteca (não terminado)
+	- sistema de biblioteca
+	- emprestimo de livro
+	- agendamento de equipamento
+8. orçamento web
+	- aplicativo para realizar orçamento pela web
+9. template para enviar SMS via PHP
+	- aplicação para enviar SMS
+10. Intranet Sanhiedrel
+	- Tela de Pré Requisição
+	- App de Protocolo de NF
+	- App de movimentoção de ferramentas
+	- Gráficos em geral
+11. Controle de Abastecimento
+12. Compras (em desenvolvimento)
+	- auxiliar na hora das compras em supermercado
+13. Sitema para fisoterapeuta (não concluido)
+	- implementei no cadastro do cliente a opção de tirar foto pela webcam do PC
+14. Aplicativo de Vendas Bem Vier (em desenvolvimento)
+	- trabalho na parte de emição de nota fiscal
+
+
+Projetos Automação Arduino / ESP8266
+1. Balança Web (em desenvolvimento)
+
+
+Gerador de Projetos
