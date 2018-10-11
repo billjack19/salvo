@@ -124,7 +124,7 @@ void restaurarConfiguracaoFabrica(){
 
 void atualizaStatusRele(uint8_t pinoGPIO, String valorButton ){
   Serial.println("---------------------- Atualizando status do pino -----------------");
-  Serial.println("Atualizando o pino:"+ String(GPIOPIN_RELES[pinoGPIO]) +" para:"+valorButton);
+  Serial.println("Atualizando o pino:" + String(GPIOPIN_RELES[pinoGPIO]) + " para:" + valorButton);
   switch (pinoGPIO) {
     case 0:
       digitalWrite(D1, String(valorButton));
