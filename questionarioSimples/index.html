@@ -50,8 +50,9 @@
 			conteudo += 
 					 + 		"<tr>"
 					 + 			"<td>"
-					 + 				"<input type='text' name='perg"+i+"' value='"+alternativas[j].alternativa+"' id='perg"+i+"alt_"+alternativas[j].alternativa+"'>"
+					 + 				"<input type='text' name='perg"+i+"' value='"+alternativas[j].id_alternativas+"' id='perg"+i+"alt_"+alternativas[j].alternativa+"'>"
 					 + 			"</td>"
+					 + 			"<td>"+alternativas[j].alternativa+")</td>"
 					 + 			"<td>"+alternativas[j].resposta+"</td>"
 					 + 		"</tr>"
 			}
@@ -83,7 +84,8 @@
 			dataType: 'text',
 			data: {
 				'gravar': true,
-				'questionario': perguntas
+				'questionario': perguntas,
+				'nome': $("#nome").val(),
 			},
 			error: function(error){
 				alert("Falha ao fazer a requisição com o servidor");

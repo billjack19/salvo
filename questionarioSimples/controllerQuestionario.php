@@ -47,4 +47,28 @@ if (!empty($_POST['listar'])) {
 	echo toJson($arrayQuestionario);
 }
 
+
+if(!empty($_POST['gravar'])){
+	$nome = $_POST['nome'];
+	$sql = "INSERT INTO questionario (nome) VALUES ('$nome')";
+	$stmt = $pdo->prepare($sql);
+	if($stmt->execute($param)){
+		$sql = "SELECT id_questionario FROM questionario ORDER BY id_questionario DESC LIMIT 1";
+		$verifica = $pdo->query($sql);
+		foreach ($verifica as $dados) $id_questionario = $row['id_questionario'];
+
+		$queryResposta = ''; $virgula = '';
+		$questionario = explode('/', $_POST['questionario']);
+		for ($i=0; $i < sizeof($questionario); $i++) { 
+			$respota = explode(',', $questionario[$i]);
+			$queryResposta .= $virgula.'('.$id_questionario.', '.$respota[0].', '.$respota[1].')';
+			$virgula = ' ,';
+		}
+		$sql = "INSERT INTO resposta (questionario_id, pergunta_id, alternativas_id) VALUES $queryResposta";
+		$stmt = $pdo->prepare($sql);
+		if($stmt->execute($param)) 	echo '1';
+		else 						echo '0';
+	} else 							echo '0';
+}
+
 ?>
