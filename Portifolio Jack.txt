@@ -1,41 +1,57 @@
 Portifolio Jack
 
 Sites desenvolvidos
-1. http://construtorabrothers.com.br
-2. http://amfiosecabos.com.br/
-3. http://minassystem.com.br/
-4. http://cdiinfo.com.br/
-6. site da cafepocos
+01. http://construtorabrothers.com.br/
+02. http://amfiosecabos.com.br/
+03. http://minassystem.com.br/
+04. http://cdiinfo.com.br/
+06. site da cafepocos
+07. http://www.sjtconstrutora.com.br/
 
 Projetos Desenvolvimento Web
-1. seuICMSdevolta
+01. seuICMSdevolta
 	- aplicação que visa auxiliar no processo de restituição do ICMS cobrando indevidamente na conta de Luz
-2. vendasCDI
+02. vendasCDI
 	- aplicativo para fazer pedidos
-3. panquecaCDI
+03. panquecaCDI
 	- aplicativo de restaurantes para fazer pedido pelo garçom
-4. cacamba (não terminado)
+04. cacamba (não terminado)
 	- aplicativo de rastreio de caçambas
 	- geolocalização e google maps
-5. entregasCDI
+05. entregasCDI
 	- aplicativo de rastreio de entregas e traçar rotas para entregas
 	- geolocalização e google maps
 	- falta o aplicativo rodar em segundo plano
-6. lanchesCDI
+06. lanchesCDI
 	- aplicativo para carrinho de lanche
-7. biblioteca (não terminado)
+07. biblioteca (não terminado)
 	- sistema de biblioteca
 	- emprestimo de livro
 	- agendamento de equipamento
-8. orçamento web
+08. orçamento web
 	- aplicativo para realizar orçamento pela web
-9. template para enviar SMS via PHP
+09. template para enviar SMS via PHP
 	- aplicação para enviar SMS
 10. Intranet Sanhiedrel
 	- Tela de Pré Requisição
-	- App de Protocolo de NF
-	- App de movimentoção de ferramentas
+	- App Sanhidrel
+		01. - App de Protocolo de NF
+		02. - App de movimentoção de ferramentas
+		03. - App de Pré requisição
+		04. - App de assistencia técnica (em desenvolvimento)
 	- Gráficos em geral
+		01. - Indicedor de Ferramentas
+		02. - Evolução
+		03. - Evolução Curva
+		04. - Sub empreiteiros
+		05. - Vale transporte
+		06. - Custo - Ocorrência (Obra e Diagnóstico) (4 gráficos numa unica tela)
+		09. - Assistencia
+		10. - Atendimento
+		11. - Avaliações
+		12. - Fabricante Revenda
+		13. - Requisições manuais
+		14. - Segunraça trabalho
 11. Controle de Abastecimento
 12. Compras (em desenvolvimento)
 	- auxiliar na hora das compras em supermercado
@@ -46,7 +62,11 @@ Projetos Desenvolvimento Web
 
 
 Projetos Automação Arduino / ESP8266
-1. Balança Web (em desenvolvimento)
+01. Balança Web (em desenvolvimento)
+02. Medidor de Temperatura com ESP8266 enviando dados para servidor
+03. RallyDuino
+	- trabalho na programação do carrinho
+04. Acender LED através do arduino usando ESP8266-01
 
 
 Gerador de Projetos
