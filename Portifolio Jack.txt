@@ -36,9 +36,9 @@ Projetos Desenvolvimento Web
 	- Tela de Pré Requisição
 	- App Sanhidrel
 		01. - App de Protocolo de NF
-		02. - App de movimentoção de ferramentas
+		02. - App de Movimentoção de Ferramentas
 		03. - App de Pré requisição
-		04. - App de assistencia técnica (em desenvolvimento)
+		04. - App de Assistencia Técnica
 	- Gráficos em geral
 		01. - Indicedor de Ferramentas
 		02. - Evolução
