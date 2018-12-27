@@ -42,12 +42,8 @@ function copiarArquivo($pastaSrc, $pastaDis, $nomeArquivo){
 	$arquivoCopia = fread($myfile,filesize($pastaSrc."/".$nomeArquivo));
 	fclose($myfile);
 
-	$myfile = fopen($pastaDis."/".$nomeArquivo, "w") or die("Unable to open file!");
-	$txt = $arquivoCopia;
-	fwrite($myfile, $txt);
-	fclose($myfile);
+	criarArquivo($pastaDis."/".$nomeArquivo, $arquivoCopia);
 }
-
 
 
 function copiarArquivoSemNome($pastaSrc, $pastaDis){
@@ -56,10 +52,6 @@ function copiarArquivoSemNome($pastaSrc, $pastaDis){
 	fclose($myfile);
 
 	criarArquivo($pastaDis, $arquivoCopia);
-	// $myfile = fopen($pastaDis, "w") or die("Unable to open file!");
-	// $txt = $arquivoCopia;
-	// fwrite($myfile, $txt);
-	// fclose($myfile);
 }
 
 
@@ -99,8 +91,7 @@ function letraMaiuscula($letra){
 		case 'x': $letra = 'X'; break;
 		case 'y': $letra = 'Y'; break;
 		case 'z': $letra = 'Z'; break;
-		
-		default: $letra = $letra; break;
+		// default: $letra = $letra; break;
 	}
 	return $letra;
 }
