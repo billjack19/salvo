@@ -60,7 +60,7 @@ function montarViewAdicionaItem(desconto){
 				}
 
 				motarSubMenu += "<td onclick='montarListaItensGrup("+data[i].grupoItem+", \""+data[i].descricao+"\")' align='center' height='auto' width='20%'>";
-				motarSubMenu += "<img src='http://"+hostServeImage+":8088/vendasCDI/img/"+data[i].imagem+"' height='auto' width='100%'>";
+				motarSubMenu += "<img src='http://"+hostServeImage+"/vendasCDI/img/"+data[i].imagem+"' height='auto' width='100%'>";
 				motarSubMenu += "<br><span class='text-center'>"+data[i].descricao+"</span>";
 				motarSubMenu += "</td><td>&nbsp;&nbsp;</td>";
 				controleDeLinha++;
