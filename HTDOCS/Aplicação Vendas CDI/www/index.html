@@ -1,0 +1,320 @@
+﻿<!doctype html>
+<html>
+<head>
+	<script>
+		var hostWebService = "192.168.0.199";
+		var portaWebService = ":8080";
+		var caminhoWebService = "/VendasCDI/webresources/";
+		var urlWebService = "http://"+hostWebService+portaWebService+caminhoWebService;
+		var parametrosWebService = "?tagmode=any&jsoncallback=?";
+		var arrayJogos = new Array();
+		var arrayJogadores = new Array();
+		var listagem = false;
+	</script>
+
+	<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+	<title>Vendas CDI</title>
+
+	<script type="text/javascript" src="js/jQuery.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	
+	<!-- Scrips padrão -->
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/bootbox.js"></script>
+	<script type="text/javascript" src="js/masked2.js"></script>
+	<script type="text/javascript" src="js/masked.js"></script>
+	<script type="text/javascript" src="js/toast.js"></script>
+	<script type="text/javascript" src="js/maskmoney.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/toast.css">
+</head>
+<body ng-app="myApp">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="container-fluid " style="margin-left: 0px; margin-top: -50px;">
+				<div class="jumbotron">
+					<div class="row">
+						<div id="hiddenUsuario">
+							<!-- Para colocar o nome com todos os dados dinamicamente -->
+						</div>
+						<input type="hidden" value="0" id="vendedor">
+						<input type="hidden" value="0" id="editar">
+						<input type="hidden" value="0" id="sequencia">
+						<input type="hidden" value="0" id="documentoGeral">
+						<input type="hidden" value="0" id="fichaPesquisa">
+						<input type="hidden" value="inicial" id="statusGeral">
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="jumbotron2">
+
+			<!-- Cabeçario Principal -->
+			<div class="col-md-12" id="cabecarioPrincipal">
+				<div style="margin-left: 15%; margin-right: 15%;">
+					<form id="formLogin" method="post">
+						<div class="col-md-12">
+							<h2 class="text-center">Login</h2>
+							<label class="label-float" for="name">Ususario:</label>
+							<input id="login" type="text" class="form-control" size="12pt" required>
+						</div>
+						<br>
+						<div class="col-md-12" id="subMenu">
+							<label class="label-float" for="name">Senha:</label>
+							<input id="password" type="password" class="form-control" size="12pt" required>
+						</div>
+						<br>
+						<div class="col-md-12"  id="listaConteudo">
+							<button type="submit" class="btn btn-primary btn-block">
+								Entrar
+							</button><br>
+							<br><br><br>
+							<img src="img/Logo.png" width="80%">
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Lista da Pagina-->
+			<div class="col-md-12" id="listaPagina">
+				
+			</div>
+		</div>
+	</div>
+	<!-- <br><br><br><br> -->
+	<div class="jumbotron3">
+		<!-- <div class="col-md-12 rodape" id="rodapeDiv" style="opacity: 0;">
+			<table class="table">
+				<tr>
+					<td align="left" style="margin-left: 15px;width: 50%;">
+						<div style="background-color: #fff; width: 100%">
+							<img src="img/logo.png" width="100%">
+						</div>
+					</td>
+					<td>&nbsp;</td>
+					<td align="left">
+						<h4>
+							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;
+							<b>Developer:</b>&nbsp;&nbsp;Jack Biller
+						</h4>	
+					</td>
+				</tr>
+			</table>
+		</div> -->
+	</div>
+</div>
+
+
+<footer class="fixed-bottom">
+	<div class="row">
+		<div class="col-md-12" style="background-color: #fff;">
+			<table class="table">
+				<tr>
+					<td align="left">
+						<div id="botaoVoltarFixo">
+							
+						</div>
+					</td>
+					<td align="right">
+						<div id="botaoPesquisarFicha">
+							
+						</div>
+					</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</footer>
+
+
+<!-- Modal do Quatidade e do valor unitario do item -->
+<div class="modal fade" id="modalAdicinarItem" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('pagina3');limparCamposModalItem();"  id="fecharModalBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Adicionar Item: <b><span id="modalNomeItem"></span></b></h4>
+			</div>
+			<div class="modal-body">
+
+				<label class="label-float" for="name">Quantidade: <span style="color: red;">*</span></label>
+				<input id="modalQtdItem" type="tel" class="form-control" onkeydown="calculaTotalItem()" onkeyup="calculaTotalItem()" required>
+
+				<label class="label-float" for="name">Valor Unitario (R$): <span style="color: red;">*</span></label>
+				<input id="modalVlrUnitarioItem" type="tel" onkeydown="calculaTotalItem()" onkeyup="calculaTotalItem()" class="form-control" required>
+
+				<label class="label-float" for="name">Valor Total:</label>
+				<input id="modalVlrTotalItem" type="text" class="form-control" disabled>
+				
+				<label class="label-float" for="name">Complemento:</label>
+				<input id="modalComplementoItem" maxlength="200" type="text" class="form-control">
+
+				<input type="hidden" id="modalIdItem">
+				<input type="hidden" id="modalGrupoItem">
+				<input type="hidden" id="modalSubGrupoItem">
+				<input type="hidden" id="modalUnidadeMedidaItem">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="adicionaItemAoPedido();">Adicionar</button>
+				<button type="button" class="btn btn-default" onclick="setStatus('pagina3');limparCamposModalItem();" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal de visualização do pedido -->
+<div class="modal fade" id="modalPropriedadePedido" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="setStatus('inicial');" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Pedido</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" width="100%">
+					<tr>
+						<td colspan="2">
+							<h4>Ficha:&nbsp;<span id="modalNumFicha"></span></h4>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<label class="label-float" for="name">Razão Social:</label>
+							<input id="modalRazaoSocialPedido" type="text" class="form-control" disabled>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="label-float" for="name">Emissao:</label>
+							<input id="modalEmissaoPedido" type="date" class="form-control" disabled>
+						</td>
+						<td>
+							<label class="label-float" for="name">Documento:</label>
+							<input id="modalDocumentoPedido" type="text" class="form-control" disabled>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="label-float" for="name">Valor Total:</label>
+							<input id="modalBalorTotalPedido" type="text" class="form-control" disabled>
+						</td>
+						<td>
+							<label class="label-float" for="name">Filial:</label>
+							<input id="modalFilialPedido" type="text" class="form-control" disabled>
+						</td>
+					</tr>	
+					<tr>
+						<td>
+							<label class="label-float" for="name">Situação:</label>
+							<input id="modalFinalizadaPedido" type="text" class="form-control" disabled>
+						</td>
+						<td>
+							<label class="label-float" for="name">Identificação:</label>
+							<input id="modalIdentificacaoPedido" type="text" class="form-control" disabled>
+						</td>
+					</tr>
+				</table>
+				<br>
+				<div class="modalPedidoItens"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="fecharModalViewPedido" onclick="setStatus('inicial');" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Modal para pegar numero da ficha e fazer conferencia de atendimento -->
+<div class="modal fade" id="modalFichaPedido" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" onclick="setStatus('inicial');limparCamposModalFichaPedido();" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Entre com o numero da ficha:</h4>
+			</div>
+			<div class="modal-body">
+				<label class="label-float" for="name">Ficha:</label>
+				<input id="modalCampoFichaPedido" type="number" class="form-control" required>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-info" onclick="n_editar();motarviewConsultarFicha();">Confirmar</button>
+				<button class="btn btn-default" id="fecharModalFichaPedido" onclick="setStatus('inicial');limparCamposModalFichaPedido();" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="hidden" id="tabelaPedidoPendentes"></div>
+
+<!-- Scripts para configuração de pagina -->
+<script src="js/ajax/ajax_login.js"></script>
+<script src="js/ajax/ajax_pedido.js"></script>
+<script src="js/ajax/ajax_item.js"></script>
+<script src="js/ajax/ajax_ficha.js"></script>
+
+<script src="js/ajax/ajax_outros.js"></script>
+<script src="js/ajax/ajax_confgAndroid.js"></script>
+
+<style>
+    [data-role=page]{height: 100% !important; position:relative !important; top:0 !important;}
+
+    .legenda{
+    	border-style: ridge;
+    	width: 50px;
+    	height: 25px;
+    }
+    .btn {
+    	height: 50px;
+    	font-size: 25px;
+    }
+    .form-control {
+    	height: 50px;
+    	font-size: 35px;
+    }
+
+
+
+    /* Inicio css rodape */
+
+	footer {
+		position: fixed;
+		height: 60px;
+		bottom: 0px;
+		width: 100%;
+	}
+
+    /* Fim css rodape */
+</style>
+
+	<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    	// app.initialize();
+    </script>
+</body>
+</html>
