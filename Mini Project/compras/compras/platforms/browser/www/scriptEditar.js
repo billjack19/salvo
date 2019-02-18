@@ -1,4 +1,0 @@
-/* Editar */
-function selecionarPedido(){
-
-}

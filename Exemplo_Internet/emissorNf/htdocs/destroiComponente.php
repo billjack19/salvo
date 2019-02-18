@@ -1,3 +1,0 @@
-unset($spdNFe);
-unset($spdNFeDataSets);
-?>

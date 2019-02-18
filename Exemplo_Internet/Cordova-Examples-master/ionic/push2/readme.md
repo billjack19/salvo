@@ -1,2 +1,0 @@
-This is the demo code related to a blog post that discusses Ionic Push and stateChange support. 
-Details may be found here: [http://www.raymondcamden.com/2015/07/02/ionic-push-example-supporting-state-changes](http://www.raymondcamden.com/2015/07/02/ionic-push-example-supporting-state-changes)
