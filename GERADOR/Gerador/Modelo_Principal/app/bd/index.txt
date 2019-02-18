@@ -1,1 +1,0 @@
-Área destinada a backups do banco de dados

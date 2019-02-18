@@ -1,4 +1,0 @@
-Esta aplicação esta hospedade em: 
-http://www.cdiinfo.com.br/aplicacoes_web/orcamento/
-http://localhost:8088/orcamento_web/index.php
-

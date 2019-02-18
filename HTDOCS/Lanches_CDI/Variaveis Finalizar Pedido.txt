@@ -1,5 +1,0 @@
-FlagCancelada  bit
-Condpagamento  int
-Desconto  float
-ValorTroco  float
-Pagamento  varchar(200)

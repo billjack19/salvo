@@ -1,7 +1,0 @@
-No caso das Situações na te4la de controle de Cheques
-
-Situações: 
-	- Depositado	(Amarelo)
-	- Devolvido		(Verde)
-	- Em caixa		(Vermelho)
-
