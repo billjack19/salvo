@@ -1,6 +1,0 @@
-1 - Descompactar o pacote com o aplicativo 7zip;
-2 - Abrir prompt de comando de administrador e pelo prompt registrar as dlls no Windows com os scripts CliSiTefRegistrar.bat e DiscadoRegistrar.bat;
-3 - Instalar o simulador do SiTef. Ele é fornecido pela software express;
-4 - Instalar o simulador do Pay&Go conforme instruções do arquivo "2 - Pay&Go Demo - Manual Instalação.pdf". Ele é fornecido pela NTK;
-5 - Abrir os exemplos desejados nas linguagens disponíveis;
-6 - Fazer debug dos métodos ConfigurarEasyTEF de cada exemplo pois este método é quem inicializa a configuração dos objetos EasyTEF.

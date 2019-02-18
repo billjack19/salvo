@@ -1,3 +1,0 @@
-20150722-10:55:14.946 00001BDC - ERROR: Bad reply from server#2 http://rl.ammyy.com {6c756f43}
-20151110-12:19:27.920 000008D4 - ERROR: ERROR 0 0 in TransportTCP2::ReadExact()#2 in Vr::run_un
-20151221-09:57:33.349 00001734 - ERROR: StartService() error 5
